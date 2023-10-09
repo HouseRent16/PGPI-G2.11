@@ -1,0 +1,31 @@
+Requisitos proyecto alquiler de pisos
+
+1. Las reservas pasadas y futuras siempre estarán visibles.
+2. A la hora de alquilar un apartamento el usuario podrá modificar fácilmente la fecha de la reserva y las personas.
+3. Las imágenes utilizadas serán siempre de calidad.
+4. Los pisos estarán organizados por las categorías que ponga el propietario a su piso.
+5. Los alquileres rápidos se realizan con no más de tres pasos, sin que el cliente tenga que registrarse necesariamente.
+6. El cliente debe sentirse seguro durante la compra.
+7. El cliente será atendido en Español.
+8. El registro permanente de datos personales del inquilino será opcional.
+9. La identificación del usuario en el registro se hará utilizando un correo y una clave.
+10. El cliente tiene acceso directo a la información de su reserva, aunque sea un cliente no registrado.
+11. Los pisos ocupados en la fecha que el usuario solicita están claramente marcados.
+12. Cada piso en el catálogo dispondrá de varias imágenes.
+13. La página se estructurará por fechas, lugares o requisitos, según corresponda por el tipo de apartamento.
+14. Búsqueda en el catálogo de pisos por nombre o propietario, así como por ciudad, código postal, personas o requisitos.
+15. La búsqueda estará disponible en la página de inicio de la tienda.
+16. En el catálogo podremos navegar por los diferentes productos organizados, si procede, por ciudades, requisitos o propietarios.
+17. En el catálogo podremos marcar pisos como favoritos indicando la fecha de cuándo se va a alquilar.
+18. Desde el catálogo podremos revisar si el piso está ocupado o disponible en la fecha que queremos.
+19. Desde la sección de favoritos podremos finalizar el alquiler.
+20. Durante el proceso de alquiler se solicitarán los datos del cliente (directamente o iniciando sesión si está registrado).
+21. Durante el proceso de alquiler se solicitarán datos adicionales como a que hora van a llegar los clientes (directamente o iniciando sesión si está registrado).
+22. Durante el proceso de alquiler se solicitarán los datos de pago (directamente o iniciando sesión si está registrado).
+23. Al finalizar el proceso de alquiler el cliente recibe un correo con los datos del apartamento alquilado, el importe y la fecha de la estancia.
+24. Se contempla la cancelación anticipada del alquiler.
+25. La marca corporativa de la empresa cliente debe reflejarse en el sitio web.
+26. El usuario puede registrarse en la solución y acceder utilizando un correo y una clave de acceso
+
+
+
