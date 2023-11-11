@@ -6,6 +6,7 @@ from django.core.validators import RegexValidator
 # Create your models here.
 class Image(models.Model):
     image = models.ImageField(upload_to="images/")
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
 class Address(models.Model):
     street = models.TextField()
@@ -33,6 +34,5 @@ class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    images = models.ManyToOneRel(Image, related_name="houseImage")
     price = models.DecimalField(decimal_places=2, min_value=1)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
