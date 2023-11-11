@@ -3,4 +3,4 @@ from django.contrib.auth.models import User
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to="houses/")
+    image = models.ImageField(upload_to="images/")
