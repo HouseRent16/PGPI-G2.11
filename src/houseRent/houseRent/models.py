@@ -26,7 +26,7 @@ class Address(models.Model):
                 regex='^[0-9]*$',
                 message='Introduzca un número válido',
                 code='invalid_chart_field'
-            ),
+            )
         ])
     country = models.CharField(max_length=100)
 
@@ -36,3 +36,19 @@ class Accommodation(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, min_value=1)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+class CustomUser(AbstractUser):
+    birthDate = models.DateField(blank=True, null=True)
+    phone = models.CharField(max_length=9, blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    dni = models.CharField(max_length=9, 
+        validators=[
+            RegexValidator(
+                regex='^\d{8}[a-zA-Z]$',
+                message='Introducza un DNI válido',
+                code='invalid_chart_field'
+                )
+            ])
+    gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
+    isOwner = models.BooleanField(default=False)
+    
