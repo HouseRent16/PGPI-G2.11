@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # User model
-AUTH_USER_MODEL = "houseRent.CustomUser"
+AUTH_USER_MODEL = "core.CustomUser"
 
 # Application definitions
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
 # Add the following line to the list of installed apps
     'apps.core',
+    'apps.authentication',
 ]
 
 MIDDLEWARE = [
