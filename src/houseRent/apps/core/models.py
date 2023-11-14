@@ -1,13 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import User, AbstractUser, PermissionsMixin
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import AbstractUser, PermissionsMixin
+from django.forms import ValidationError
+from .enums import Category
 
-# Create your models here.
 class Address(models.Model):
     street = models.TextField()
     city = models.CharField(max_length=200)
     province = models.CharField(max_length=200)
-    code = models.CharField(max_length=10, 
+    zipcode = models.CharField(max_length=10, 
         validators=[
             RegexValidator(
                 regex='^[0-9]*$',
@@ -40,18 +41,45 @@ class CustomUser(AbstractUser, PermissionsMixin):
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
     isOwner = models.BooleanField(default=False)
 
+    class Meta:
+        app_label = "houseRent"
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"
+
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+    
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField()
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    category = models.CharField(max_length=10, choices=Category.choices())
 
+    class Meta:
+        verbose_name = "Alojamiento"
+        verbose_name_plural = "Alojamientos"
+
+    def clean(self):
+        if self.price < 0:
+            raise ValidationError('El precio no puede ser negativo')
+
+    def __str__(self):
+        return f"{self.name} - {self.address}"
+    
 class Image(models.Model):
     image = models.ImageField(upload_to="images/")
+    alt = models.CharField(max_length=200)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
-class Meta:
-    app_label = "houseRent"
-    verbose_name = "User"
-    verbose_name_plural = "Users"
+    class Meta:
+        verbose_name = "Imagen"
+        verbose_name_plural = "Imágenes"
+
+    def __str__(self):
+        return f"{self.accommodation} - {self.alt}"
