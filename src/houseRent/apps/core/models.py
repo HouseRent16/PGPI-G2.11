@@ -26,6 +26,26 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
+class CustomUser(AbstractUser, PermissionsMixin):
+    birthDate = models.DateField(blank=True, null=True)
+    phone = models.CharField(max_length=9, blank=True, null=True)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    dni = models.CharField(max_length=9, 
+        validators=[
+            RegexValidator(
+                regex='^\d{8}[a-zA-Z]$',
+                message='Introducza un DNI válido',
+                code='invalid_chart_field'
+                )
+            ])
+    gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
+    isOwner = models.BooleanField(default=False)
+
+    class Meta:
+        app_label = "houseRent"
+        verbose_name = "Usuario"
+        verbose_name_plural = "Usuarios"
+
     class Meta:
         verbose_name = "Dirección"
         verbose_name_plural = "Direcciones"

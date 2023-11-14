@@ -28,8 +28,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# User model
+AUTH_USER_MODEL = "houseRent.CustomUser"
 
-# Application definition
+# Application definitions
 
 INSTALLED_APPS = [
     "django.contrib.admin",
