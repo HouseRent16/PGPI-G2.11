@@ -1,13 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-
+from django.contrib.auth.models import AbstractUser, PermissionsMixin
 
 # Create your models here.
-class Image(models.Model):
-    image = models.ImageField(upload_to="images/")
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-
 class Address(models.Model):
     street = models.TextField()
     city = models.CharField(max_length=200)
@@ -30,14 +25,7 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
-class Accommodation(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    price = models.DecimalField(decimal_places=2, min_value=1)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-
-class CustomUser(AbstractUser):
+class CustomUser(AbstractUser, PermissionsMixin):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
@@ -51,4 +39,19 @@ class CustomUser(AbstractUser):
             ])
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
     isOwner = models.BooleanField(default=False)
-    
+
+class Accommodation(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+class Image(models.Model):
+    image = models.ImageField(upload_to="images/")
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
+class Meta:
+    app_label = "houseRent"
+    verbose_name = "User"
+    verbose_name_plural = "Users"
