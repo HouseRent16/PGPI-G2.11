@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+# Add the following line to the list of installed apps
+    'apps.core',
 ]
 
 MIDDLEWARE = [
