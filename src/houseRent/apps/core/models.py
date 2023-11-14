@@ -1,0 +1,65 @@
+from django.db import models
+from django.contrib.auth.models import User, AbstractUser, PermissionsMixin
+from django.core.validators import RegexValidator
+from django.forms import ValidationError
+from .enums import Category
+
+class Address(models.Model):
+    street = models.TextField()
+    city = models.CharField(max_length=200)
+    province = models.CharField(max_length=200)
+    zipcode = models.CharField(max_length=10, 
+        validators=[
+            RegexValidator(
+                regex='^[0-9]*$',
+                message='Introduzca un código postal válido',
+                code='invalid_chart_field'
+            ),
+        ])
+    number = models.CharField(max_length=10, 
+        validators=[
+            RegexValidator(
+                regex='^[0-9]*$',
+                message='Introduzca un número válido',
+                code='invalid_chart_field'
+            )
+        ])
+    country = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+    
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
+class Accommodation(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    price = models.DecimalField(decimal_places=2, max_digits=10)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    category = models.CharField(max_length=10, choices=Category.choices())
+
+    class Meta:
+        verbose_name = "Alojamiento"
+        verbose_name_plural = "Alojamientos"
+
+    def clean(self):
+        if self.price < 0:
+            raise ValidationError('El precio no puede ser negativo')
+
+    def __str__(self):
+        return f"{self.name} - {self.address}"
+    
+class Image(models.Model):
+    image = models.ImageField(upload_to="images/")
+    alt = models.CharField(max_length=200)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Imagen"
+        verbose_name_plural = "Imágenes"
+
+    def __str__(self):
+        return f"{self.accommodation} - {self.alt}"
