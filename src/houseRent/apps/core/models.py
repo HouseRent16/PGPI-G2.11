@@ -91,7 +91,9 @@ class Claim(models.Model):
         verbose_name_plural = "Reclamaciones"
 
     def __str__(self):
-        return f"{self.accommodation} - {self.title}"
+        return f"{self.accommodation.name} - {self.title}"
+
+
 
 
 
