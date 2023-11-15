@@ -26,6 +26,13 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
@@ -46,7 +53,7 @@ class CustomUser(AbstractUser):
         verbose_name_plural = "Usuarios"
     
     def __str__(self):
-        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+        return f"{self.username}"
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
@@ -65,7 +72,7 @@ class Accommodation(models.Model):
             raise ValidationError('El precio no puede ser negativo')
 
     def __str__(self):
-        return f"{self.name} - {self.address}"
+        return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
     image = models.ImageField(upload_to="images/")
