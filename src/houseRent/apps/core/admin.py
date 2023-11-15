@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Address, Accommodation, Image
+from .models import Address, CustomUser, Accommodation, Image
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
@@ -18,3 +18,9 @@ class ImageAdmin(admin.ModelAdmin):
     list_display = ['image', 'alt', 'accommodation']
     list_filter = ['image', 'alt', 'accommodation']
     search_fields = ['image', 'alt', 'accommodation']
+
+@admin.register(CustomUser)
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ['username', 'is_staff', 'is_active']
+    list_filter = ['username', 'is_staff', 'is_active']
+    search_fields = ['username']
