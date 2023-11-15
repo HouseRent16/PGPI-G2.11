@@ -1,6 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser, PermissionsMixin
-from django.core.validators import RegexValidator
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
 from .enums import Category
 
@@ -26,10 +26,17 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
-class CustomUser(AbstractUser, PermissionsMixin):
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
+class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
     dni = models.CharField(max_length=9, 
         validators=[
             RegexValidator(
@@ -42,21 +49,16 @@ class CustomUser(AbstractUser, PermissionsMixin):
     isOwner = models.BooleanField(default=False)
 
     class Meta:
-        app_label = "houseRent"
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
-
-    class Meta:
-        verbose_name = "Dirección"
-        verbose_name_plural = "Direcciones"
     
     def __str__(self):
-        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+        return f"{self.username}"
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    description = models.TextField(max_length=1024,blank=True, null=True)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     category = models.CharField(max_length=10, choices=Category.choices())
@@ -70,11 +72,15 @@ class Accommodation(models.Model):
             raise ValidationError('El precio no puede ser negativo')
 
     def __str__(self):
-        return f"{self.name} - {self.address}"
+        return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
+    title = models.TextField(max_length=100,blank=True, null=True)
+    description = models.TextField(max_length=1024,blank=True, null=True)
+    order = models.PositiveIntegerField(blank=True, null=True)
     image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=200)
+    publicationDate = models.DateField(auto_now=True)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
     class Meta:
@@ -82,11 +88,37 @@ class Image(models.Model):
         verbose_name_plural = "Imágenes"
 
     def __str__(self):
-        return f"{self.accommodation} - {self.alt}"
+        return f"{self.accommodation} - {self.alt}"    
     
+    class Comment(models.Model):
+        title = models.TextField(max_length=100,blank=True, null=True)
+        description = models.TextField(max_length=1024,blank=True, null=True)
+        publicationDate = models.DateField(auto_now_add=True)
+        user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+        rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+        accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
+
+class Claim(models.Model):
+    title = models.CharField(max_length=100,blank=True, null=True)
+    description = models.CharField(max_length=1024,blank=True, null=True)
+    publicationDate = models.DateField(auto_now=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Reclamación"
+        verbose_name_plural = "Reclamaciones"
+
+    def __str__(self):
+        return f"{self.accommodation.name} - {self.title}"
+
 class Book(models.Model):
     start_date=models.DateTimeField()
     end_date=models.DateTimeField()
-    paymentMethod=models.TextChoices("Efectivo","Tarjeta","Pago Online")
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    paymentMethod=models.TextChoices("Cobro en la entrega","Pago Online")
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    amountPeople=models.IntegerField()
+    price=models.DecimalField(decimal_places=2, max_digits=10)
     isActive=models.BooleanField()
+    accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE)

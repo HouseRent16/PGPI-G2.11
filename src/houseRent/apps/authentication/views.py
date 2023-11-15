@@ -1,6 +1,7 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from .forms import CustomUserCreationForm
 
 from .forms import LoginForm
 
@@ -23,4 +24,16 @@ def login_view(request):
     else:
         form = LoginForm()
 
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'authentication/login.html', {'form': form})
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirigir a la página principal o a la página que desees
+            #return redirect('home')
+    else:
+        form = CustomUserCreationForm()
+
+    return render(request, 'authentication/register.html', {'form': form})
