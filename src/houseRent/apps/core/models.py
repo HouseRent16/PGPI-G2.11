@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser, PermissionsMixin
+from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
 from django.forms import ValidationError
 from .enums import Category
@@ -26,10 +26,10 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
-class CustomUser(AbstractUser, PermissionsMixin):
+class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
     dni = models.CharField(max_length=9, 
         validators=[
             RegexValidator(
