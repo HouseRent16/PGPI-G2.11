@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
 from .enums import Category
 
@@ -26,6 +26,13 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
@@ -46,7 +53,9 @@ class CustomUser(AbstractUser):
         verbose_name_plural = "Usuarios"
     
     def __str__(self):
-        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+        return f"{self.username}"
+      
+      
 class Service(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=544)
@@ -61,7 +70,7 @@ class Service(models.Model):
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField()
+    description = models.TextField(max_length=1024)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
@@ -77,11 +86,15 @@ class Accommodation(models.Model):
             raise ValidationError('El precio no puede ser negativo')
 
     def __str__(self):
-        return f"{self.name} - {self.address}"
+        return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
+    title = models.TextField(max_length=100)
+    description = models.TextField(max_length=1024)
+    order = models.PositiveIntegerField()
     image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=200)
+    publicationDate = models.DateField(auto_now=True)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
     class Meta:
@@ -90,6 +103,15 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.accommodation} - {self.alt}"
+    
+    class Comment(models.Model):
+        title = models.TextField(max_length=100)
+        description = models.TextField(max_length=1024)
+        publicationDate = models.DateField(auto_now_add=True)
+        user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+        rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+        accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+
 
 class Claim(models.Model):
     title = models.CharField(max_length=100)
