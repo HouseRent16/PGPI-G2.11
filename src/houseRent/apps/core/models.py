@@ -83,3 +83,10 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.accommodation} - {self.alt}"
+    
+class Book(models.Model):
+    start_date=models.DateTimeField()
+    end_date=models.DateTimeField()
+    paymentMethod=models.TextChoices("Efectivo","Tarjeta","Pago Online")
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    isActive=models.BooleanField()
