@@ -54,6 +54,19 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.username}"
+      
+      
+class Service(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=544)
+
+    class Meta:
+        verbose_name = "Servicio"
+        verbose_name_plural = "Servicios"
+
+    def __str__(self):
+        return f"{self.name} - {self.description}"
+
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
@@ -62,6 +75,7 @@ class Accommodation(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     category = models.CharField(max_length=10, choices=Category.choices())
+    service = models.ManyToManyField(Service)
 
     class Meta:
         verbose_name = "Alojamiento"
@@ -111,7 +125,10 @@ class Claim(models.Model):
         verbose_name_plural = "Reclamaciones"
 
     def __str__(self):
-        return f"{self.accommodation.name} - {self.title}"
+        return f"{self.accommodation.name} : {self.title}"
+
+
+
 
 
 
