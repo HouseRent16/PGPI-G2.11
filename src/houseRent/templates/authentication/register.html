@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Registro de Usuario</h2>
+    <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        
+        <!-- Campo de nombre de usuario -->
+        <label for="username">Nombre de Usuario:</label>
+        <input type="text" id="username" name="username" required>
+
+        <!-- Campo de contraseña -->
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" required>
+
+        <!-- Otros campos de CustomUser -->
+        <label for="birthDate">Fecha de Nacimiento:</label>
+        <input type="date" id="birthDate" name="birthDate" required>
+
+        <label for="phone">Teléfono:</label>
+        <input type="text" id="phone" name="phone">
+
+        <!-- Address -->
+    
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" name="dni" pattern="^\d{8}[a-zA-Z]$" title="Introduzca un DNI válido" required>
+
+        <label for="gender">Género:</label>
+        <select id="gender" name="gender">
+            <option value="M">Masculino</option>
+            <option value="F">Femenino</option>
+            <option value="O">Otro</option>
+        </select>
+
+        <label for="isOwner">¿Es Propietario?:</label>
+        <input type="checkbox" id="isOwner" name="isOwner">
+
+        <!-- Botón de envío del formulario -->
+        <button type="submit">Registrarse</button>
+    </form>
+{% endblock %}
