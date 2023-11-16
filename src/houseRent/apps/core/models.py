@@ -26,6 +26,14 @@ class Address(models.Model):
         ])
     country = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = "Dirección"
+        verbose_name_plural = "Direcciones"
+
+    def __str__(self):
+        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+
+
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
@@ -46,7 +54,9 @@ class CustomUser(AbstractUser):
         verbose_name_plural = "Usuarios"
     
     def __str__(self):
-        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+        return f"{self.username}"
+
+
 class Service(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=544)
@@ -78,7 +88,8 @@ class Accommodation(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.address}"
-    
+
+
 class Image(models.Model):
     image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=200)
@@ -90,6 +101,7 @@ class Image(models.Model):
 
     def __str__(self):
         return f"{self.accommodation} - {self.alt}"
+
 
 class Claim(models.Model):
     title = models.CharField(max_length=100)
@@ -106,6 +118,17 @@ class Claim(models.Model):
         return f"{self.accommodation.name} : {self.title}"
 
 
+class Favorite(models.Model):
+    date = models.DateField(auto_now=True)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Favorito"
+        verbose_name_plural = "Favoritos"
+
+    def __str__(self):
+        return f"{self.client.name} : {self.accommodation.name} - {self.date}"
 
 
 
