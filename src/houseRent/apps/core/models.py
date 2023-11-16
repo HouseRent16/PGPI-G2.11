@@ -84,7 +84,7 @@ class Service(models.Model):
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField(max_length=1024)
+    description = models.TextField(max_length=1024,blank=True, null=True)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
@@ -104,9 +104,9 @@ class Accommodation(models.Model):
         return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
-    title = models.TextField(max_length=100)
-    description = models.TextField(max_length=1024)
-    order = models.PositiveIntegerField()
+    title = models.TextField(max_length=100,blank=True, null=True)
+    description = models.TextField(max_length=1024,blank=True, null=True)
+    order = models.PositiveIntegerField(blank=True, null=True)
     image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=200)
     publicationDate = models.DateField(auto_now=True)
@@ -117,11 +117,11 @@ class Image(models.Model):
         verbose_name_plural = "Imágenes"
 
     def __str__(self):
-        return f"{self.accommodation} - {self.alt}"
+        return f"{self.accommodation} - {self.alt}"    
     
     class Comment(models.Model):
-        title = models.TextField(max_length=100)
-        description = models.TextField(max_length=1024)
+        title = models.TextField(max_length=100,blank=True, null=True)
+        description = models.TextField(max_length=1024,blank=True, null=True)
         publicationDate = models.DateField(auto_now_add=True)
         user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
         rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
@@ -130,8 +130,8 @@ class Image(models.Model):
 
 
 class Claim(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.CharField(max_length=1024)
+    title = models.CharField(max_length=100,blank=True, null=True)
+    description = models.CharField(max_length=1024,blank=True, null=True)
     publicationDate = models.DateField(auto_now=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
@@ -158,12 +158,12 @@ class Favorite(models.Model):
         return f"{self.client.name} : {self.accommodation.name} - {self.date}"
 
 
-
-
-
-
-
-
-
-
-
+class Book(models.Model):
+    start_date=models.DateTimeField()
+    end_date=models.DateTimeField()
+    paymentMethod=models.TextChoices("Cobro en la entrega","Pago Online")
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    amountPeople=models.IntegerField()
+    price=models.DecimalField(decimal_places=2, max_digits=10)
+    isActive=models.BooleanField()
+    accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE)
