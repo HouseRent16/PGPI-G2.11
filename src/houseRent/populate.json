@@ -131,7 +131,7 @@
         "model": "core.CustomUser",
         "pk": 71,
         "fields": {
-            "password": "pbkdf2_sha256$390000$LKwU2rSPf7BMolMVfQiR2L$1cLYuCXabQ9iCUyLg+gdRmj1yrgMSQ/0gdJiwUmmXOA=",
+            "password": "pbkdf2_sha256$390000$t9M20jSrAZnAqKDpiYEZcp$GVxTIh3fOyTQKSpVSOgjEYOrxl82TEm9xncl2L5d9lc=",
             "last_login": "2022-12-05T16:54:46.872Z",
             "is_superuser": true,
             "username": "admin",
@@ -150,7 +150,7 @@
         "model": "core.CustomUser",
         "pk": 72,
         "fields": {
-            "password": "pbkdf2_sha256$390000$LKwU2rSPf7BMolMVfQiR2L$1cLYuCXabQ9iCUyLg+gdRmj1yrgMSQ/0gdJiwUmmXOA=",
+            "password": "pbkdf2_sha256$390000$zBM8rutpt89kLu3cF7ieev$4RMNvBNGZISO4tABc6V60vkHyZqNJUSr06C+ODBCSGk=",
             "last_login": "2022-12-05T16:54:46.872Z",
             "is_superuser": true,
             "username": "admin2",
@@ -177,7 +177,7 @@
             "isOwner": true,
             "email": "jamesowens@franklin-green.org",
             "username":"jame1",
-            "password": "%Jr5DIPm9N"
+            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI="
         }
     },
     {
