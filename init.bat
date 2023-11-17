@@ -57,7 +57,7 @@ echo ========== CHECKING PYTHON VERSION ==========
 echo Checking Python version...
 python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 10) else 1)"
 if %errorlevel% neq 0 (
-    echo La versión de Python no es 3.10. Por favor, actualiza tu versión de Python.
+    echo Python version is not 3.10. Exiting...
     exit /b
 )
 echo.
@@ -93,7 +93,7 @@ echo Updating pip...
 python -m pip install --upgrade pip
 echo.
 
-IF "%nodependencies%"=="1"(
+IF "%nodependencies%"=="1" (
     echo ========== SKIPPING DEPENDENCIES INSTALLATION ==========
     echo Skipping dependencies installation because of --nodependencies argument.
     echo.
