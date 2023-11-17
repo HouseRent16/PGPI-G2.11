@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Address, CustomUser, Accommodation, Image
+from .models import Address, CustomUser, Accommodation, Image,Service,Comment,Claim,Favorite,Book
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
@@ -24,3 +24,33 @@ class CustomUserAdmin(admin.ModelAdmin):
     list_display = ['username', 'is_staff', 'is_active']
     list_filter = ['username', 'is_staff', 'is_active']
     search_fields = ['username']
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = ['name', 'description']
+    list_filter = ['name', 'description']
+    search_fields = ['name']
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description','publicationDate','user','rating','accommodation']
+    list_filter = ['title', 'description','publicationDate','user','rating','accommodation']
+    search_fields = ['title','publicationDate','rating']
+
+@admin.register(Claim)
+class ClaimAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description','publicationDate','user','accommodation']
+    list_filter = ['title', 'description','publicationDate','user','accommodation']
+    search_fields = ['title','publicationDate']
+
+@admin.register(Favorite)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ['date', 'accommodation','client']
+    list_filter = ['date', 'accommodation','client']
+    search_fields = ['date']
+
+@admin.register(Book)
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
+    list_filter = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
+    search_fields = ['start_date','end_date','user','amountPeople']
