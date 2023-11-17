@@ -4,6 +4,11 @@
 # Para ejecutar, primero da permisos de ejecución con 'chmod +x init.sh'
 # Luego, ejecute con './init.sh'
 
+echo "========== DELETING VIRTUAL ENVIRONMENT =========="
+echo "Deleting virtual environment..."
+rm -rf venv
+echo ""
+
 echo "========== CREATING VIRTUAL ENVIRONMENT =========="
 echo "Creating virtual environment..."
 python3 -m venv venv
@@ -37,13 +42,21 @@ echo ""
 
 echo "========== CLEARING CACHE =========="
 echo "Clearing cache..."
-find . -name '__pycache__' -exec rm -rf {} +
+find . -name '__pycache__' -print -exec rm -rf {} +
 echo ""
 
-echo "========== CLEARING MIGRATIONS =========="
-echo "Clearing migrations and recreating __init__.py files..."
-find . -path "*/migrations/*" -not -name "__init__.py" -delete
-find . -path "*/migrations" -exec touch {}/__init__.py \;
+echo "========== CLEARING MIGRATIONS IN /apps =========="
+echo "Clearing migrations and recreating directories..."
+for d in apps/*/; do
+    if [ -d "${d}migrations" ]; then
+        echo "Deleting migrations directory: ${d}migrations"
+        rm -rf "${d}migrations"
+    fi
+    echo "Creating migrations directory: ${d}migrations"
+    mkdir -p "${d}migrations"
+    echo "Creating file: ${d}migrations/__init__.py"
+    touch "${d}migrations/__init__.py"
+done
 echo ""
 
 echo "========== MAKEMIGRATIONS =========="

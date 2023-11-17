@@ -3,6 +3,11 @@ REM Script para ejecutar comandos Django en Windows
 REM El script asume que se encuentra en la raíz del proyecto
 REM Para ejecutar, haga doble clic en este archivo o ejecute desde el símbolo del sistema './init.bat'.
 
+echo ========== DELETING VIRTUAL ENVIRONMENT ==========
+echo Deleting virtual environment...
+if exist "venv" rmdir /s /q "venv"
+echo.
+
 echo ========== CREATING VIRTUAL ENVIRONMENT ==========
 echo Creating virtual environment...
 python -m venv venv
@@ -36,16 +41,25 @@ echo.
 
 echo ========== CLEARING CACHE ==========
 echo Clearing cache...
-for /d /r . %%d in (__pycache__) do @if exist "%%d" rd /s /q "%%d"
+for /d /r . %%d in (__pycache__) do (
+    if exist "%%d" (
+        echo Deleting cache directory: %%d
+        rd /s /q "%%d"
+    )
+)
 echo.
 
 echo ========== CLEARING MIGRATIONS ==========
-echo Clearing migrations and recreating __init__.py files...
-for /d /r . %%d in (migrations) do (
-    if exist "%%d" (
-        del /q "%%d\*"
-        echo. 2>"%%d\__init__.py"
+echo Clearing migrations and recreating directories...
+for /d %%d in (apps\*) do (
+    if exist "%%d\migrations" (
+        echo Deleting migrations directory: %%d\migrations
+        rd /s /q "%%d\migrations"
     )
+    echo Creating migrations directory: %%d\migrations
+    mkdir "%%d\migrations"
+    echo Creating file: %%d\migrations\__init__.py
+    echo. 2>"%%d\migrations\__init__.py"
 )
 echo.
 
