@@ -120,6 +120,52 @@
         }
     },
     {
+        "model": "auth.group",
+        "pk": 70,
+        "fields": {
+            "name": "Administradores",
+            "permissions": [] 
+        }
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 71,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$LKwU2rSPf7BMolMVfQiR2L$1cLYuCXabQ9iCUyLg+gdRmj1yrgMSQ/0gdJiwUmmXOA=",
+            "last_login": "2022-12-05T16:54:46.872Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@us.es",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-12-05T16:46:52.327Z",
+            "address_id": null,
+            "groups": [70],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 72,
+        "fields": {
+            "password": "pbkdf2_sha256$390000$LKwU2rSPf7BMolMVfQiR2L$1cLYuCXabQ9iCUyLg+gdRmj1yrgMSQ/0gdJiwUmmXOA=",
+            "last_login": "2022-12-05T16:54:46.872Z",
+            "is_superuser": true,
+            "username": "admin2",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin2@us.es",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2022-12-05T16:46:52.327Z",
+            "address_id": null,
+            "groups": [70],
+            "user_permissions": []
+        }
+    },
+    {
         "model": "core.CustomUser",
         "pk": 1,
         "fields": {

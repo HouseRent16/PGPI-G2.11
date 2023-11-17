@@ -160,4 +160,3 @@ cython_debug/
 #.idea/
 src/houseRent/db.sqlite3
 src/houseRent/apps/core/migrations/0001_initial.py
-
