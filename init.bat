@@ -11,7 +11,7 @@ SET persist=0
 SET notest=0
 
 :loop
-IF "%1"=="" GOTO endloop
+IF "%1"=="" GOTO start
 IF "%1"=="--help" GOTO help
 IF "%1"=="--novenv" SET "novenv=1" & GOTO nextarg
 IF "%1"=="--nodependencies" SET "nodependencies=1" & GOTO nextarg
@@ -22,8 +22,6 @@ IF "%1"=="--notest" SET "notest=1" & GOTO nextarg
 SHIFT
 GOTO loop
 
-:endloop
-
 :help
 echo Usage: init.bat [--novenv] [--nodependencies] [--persist] [--notest] [--help]
 echo Options:
@@ -33,6 +31,8 @@ echo   --nodependencies  Skip the dependencies installation.
 echo   --persist  Persist the database.
 echo   --notest  Skip the test execution.
 exit /b
+
+:start
 
 echo ###########################################################################################################
 echo #                                                                                                         #
