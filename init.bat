@@ -5,6 +5,8 @@ REM El script asume que se encuentra en la raíz del proyecto
 REM Para ejecutar, haga doble clic en este archivo o ejecute desde el símbolo del sistema './init.bat'.
 REM *********************************************************************************************************************
 
+chcp 65001
+
 SET novenv=0
 SET nodependencies=0
 SET persist=0
