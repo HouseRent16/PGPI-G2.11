@@ -1,8 +1,46 @@
 #!/bin/bash
+# *********************************************************************************************************************
 # Script para ejecutar comandos Django en macOS y Linux
 # El script asume que se encuentra en la raíz del proyecto
 # Para ejecutar, primero da permisos de ejecución con 'chmod +x init.sh'
 # Luego, ejecute con './init.sh'
+# *********************************************************************************************************************
+
+if [ "$1" == "--help" ]; then
+    echo "Usage: ./init.sh [--notest] [--help]"
+    echo "Options:"
+    echo "  --help    Show this help message."
+    echo "  --notest  Skip the test execution."
+    echo ""
+    exit 0
+fi
+
+echo "###########################################################################################################"
+echo ""#                                                                                                         #""
+echo "#                                                                                                         #"
+echo "#                                                                                                         #"
+echo "#      █████   █████                                      ███████████                        █████        #"
+echo "#     ░░███   ░░███                                      ░░███░░░░░███                      ░░███         #"
+echo "#      ░███    ░███   ██████  █████ ████  █████   ██████  ░███    ░███   ██████  ████████   ███████       #"
+echo "#      ░███████████  ███░░███░░███ ░███  ███░░   ███░░███ ░██████████   ███░░███░░███░░███ ░░░███░        #"
+echo "#      ░███░░░░░███ ░███ ░███ ░███ ░███ ░░█████ ░███████  ░███░░░░░███ ░███████  ░███ ░███   ░███         #"
+echo "#      ░███    ░███ ░███ ░███ ░███ ░███  ░░░░███░███░░░   ░███    ░███ ░███░░░   ░███ ░███   ░███ ███     #"
+echo "#      █████   █████░░██████  ░░████████ ██████ ░░██████  █████   █████░░██████  ████ █████  ░░█████      #"
+echo "#     ░░░░░   ░░░░░  ░░░░░░    ░░░░░░░░ ░░░░░░   ░░░░░░  ░░░░░   ░░░░░  ░░░░░░  ░░░░ ░░░░░    ░░░░░       #"
+echo "#                                                                                                         #"
+echo "#                                                                                                         #"
+echo "#                                                                                                         #"
+echo "###########################################################################################################"
+echo ""
+echo ""
+
+echo "========== CHECKING PYTHON VERSION =========="
+echo "Checking Python version..."
+python3 -c "import sys; assert sys.version_info[:2] == (3, 10), 'Incorrect Python version, requires Python 3.10'; print('Correct Python version (3.10)')"
+if [ $? -ne 0 ]; then
+    echo "Python version is not 3.10. Exiting..."
+    exit 1
+fi
 
 echo "========== DELETING VIRTUAL ENVIRONMENT =========="
 echo "Deleting virtual environment..."
@@ -45,7 +83,7 @@ echo "Clearing cache..."
 find . -name '__pycache__' -print -exec rm -rf {} +
 echo ""
 
-echo "========== CLEARING MIGRATIONS IN /apps =========="
+echo "========== CLEARING MIGRATIONS =========="
 echo "Clearing migrations and recreating directories..."
 for d in apps/*/; do
     if [ -d "${d}migrations" ]; then
@@ -69,10 +107,24 @@ echo "Running migrate..."
 ./manage.py migrate
 echo ""
 
-echo "========== TEST =========="
-echo "Running tests..."
-./manage.py test
-echo ""
+if [ "$1" == "--notest" ]; then
+    echo "========== SKIPPING TESTS =========="
+    echo "Skipping test execution because of --notest argument."
+    echo ""
+else
+    echo "========== TEST =========="
+    echo "Running tests..."
+    ./manage.py test
+    echo ""
+
+    echo "========== COVERAGE REPORT =========="
+    echo "Generating coverage report..."
+    coverage run --source='.' manage.py test
+    coverage report
+    coverage html
+    echo ""
+fi
+
 
 echo "========== LOAD DATA =========="
 echo "Loading data from populate.json..."
