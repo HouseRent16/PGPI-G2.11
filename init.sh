@@ -6,16 +6,38 @@
 # Luego, ejecute con './init.sh'
 # *********************************************************************************************************************
 
-if [ "$1" == "--help" ]; then
-    echo "Usage: ./init.sh [--notest] [--help]"
-    echo "Options:"
-    echo "  --help    Show this help message."
-    echo "  --novenv  Skip the virtual environment creation."
-    echo "  --nodependencies  Skip the dependencies installation."
-    echo "  --notest  Skip the test execution."
-    echo ""
-    exit 0
-fi
+novenv=0
+nodependencies=0
+persist=0
+notest=0
+
+while [ "$1" != "" ]; do
+    case $1 in
+        --help)
+            echo "Usage: ./init.sh [--novenv] [--nodependencies] [--persist] [--notest] [--help]"
+            echo "Options:"
+            echo "  --help    Show this help message."
+            echo "  --novenv  Skip the virtual environment creation."
+            echo "  --nodependencies  Skip the dependencies installation."
+            echo "  --persist  Persist the database."
+            echo "  --notest  Skip the test execution."
+            exit 0
+            ;;
+        --novenv)
+            novenv=1
+            ;;
+        --nodependencies)
+            nodependencies=1
+            ;;
+        --persist)
+            persist=1
+            ;;
+        --notest)
+            notest=1
+            ;;
+    esac
+    shift
+done
 
 echo "###########################################################################################################"
 echo ""#                                                                                                         #""
@@ -45,7 +67,7 @@ if [ $? -ne 0 ]; then
 fi
 echo ""
 
-if [ "$1" == "--novenv" ]; then
+if [ $novenv -eq 1 ]; then
     echo "========== SKIPPING VENV =========="
     echo "Skipping virtual environment creation because of --novenv argument."
     echo ""
@@ -76,7 +98,7 @@ echo "Updating pip..."
 python -m pip install --upgrade pip
 echo ""
 
-if [ "$1" == "--nodependencies" ]; then
+if [ $nodependencies -eq 1 ]; then
     echo "========== SKIPPING DEPENDENCIES INSTALLATION =========="
     echo "Skipping dependencies installation because of --nodependencies argument."
     echo ""
@@ -87,11 +109,19 @@ else
     echo ""
 fi
 
-echo "========== DELETING DATABASE =========="
-echo "Deleting database..."
 cd src/houseRent
-rm -f db.sqlite3
-echo ""
+
+#Persistir datos de la base de datos
+if [ $persist -eq 1 ]; then
+    echo "========== PERSISTING DATABASE =========="
+    echo "Persisting database because of --persist argument."
+    echo ""
+else
+    echo "========== DELETING DATABASE =========="
+    echo "Deleting database..."
+    rm -f db.sqlite3
+    echo ""
+fi
 
 echo "========== CLEARING CACHE =========="
 echo "Clearing cache..."
@@ -122,7 +152,7 @@ echo "Running migrate..."
 ./manage.py migrate
 echo ""
 
-if [ "$1" == "--notest" ]; then
+if [ $notest -eq 1 ]; then
     echo "========== SKIPPING TESTS =========="
     echo "Skipping test execution because of --notest argument."
     echo ""

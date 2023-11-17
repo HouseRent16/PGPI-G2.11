@@ -5,16 +5,34 @@ REM El script asume que se encuentra en la raíz del proyecto
 REM Para ejecutar, haga doble clic en este archivo o ejecute desde el símbolo del sistema './init.bat'.
 REM *********************************************************************************************************************
 
-IF "%1"=="--help" (
-    echo Usage: init.bat [--notest] [--help]
-    echo Options:
-    echo   --help    Show this help message.
-    echo   --novenv  Skip the virtual environment creation.
-    echo   --nodependencies  Skip the dependencies installation.
-    echo   --notest  Skip the test execution.
-    echo.
-    exit /b
-)
+SET novenv=0
+SET nodependencies=0
+SET persist=0
+SET notest=0
+
+:loop
+IF "%1"=="" GOTO endloop
+IF "%1"=="--help" GOTO help
+IF "%1"=="--novenv" SET "novenv=1" & GOTO nextarg
+IF "%1"=="--nodependencies" SET "nodependencies=1" & GOTO nextarg
+IF "%1"=="--persist" SET "persist=1" & GOTO nextarg
+IF "%1"=="--notest" SET "notest=1" & GOTO nextarg
+
+:nextarg
+SHIFT
+GOTO loop
+
+:endloop
+
+:help
+echo Usage: init.bat [--novenv] [--nodependencies] [--persist] [--notest] [--help]
+echo Options:
+echo   --help    Show this help message.
+echo   --novenv  Skip the virtual environment creation.
+echo   --nodependencies  Skip the dependencies installation.
+echo   --persist  Persist the database.
+echo   --notest  Skip the test execution.
+exit /b
 
 echo ###########################################################################################################
 echo #                                                                                                         #
@@ -44,7 +62,7 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-IF "%1"=="--novenv" (
+IF "%novenv%"=="1" (
     echo ========== SKIPPING VENV ==========
     echo Skipping virtual environment creation because of --novenv argument.
     echo.
@@ -75,7 +93,7 @@ echo Updating pip...
 python -m pip install --upgrade pip
 echo.
 
-IF "%1"=="--nodependencies" (
+IF "%nodependencies%"=="1"(
     echo ========== SKIPPING DEPENDENCIES INSTALLATION ==========
     echo Skipping dependencies installation because of --nodependencies argument.
     echo.
@@ -86,11 +104,18 @@ IF "%1"=="--nodependencies" (
     echo.
 )
 
-echo ========== DELETING DATABASE ==========
-echo Deleting database...
 cd src\houseRent
-if exist "db.sqlite3" del "db.sqlite3"
-echo.
+
+IF "%persist%"=="1" (
+    echo ========== PERSISTING DATABASE ==========
+    echo Persisting database because of --persist argument.
+    echo.
+) ELSE (
+    echo ========== DELETING DATABASE ==========
+    echo Deleting database...
+    if exist "db.sqlite3" del "db.sqlite3"
+    echo.
+)
 
 echo ========== CLEARING CACHE ==========
 echo Clearing cache...
@@ -126,7 +151,7 @@ echo Running migrate...
 python manage.py migrate
 echo.
 
-IF "%1"=="--notest" (
+IF "%notest%"=="1" (
     echo ========== SKIPPING TESTS ==========
     echo Skipping test execution because of --notest argument.
     echo.
