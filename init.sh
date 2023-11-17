@@ -10,6 +10,8 @@ if [ "$1" == "--help" ]; then
     echo "Usage: ./init.sh [--notest] [--help]"
     echo "Options:"
     echo "  --help    Show this help message."
+    echo "  --novenv  Skip the virtual environment creation."
+    echo "  --nodependencies  Skip the dependencies installation."
     echo "  --notest  Skip the test execution."
     echo ""
     exit 0
@@ -41,16 +43,23 @@ if [ $? -ne 0 ]; then
     echo "Python version is not 3.10. Exiting..."
     exit 1
 fi
-
-echo "========== DELETING VIRTUAL ENVIRONMENT =========="
-echo "Deleting virtual environment..."
-rm -rf venv
 echo ""
 
-echo "========== CREATING VIRTUAL ENVIRONMENT =========="
-echo "Creating virtual environment..."
-python3 -m venv venv
-echo ""
+if [ "$1" == "--novenv" ]; then
+    echo "========== SKIPPING VENV =========="
+    echo "Skipping virtual environment creation because of --novenv argument."
+    echo ""
+else
+    echo "========== DELETING VIRTUAL ENVIRONMENT =========="
+    echo "Deleting virtual environment..."
+    rm -rf venv
+    echo ""
+
+    echo "========== CREATING VIRTUAL ENVIRONMENT =========="
+    echo "Creating virtual environment..."
+    python3 -m venv venv
+    echo ""
+fi
 
 echo "========== ACTIVATING VIRTUAL ENVIRONMENT =========="
 echo "Activating virtual environment..."
@@ -67,10 +76,16 @@ echo "Updating pip..."
 python -m pip install --upgrade pip
 echo ""
 
-echo "========== INSTALLING DEPENDENCIES =========="
-echo "Installing dependencies from requirements.txt..."
-pip install -r ./requirements.txt
-echo ""
+if [ "$1" == "--nodependencies" ]; then
+    echo "========== SKIPPING DEPENDENCIES INSTALLATION =========="
+    echo "Skipping dependencies installation because of --nodependencies argument."
+    echo ""
+else
+    echo "========== INSTALLING DEPENDENCIES =========="
+    echo "Installing dependencies from requirements.txt..."
+    pip install -r ./requirements.txt
+    echo ""
+fi
 
 echo "========== DELETING DATABASE =========="
 echo "Deleting database..."

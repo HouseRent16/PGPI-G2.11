@@ -9,6 +9,8 @@ IF "%1"=="--help" (
     echo Usage: init.bat [--notest] [--help]
     echo Options:
     echo   --help    Show this help message.
+    echo   --novenv  Skip the virtual environment creation.
+    echo   --nodependencies  Skip the dependencies installation.
     echo   --notest  Skip the test execution.
     echo.
     exit /b
@@ -40,16 +42,23 @@ if %errorlevel% neq 0 (
     echo La versión de Python no es 3.10. Por favor, actualiza tu versión de Python.
     exit /b
 )
-
-echo ========== DELETING VIRTUAL ENVIRONMENT ==========
-echo Deleting virtual environment...
-if exist "venv" rmdir /s /q "venv"
 echo.
 
-echo ========== CREATING VIRTUAL ENVIRONMENT ==========
-echo Creating virtual environment...
-python -m venv venv
-echo.
+IF "%1"=="--novenv" (
+    echo ========== SKIPPING VENV ==========
+    echo Skipping virtual environment creation because of --novenv argument.
+    echo.
+) ELSE (
+    echo ========== DELETING VIRTUAL ENVIRONMENT ==========
+    echo Deleting virtual environment...
+    if exist "venv" rmdir /s /q "venv"
+    echo.
+
+    echo ========== CREATING VIRTUAL ENVIRONMENT ==========
+    echo Creating virtual environment...
+    python -m venv venv
+    echo.
+)
 
 echo ========== ACTIVATING VIRTUAL ENVIRONMENT ==========
 echo Activating virtual environment...
@@ -66,10 +75,16 @@ echo Updating pip...
 python -m pip install --upgrade pip
 echo.
 
-echo ========== INSTALLING DEPENDENCIES ==========
-echo Installing dependencies from requirements.txt...
-pip install -r ./requirements.txt
-echo.
+IF "%1"=="--nodependencies" (
+    echo ========== SKIPPING DEPENDENCIES INSTALLATION ==========
+    echo Skipping dependencies installation because of --nodependencies argument.
+    echo.
+) ELSE (
+    echo ========== INSTALLING DEPENDENCIES ==========
+    echo Installing dependencies from requirements.txt...
+    pip install -r ./requirements.txt
+    echo.
+)
 
 echo ========== DELETING DATABASE ==========
 echo Deleting database...
