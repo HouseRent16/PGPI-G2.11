@@ -28,10 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# User model
-AUTH_USER_MODEL = "core.CustomUser"
 
-# Application definitions
+# Application definition
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -40,10 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-# Add the following line to the list of installed apps
-    'apps.core',
-    'apps.authentication',
+    "apps.core",
+    "apps.authentication",
 ]
 
 MIDDLEWARE = [
@@ -61,7 +57,7 @@ ROOT_URLCONF = "houseRent.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -110,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "es-ES"
+LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
@@ -124,17 +120,19 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-STATICFILES_DIRS = [BASE_DIR / 'static']
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
 # Base url to serve media files  
 MEDIA_URL = '/media/'  
   
 # Path where media is stored  
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'decide202324@gmail.com'
+EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'
