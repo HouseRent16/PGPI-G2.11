@@ -15,9 +15,9 @@ class AccommodationAdmin(admin.ModelAdmin):
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ['image', 'alt', 'accommodation']
-    list_filter = ['image', 'alt', 'accommodation']
-    search_fields = ['image', 'alt', 'accommodation']
+    list_display = ['title','image', 'alt', 'accommodation']
+    list_filter = ['title','image', 'alt', 'accommodation']
+    search_fields = ['title','image', 'alt', 'accommodation']
 
 @admin.register(CustomUser)
 class CustomUserAdmin(admin.ModelAdmin):
@@ -50,7 +50,7 @@ class FavoriteAdmin(admin.ModelAdmin):
     search_fields = ['date']
 
 @admin.register(Book)
-class FavoriteAdmin(admin.ModelAdmin):
+class BookAdmin(admin.ModelAdmin):
     list_display = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
     list_filter = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
     search_fields = ['start_date','end_date','user','amountPeople']
