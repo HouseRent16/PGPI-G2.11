@@ -115,6 +115,12 @@ class Image(models.Model):
         rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
         accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Imagen"
+        verbose_name_plural = "Imágenes"
+
+    def __str__(self):
+        return f"{self.accommodation.name} : {self.title}"
 
 
 class Claim(models.Model):
