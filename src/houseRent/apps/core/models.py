@@ -116,8 +116,8 @@ class Image(models.Model):
         accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = "Imagen"
-        verbose_name_plural = "Imágenes"
+        verbose_name = "Comentario"
+        verbose_name_plural = "Comentarios"
 
     def __str__(self):
         return f"{self.accommodation.name} : {self.title}"
