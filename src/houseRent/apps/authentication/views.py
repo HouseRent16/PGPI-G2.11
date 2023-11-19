@@ -2,7 +2,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from .forms import CustomUserCreationForm
-from utils.mailer import send_mail
 from .forms import LoginForm
 
 def login_view(request):
@@ -15,7 +14,6 @@ def login_view(request):
 
             if user is not None:
                 login(request, user)
-                send_mail('Bienvenido', 'Bienvenido a House Rent', [user.email])
                 # Redirigir a la página principal o a la página que desees
                 return redirect('home')
             else:
@@ -28,7 +26,6 @@ def login_view(request):
     return render(request, 'authentication/login.html', {'form': form})
 
 def register(request):
-    send_mail('Bienvenido', 'Bienvenido a House Rent', ["sergiosantiago0403@gmail.com"])
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():

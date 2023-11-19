@@ -1,11 +1,12 @@
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
+from email.mime.image import MIMEImage
 
-def send_mail(subject, body, receivers, template="mail.html", context=None, attachments=None):
+def send_mail(subject, body, receivers, template="email.html", context=None, attachments=None):
     if context is None:
         context = {}
-    context['image_path'] = 'media/assets/Logo_S_T.png'
+    context['image_path'] = 'Logo_S_T.png'
     mail = EmailMessage(
         subject,
         render_to_string(template, context),
@@ -14,9 +15,16 @@ def send_mail(subject, body, receivers, template="mail.html", context=None, atta
     )
     mail.content_subtype = "html"
 
+   # mail.attach("Logo_S_T.png", open('static/assets/Logo_S_T.png', 'rb').read(), "image/png")
+
+    with open("static/assets/Logo_S_T.png", 'rb') as f:
+        attached_image = MIMEImage(f.read())
+        attached_image.add_header('Content-ID', '<attached_image>')
+        mail.attach(attached_image)
+
     if attachments:
         for attachment in attachments:
             with open(attachment['file'], 'rb') as file:
-                mail.attach(attachment['nombre'], file.read(), attachment['tipo'])
+                mail.attach(attachment['name'], file.read(), attachment['type'])
 
     mail.send()
