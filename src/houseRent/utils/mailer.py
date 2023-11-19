@@ -5,7 +5,7 @@ from django.conf import settings
 def send_mail(subject, body, receivers, template="mail.html", context=None, attachments=None):
     if context is None:
         context = {}
-    context['imagen_adjunta'] = 'static/assets/Logo_S_T.png'
+    context['image_path'] = 'static/assets/Logo_S_T.png'
     mail = EmailMessage(
         subject,
         render_to_string(template, context),
