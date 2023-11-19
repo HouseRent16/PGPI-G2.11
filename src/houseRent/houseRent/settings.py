@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# User model
+AUTH_USER_MODEL = "core.CustomUser"
 
 # Application definition
 
@@ -134,5 +136,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'decide202324@gmail.com'
+EMAIL_HOST_USER = 'houserent2324@gmail.com'
 EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'

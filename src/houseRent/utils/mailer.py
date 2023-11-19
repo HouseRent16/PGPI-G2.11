@@ -5,13 +5,14 @@ from django.conf import settings
 def send_mail(subject, body, receivers, template="mail.html", context=None, attachments=None):
     if context is None:
         context = {}
-    context['image_path'] = 'static/assets/Logo_S_T.png'
+    context['imagen_adjunta'] = 'static/assets/Logo_S_T.png'
     mail = EmailMessage(
         subject,
         render_to_string(template, context),
         settings.EMAIL_HOST_USER,
         receivers,
     )
+    mail.content_subtype = "html"
 
     if attachments:
         for attachment in attachments:

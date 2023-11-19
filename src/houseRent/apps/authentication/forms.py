@@ -11,7 +11,6 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta:
         model = CustomUser
         fields = UserCreationForm.Meta.fields + ('birthDate', 'phone', 'address', 'dni', 'gender', 'isOwner')
-
     birthDate = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
     phone = forms.CharField(max_length=9, required=False)
     address = forms.ModelChoiceField(queryset=Address.objects.all(), required=False)
