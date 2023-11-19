@@ -30,10 +30,19 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user_form = form.save(commit=False)
+            user_form.set_password(form.cleaned_data['password'])    # Encriptar contraseña
+            user_form.save()
             # Redirigir a la página principal o a la página que desees
-            #return redirect('home')
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            login(request, user)
+            return redirect('home')
+        else:
+            form.add_error(None, 'datos incorrectos.')
     else:
         form = CustomUserCreationForm()
+
 
     return render(request, 'authentication/register.html', {'form': form})

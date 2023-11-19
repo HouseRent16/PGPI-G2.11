@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
 from .enums import Category
+from passlib.hash import pbkdf2_sha256
 
 class Address(models.Model):
     street = models.TextField()
@@ -48,6 +49,12 @@ class CustomUser(AbstractUser):
             ])
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
     isOwner = models.BooleanField(default=False)
+
+    def set_password(self, raw_password):
+        self.password = pbkdf2_sha256.hash(raw_password)
+
+    def check_password(self, raw_password):
+        return pbkdf2_sha256.verify(raw_password, self.password)
 
     class Meta:
         verbose_name = "Usuario"
