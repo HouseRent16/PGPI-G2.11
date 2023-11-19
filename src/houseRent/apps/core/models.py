@@ -50,12 +50,6 @@ class CustomUser(AbstractUser):
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
     isOwner = models.BooleanField(default=False)
 
-    def set_password(self, raw_password):
-        self.password = pbkdf2_sha256.hash(raw_password)
-
-    def check_password(self, raw_password):
-        return pbkdf2_sha256.verify(raw_password, self.password)
-
     class Meta:
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
