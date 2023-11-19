@@ -69,6 +69,7 @@ class Service(models.Model):
         return f"{self.name} - {self.description}"
 
 
+
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1024,blank=True, null=True)
