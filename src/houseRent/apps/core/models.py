@@ -70,18 +70,6 @@ class Service(models.Model):
 
 
 
-class Service(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.CharField(max_length=544)
-
-    class Meta:
-        verbose_name = "Servicio"
-        verbose_name_plural = "Servicios"
-
-    def __str__(self):
-        return f"{self.name} - {self.description}"
-
-
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(max_length=1024,blank=True, null=True)
