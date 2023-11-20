@@ -142,6 +142,8 @@ for d in apps/*/; do
 done
 echo ""
 
+chmod +x dumpdata.sh
+
 echo "========== MAKEMIGRATIONS =========="
 echo "Running makemigrations..."
 ./manage.py makemigrations
