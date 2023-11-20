@@ -1,6 +1,6 @@
 from django.urls import path
-from apps.core import views as core_views
+from apps.core import views
 
 urlpatterns = [
-    
+    path('admin/core/customuser/<int:user_id>/password/', views.change_password, name='admin_change_password'),
 ]
