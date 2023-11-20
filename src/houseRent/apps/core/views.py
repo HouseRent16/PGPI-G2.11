@@ -3,6 +3,7 @@ from django.contrib import messages
 from .models import CustomUser
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
+from django.shortcuts import render 
 
 @staff_member_required
 def change_password(request, user_id):
@@ -19,3 +20,6 @@ def change_password(request, user_id):
     return render(request, 'core/change_password.html', {
         'form': form
     })
+
+def home(request):
+    return render(request,"core/home.html")
