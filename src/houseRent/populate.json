@@ -1,5 +1,97 @@
 [
     {
+        "model": "auth.group",
+        "pk": 70,
+        "fields": {
+            "name": "Administradores",
+            "permissions": [
+                1,
+                2,
+                3,
+                4,
+                9,
+                10,
+                11,
+                12,
+                5,
+                6,
+                7,
+                8,
+                13,
+                14,
+                15,
+                16,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                53,
+                54,
+                55,
+                56,
+                49,
+                50,
+                51,
+                52,
+                45,
+                46,
+                47,
+                48,
+                21,
+                22,
+                23,
+                24,
+                41,
+                42,
+                43,
+                44,
+                37,
+                38,
+                39,
+                40,
+                33,
+                34,
+                35,
+                36,
+                17,
+                18,
+                19,
+                20
+            ]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 71,
+        "fields": {
+            "name": "Personal",
+            "permissions": [
+                27,
+                28,
+                55,
+                56,
+                51,
+                52,
+                47,
+                48,
+                21,
+                22,
+                23,
+                24,
+                39,
+                40,
+                33,
+                34,
+                35,
+                36
+            ]
+        }
+    },
+    {
         "model": "core.address",
         "pk": 1,
         "fields": {
@@ -120,14 +212,6 @@
         }
     },
     {
-        "model": "auth.group",
-        "pk": 70,
-        "fields": {
-            "name": "Administradores",
-            "permissions": [] 
-        }
-    },
-    {
         "model": "core.CustomUser",
         "pk": 71,
         "fields": {
@@ -150,18 +234,17 @@
         "model": "core.CustomUser",
         "pk": 72,
         "fields": {
-            "password": "pbkdf2_sha256$390000$zBM8rutpt89kLu3cF7ieev$4RMNvBNGZISO4tABc6V60vkHyZqNJUSr06C+ODBCSGk=",
+            "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
             "last_login": "2022-12-05T16:54:46.872Z",
-            "is_superuser": true,
-            "username": "admin2",
+            "username": "staff",
             "first_name": "",
             "last_name": "",
-            "email": "admin2@us.es",
+            "email": "staff@us.es",
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
             "address_id": null,
-            "groups": [70],
+            "groups": [71],
             "user_permissions": []
         }
     },
