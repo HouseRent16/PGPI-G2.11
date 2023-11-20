@@ -533,7 +533,6 @@
             "end_date": "2023-12-15T00:00:00Z",
             "paymentMethod": "EFECTIVO",
             "amountPeople": 7,
-            "price": 98726,
             "user": 10,
             "isActive": false,
             "accommodation": 11 
@@ -547,7 +546,6 @@
             "end_date": "2023-11-30T20:48:00Z",
             "paymentMethod": "EFECTIVO",
             "amountPeople": 8,
-            "price": 25052,
             "user": 6,
             "isActive": false,
             "accommodation": 12
@@ -561,7 +559,6 @@
             "end_date": "2023-12-10T03:50:00Z",
             "paymentMethod": "EFECTIVO",
             "amountPeople": 5,
-            "price": 58731,
             "user": 9,
             "isActive": false,
             "accommodation": 13
@@ -575,7 +572,6 @@
             "end_date": "2023-11-22T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 6,
-            "price": 76207,
             "user": 10,
             "isActive": true,
             "accommodation": 14
@@ -589,7 +585,6 @@
             "end_date": "2023-11-19T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 9,
-            "price": 99443,
             "user": 5,
             "isActive": false,
             "accommodation": 15
@@ -603,7 +598,6 @@
             "end_date": "2023-11-20T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 3,
-            "price": 58502,
             "user": 8,
             "isActive": false,
             "accommodation": 16
@@ -617,7 +611,6 @@
             "end_date": "2023-11-29T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 1,
-            "price": 5368,
             "user": 8,
             "isActive": false,
             "accommodation": 17
@@ -631,7 +624,6 @@
             "end_date": "2023-12-09T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 7,
-            "price": 81952,
             "user": 4,
             "isActive": false,
             "accommodation": 18
@@ -645,7 +637,6 @@
             "end_date": "2023-12-14T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 10,
-            "price": 8980,
             "user": 10,
             "isActive": true,
             "accommodation": 19
@@ -659,7 +650,6 @@
             "end_date": "2023-11-27T00:00:00Z",
             "paymentMethod": "ONLINE",
             "amountPeople": 8,
-            "price": 86896,
             "user": 2,
             "isActive": true,
             "accommodation": 20

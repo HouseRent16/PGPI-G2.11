@@ -66,6 +66,6 @@ class FavoriteAdmin(ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(ModelAdmin):
-    list_display = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
-    list_filter = ['start_date', 'end_date','paymentMethod','user','amountPeople','price','isActive','accommodation']
+    list_display = ['start_date', 'end_date','paymentMethod','user','amountPeople','isActive','accommodation']
+    list_filter = ['start_date', 'end_date','paymentMethod','user','amountPeople','isActive','accommodation']
     search_fields = ['start_date','end_date','user','amountPeople']
