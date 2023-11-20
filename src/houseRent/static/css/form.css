@@ -83,6 +83,21 @@
   transition: all 0.2s ease;
   background: rgb(0, 166, 255);
 }
+
 .formulario button:hover {
   background: rgb(107, 107, 107);
+}
+
+.outlined-button {
+  height: 55px;
+  width: 100%;
+  color: rgb(0, 166, 255);
+  font-size: 1rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: 1px solid rgb(0, 166, 255);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background:  #fff;
+ 
 }
