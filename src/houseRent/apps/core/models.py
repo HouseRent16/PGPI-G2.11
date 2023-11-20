@@ -102,6 +102,12 @@ class Comment(models.Model):
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Comentario"
+        verbose_name_plural = "Comentarios"
+
+    def __str__(self):
+        return f"{self.accommodation.name} : {self.title}"
 
 
 class Claim(models.Model):
