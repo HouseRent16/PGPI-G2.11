@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
-from .enums import Category,PaymentMethod
+from .enums import Category, Request, PaymentMethod
 
 class Address(models.Model):
     street = models.TextField()
@@ -47,7 +47,7 @@ class CustomUser(AbstractUser):
                 )
             ])
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
-    isOwner = models.BooleanField(default=False)
+    request = models.CharField(max_length=32, choices=Request.choices(), default=Request.NOT_REQUESTED)
 
     class Meta:
         verbose_name = "Usuario"

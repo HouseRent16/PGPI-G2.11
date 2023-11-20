@@ -92,6 +92,14 @@
         }
     },
     {
+        "model": "auth.group",
+        "pk": 72,
+        "fields": {
+            "name": "Propietarios",
+            "permissions": []
+        }
+    },
+    {
         "model": "core.address",
         "pk": 1,
         "fields": {
@@ -257,11 +265,11 @@
             "birthDate": "1963-02-24",
             "gender": "Other",
             "phone": "+1-606-406-9746x5270",
-            "isOwner": true,
             "email": "jamesowens@franklin-green.org",
             "username":"jame1",
-            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI="
-        }
+            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
+            "groups": [72]
+        }   
     },
     {
         "model": "core.CustomUser",
@@ -272,7 +280,6 @@
             "birthDate": "1993-10-01",
             "gender": "Male",
             "phone": "400.216.0250x1122",
-            "isOwner": true,
             "email": "katherineforbes@young.com",
             "username":"katherine1",
             "password": "aE$O8NomwH"
@@ -287,7 +294,6 @@
             "birthDate": "1968-03-08",
             "gender": "Male",
             "phone": "(571)343-4560",
-            "isOwner": false,
             "username": "Rachel Holt",
             "email": "debbie24@hotmail.com",
             "password": "5*40YejClw"
@@ -302,7 +308,6 @@
             "birthDate": "1942-04-27",
             "gender": "Male",
             "phone": "001-229-491-5202x9112",
-            "isOwner": false,
             "username": "Ernest Murphy MD",
             "email": "michellemckee@gmail.com",
             "password": "*wPVm!AXf7"
@@ -317,7 +322,6 @@
             "birthDate": "2005-01-08",
             "gender": "Male",
             "phone": "+1-137-883-8802x9126",
-            "isOwner": false,
             "username": "Carl Lee",
             "email": "jdavis@adkins-vazquez.org",
             "password": "$6BCifc4G0"
@@ -332,7 +336,6 @@
             "birthDate": "1965-02-10",
             "gender": "Female",
             "phone": "087.593.9688",
-            "isOwner": true,
             "username": "Ryan Harris",
             "email": "mitchelllauren@yahoo.com",
             "password": "E9Vypma9)e"
@@ -347,7 +350,6 @@
             "birthDate": "1962-08-19",
             "gender": "Female",
             "phone": "001-504-659-4264x227",
-            "isOwner": true,
             "username": "John Hicks",
             "email": "gwolfe@gmail.com",
             "password": "r4g4Y%CkF!"
@@ -362,7 +364,6 @@
             "birthDate": "1944-11-01",
             "gender": "Other",
             "phone": "(613)624-5868x090",
-            "isOwner": false,
             "username": "Louis Levine",
             "email": "batescarol@mccall.com",
             "password": ")F7hNXppa8"
@@ -377,7 +378,6 @@
             "birthDate": "1994-08-14",
             "gender": "Other",
             "phone": "001-659-040-8597x22085",
-            "isOwner": false,
             "username": "Brandi Hernandez",
             "email": "daniellebennett@hotmail.com",
             "password": "(cW7SBseqF"
@@ -392,7 +392,6 @@
             "birthDate": "1943-10-29",
             "gender": "Other",
             "phone": "(907)906-6039x041",
-            "isOwner": false,
             "username": "Tina Wright",
             "email": "simonkathryn@gmail.com",
             "password": "&A$4Mr1kkZ"

@@ -1,7 +1,18 @@
 from django.contrib import admin
 from unfold.admin import ModelAdmin
 from django.utils.html import format_html
+from django.contrib.auth.models import Group
 from .models import Address, CustomUser, Accommodation, Image,Service,Comment,Claim,Favorite,Book
+from .enums import Request
+
+def add_to_owners(modeladmin, request, queryset):
+    owners_group = Group.objects.get(name='Propietarios')
+    for user in queryset:
+        user.groups.add(owners_group)
+        user.request = Request.ACCEPTED.name
+        user.save()
+
+add_to_owners.short_description = "Añadir como propietario"
 
 @admin.register(Address)
 class AddressAdmin(ModelAdmin):
@@ -26,6 +37,8 @@ class CustomUserAdmin(ModelAdmin):
     list_display = ['username', 'is_staff', 'is_active']
     list_filter = ['username', 'is_staff', 'is_active']
     search_fields = ['username']
+
+    actions = [add_to_owners]
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         extra_context = extra_context or {}

@@ -26,7 +26,6 @@ class AccommodationTestCase(TestCase):
             address=self.address,
             dni='12345678Z',
             gender='M',
-            isOwner=True
         )
 
         # Crear un alojamiento

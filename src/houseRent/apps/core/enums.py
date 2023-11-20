@@ -13,6 +13,17 @@ class Category(Enum):
     @classmethod
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)
+    
+class Request(Enum):
+
+    NOT_REQUESTED = 'Sin solicitar'
+    PENDING = 'Pendiente'
+    ACCEPTED = 'Aceptada'
+    DENIED = 'Denegada'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
 
 class PaymentMethod(Enum):
 
