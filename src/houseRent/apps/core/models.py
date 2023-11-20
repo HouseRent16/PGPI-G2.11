@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
-from .enums import Category
+from .enums import Category,PaymentMethod
 
 class Address(models.Model):
     street = models.TextField()
@@ -57,19 +57,6 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username}"
       
-      
-class Service(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.CharField(max_length=544)
-
-    class Meta:
-        verbose_name = "Servicio"
-        verbose_name_plural = "Servicios"
-
-    def __str__(self):
-        return f"{self.name} - {self.description}"
-
-
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
@@ -108,14 +95,20 @@ class Image(models.Model):
     def __str__(self):
         return f"{self.accommodation} - {self.alt}"    
     
-    class Comment(models.Model):
-        title = models.TextField(max_length=100,blank=True, null=True)
-        description = models.TextField(max_length=1024,blank=True, null=True)
-        publicationDate = models.DateField(auto_now_add=True)
-        user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-        rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
-        accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+class Comment(models.Model):
+    title = models.TextField(max_length=100,blank=True, null=True)
+    description = models.TextField(max_length=1024,blank=True, null=True)
+    publicationDate = models.DateField(auto_now_add=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
 
+    class Meta:
+        verbose_name = "Comentario"
+        verbose_name_plural = "Comentarios"
+
+    def __str__(self):
+        return f"{self.accommodation.name} : {self.title}"
 
 
 class Claim(models.Model):
@@ -150,7 +143,7 @@ class Favorite(models.Model):
 class Book(models.Model):
     start_date=models.DateTimeField()
     end_date=models.DateTimeField()
-    paymentMethod=models.TextChoices("Cobro en la entrega","Pago Online")
+    paymentMethod=models.CharField(max_length=10, choices=PaymentMethod.choices())
     user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     amountPeople=models.IntegerField()
     price=models.DecimalField(decimal_places=2, max_digits=10)
