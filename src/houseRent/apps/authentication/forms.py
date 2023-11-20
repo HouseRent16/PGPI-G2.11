@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 from apps.core.models import CustomUser, Address
+from django.contrib.auth.forms import AuthenticationForm
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -24,5 +26,11 @@ class CustomUserCreationForm(UserCreationForm):
         dni = self.cleaned_data.get('dni')
         # Puedes realizar validaciones adicionales para el DNI si es necesario
         return dni
+
+class GuestLoginForm(AuthenticationForm):
+    accept_privacy = forms.BooleanField(
+        required=True,
+        widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    )
 
 
