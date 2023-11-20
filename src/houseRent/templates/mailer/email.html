@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base_generic.html' %}
 {% block extrahead %}
 {% load static %} 
 <style>
@@ -20,6 +20,14 @@
         text-align: center;
         margin: 0 auto;
     }
+
+    .content {
+        background-color: white;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+    }
     
     </style>
 <div class="appBar">
@@ -29,7 +37,10 @@
     </div>
 </div>
 
-    
+{% endblock %}
 
-
+{% block content %}
+<div class="content">
+    <p>{{body}}</p>
+</div>
 {% endblock %}

@@ -56,7 +56,17 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.username}"
-      
+    
+class Service(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=544)
+
+    class Meta:
+        verbose_name = "Servicio"
+        verbose_name_plural = "Servicios"
+
+    def __str__(self):
+        return f"{self.name} - {self.description}"     
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
