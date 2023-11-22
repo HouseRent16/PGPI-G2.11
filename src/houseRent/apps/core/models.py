@@ -62,7 +62,7 @@ class CustomUser(AbstractUser):
     
 class Service(models.Model):
     name = models.CharField(max_length=256, unique=True, blank=False, null=False)
-    description = models.CharField(max_length=512)
+    description = models.CharField(max_length=512, blank=False, null=False)
 
     class Meta:
         verbose_name = "Servicio"
@@ -75,12 +75,12 @@ class Service(models.Model):
         return f"{self.name} - {self.description}"
 
 class Accommodation(models.Model):
-    name = models.CharField(max_length=256)
-    description = models.TextField(max_length=1024)
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    price = models.DecimalField(decimal_places=2, max_digits=8)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    category = models.CharField(max_length=16, choices=Category.choices())
+    name = models.CharField(max_length=256, blank=False, null=False)
+    description = models.TextField(max_length=1024, blank=False, null=False)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
+    category = models.CharField(max_length=16, choices=Category.choices(), blank=False, null=False)
     service = models.ManyToManyField(Service)
 
     class Meta:
@@ -101,18 +101,20 @@ class Accommodation(models.Model):
         return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
-    title = models.TextField(max_length=64)
+    title = models.TextField(max_length=64, blank=False, null=False)
     description = models.TextField(max_length=1024)
-    order = models.PositiveIntegerField()
+    order = models.PositiveIntegerField(blank=False, null=False)
     image = models.ImageField(
         upload_to="images/",
+        blank=False,
+        null=False,
         validators=[
             FileExtensionValidator(allowed_extensions=['jpg', 'png', 'jpeg'])
         ]
     )
-    alt = models.CharField(max_length=256)
-    publication_date = models.DateField(auto_now=True)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+    alt = models.CharField(max_length=256, blank=False, null=False)
+    publication_date = models.DateField(auto_now=True, blank=False, null=False)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = "Imagen"
@@ -123,13 +125,13 @@ class Image(models.Model):
         return f"{self.accommodation} - {self.alt}"    
     
 class Comment(models.Model):
-    title = models.TextField(max_length=64)
+    title = models.TextField(max_length=64, blank=False, null=False)
     description = models.TextField(max_length=1024)
-    publication_date = models.DateField(auto_now_add=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
+    publication_date = models.DateField(auto_now_add=True, blank=False, null=False)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)], blank=False, null=False)
     response = models.TextField(max_length=1024)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = "Comentario"
@@ -144,12 +146,12 @@ class Comment(models.Model):
 
 
 class Claim(models.Model):
-    title = models.CharField(max_length=64)
-    description = models.CharField(max_length=1024)
-    publication_date = models.DateField(auto_now=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-    status = models.CharField(max_length=16, choices=ClaimStatus.choices(), default=ClaimStatus.PENDING)
+    title = models.CharField(max_length=64, blank=False, null=False)
+    description = models.CharField(max_length=1024, blank=False, null=False)
+    publication_date = models.DateField(auto_now=True, blank=False, null=False)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
+    status = models.CharField(max_length=16, choices=ClaimStatus.choices(), default=ClaimStatus.PENDING, blank=False, null=False)
     response = models.TextField(max_length=1024)
 
     class Meta:
@@ -165,9 +167,9 @@ class Claim(models.Model):
         return f"{self.accommodation.name} : {self.title}"
 
 class Favorite(models.Model):
-    date = models.DateField(auto_now=True)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
-    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    date = models.DateField(auto_now=True, blank=False, null=False)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
+    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = "Favorito"
@@ -182,14 +184,14 @@ class Favorite(models.Model):
         return f"{self.client.username} : {self.accommodation.name} - {self.date}"
 
 class Book(models.Model):
-    start_date=models.DateTimeField()
-    end_date=models.DateTimeField()
-    payment_method=models.CharField(max_length=16, choices=PaymentMethod.choices())
-    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    amount_people=models.PositiveIntegerField()
+    start_date=models.DateTimeField(blank=False, null=False)
+    end_date=models.DateTimeField(blank=False, null=False)
+    payment_method=models.CharField(max_length=16, choices=PaymentMethod.choices(), blank=False, null=False)
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    amount_people=models.PositiveIntegerField(blank=False, null=False)
     is_active=models.BooleanField()
-    accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE)
-    status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING)
+    accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=False, null=False)
+    status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
 
     class Meta:
