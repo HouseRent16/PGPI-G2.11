@@ -105,8 +105,7 @@
         "fields": {
             "unit_number": "Apt. 012",
             "street_number": "012",
-            "address_line_1": "012 Main St.",
-            "address_line_2": "Apt. 012",
+            "address_line": "012 Main St.",
             "city": "Springfield",
             "region": "IL",
             "country": "US",
@@ -119,8 +118,7 @@
         "fields": {
             "unit_number": "Apt. 123",
             "street_number": "123",
-            "address_line_1": "123 Main St.",
-            "address_line_2": "Apt. 123",
+            "address_line": "123 Main St.",
             "city": "Springfield",
             "region": "IL",
             "country": "US",
@@ -133,8 +131,7 @@
         "fields": {
             "unit_number": "Apt. 456",
             "street_number": "456",
-            "address_line_1": "456 Main St.",
-            "address_line_2": "Apt. 456",
+            "address_line": "456 Main St.",
             "city": "Springfield",
             "region": "IL",
             "country": "US",
@@ -147,8 +144,7 @@
         "fields": {
             "unit_number": "Apt. 789",
             "street_number": "789",
-            "address_line_1": "789 Main St.",
-            "address_line_2": "Apt. 789",
+            "address_line": "789 Main St.",
             "city": "Springfield",
             "region": "IL",
             "country": "US",
