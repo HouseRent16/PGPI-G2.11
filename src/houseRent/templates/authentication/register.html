@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="cuerpo">
     <section class="contenedor">
         <header>Registro de Usuario</header>
         <form method="post" action="{% url 'register' %}" class="formulario">
@@ -107,5 +108,5 @@
             <button type="submit">Registrarse</button>
         </form>
     </section>
-
+</div>
 {% endblock %}

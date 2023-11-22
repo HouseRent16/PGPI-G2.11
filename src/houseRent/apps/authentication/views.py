@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from .forms import RegisterUser, RegisterAddress
 from django.contrib.auth.views import LoginView
 
-from .forms import LoginForm, GuestLoginForm
+from .forms import LoginForm
 
 def login_view(request):
     if request.method == 'POST':
@@ -45,11 +45,5 @@ def register(request):
 
     return render(request, 'authentication/register.html', {'formUser': formUser, 'formAddress': formAddress})
 
-class GuestLoginView(LoginView):
-    template_name = 'login.html'
-    form_class = GuestLoginForm
-
-    def form_valid(self, form):
-        # Añade la lógica de acceso como invitado aquí
-        return super().form_valid(form)
-
+def login_guest(request):
+    return render(request, 'authentication/privatePolicy.html')
