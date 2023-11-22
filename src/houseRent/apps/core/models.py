@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
-from .enums import Category,PaymentMethod
+from .enums import *
 from django_countries.fields import CountryField
 
 class Address(models.Model):
@@ -32,7 +32,6 @@ class Address(models.Model):
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
-    email = models.EmailField(unique=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
     dni = models.CharField(max_length=9, 
         validators=[
@@ -43,7 +42,7 @@ class CustomUser(AbstractUser):
                 )
             ])
     gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
-    isOwner = models.BooleanField(default=False)
+    request = models.CharField(max_length=32, choices=Request.choices(), default=Request.NOT_REQUESTED)
 
     class Meta:
         verbose_name = "Usuario"
@@ -51,6 +50,7 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.username}"
+    
 class Service(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=544)
@@ -80,7 +80,6 @@ class Accommodation(models.Model):
             raise ValidationError('El precio no puede ser negativo')
 
     def __str__(self):
-
         return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
@@ -129,8 +128,6 @@ class Claim(models.Model):
     def __str__(self):
         return f"{self.accommodation.name} : {self.title}"
 
-
-
 class Favorite(models.Model):
     date = models.DateField(auto_now=True)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)
@@ -142,7 +139,6 @@ class Favorite(models.Model):
 
     def __str__(self):
         return f"{self.client.username} : {self.accommodation.name} - {self.date}"
-
 
 class Book(models.Model):
     start_date=models.DateTimeField()

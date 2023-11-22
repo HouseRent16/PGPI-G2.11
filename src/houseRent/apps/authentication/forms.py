@@ -12,6 +12,7 @@ class LoginForm(forms.Form):
 class RegisterUser(forms.ModelForm):
     class Meta:
         model = CustomUser
+
         exclude = ['is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'is_active', 'address']
         fields = "__all__"
 
