@@ -37,6 +37,7 @@ class Address(models.Model):
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
     phone = models.CharField(max_length=9, blank=True, null=True)
+    email = models.EmailField(unique=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
     dni = models.CharField(max_length=9, 
         validators=[
@@ -55,7 +56,6 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.username}"
-
 class Service(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=544)
