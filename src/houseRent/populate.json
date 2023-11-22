@@ -157,7 +157,7 @@
     },
     {
         "model": "core.CustomUser",
-        "pk": 71,
+        "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$390000$t9M20jSrAZnAqKDpiYEZcp$GVxTIh3fOyTQKSpVSOgjEYOrxl82TEm9xncl2L5d9lc=",
             "last_login": "2022-12-05T16:54:46.872Z",
@@ -177,7 +177,7 @@
     },
     {
         "model": "core.CustomUser",
-        "pk": 72,
+        "pk": 2,
         "fields": {
             "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
             "last_login": "2022-12-05T16:54:46.872Z",
@@ -191,13 +191,12 @@
             "address": 4,
             "groups": [71],
             "dni": "784437896z",
-            "birth_date": "1963-02-24"
-            
+            "birth_date": "1963-02-24"            
         }
     },
     {
         "model": "core.CustomUser",
-        "pk": 1,
+        "pk": 3,
         "fields": {
             "dni": "784437896y",
             "address": 1,
@@ -207,7 +206,8 @@
             "email": "jamesowens@franklin-green.org",
             "username":"jame1",
             "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
-            "groups": [72]
+            "groups": [72],
+            "request": "ACCEPTED"
         }   
     },
     {
@@ -260,8 +260,11 @@
             "price": 7041,
             "category": "Apartamento",
             "service": [1],
-            "owner": 1,
-            "capacity": 5
+            "owner": 3,
+            "capacity": 5,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
@@ -274,8 +277,11 @@
             "price": 26735,
             "category": "Casa",
             "service": [2],
-            "owner": 1,
-            "capacity": 6
+            "owner": 3,
+            "capacity": 6,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
@@ -288,8 +294,11 @@
             "price": 78839,
             "category": "Dúplex",
             "service": [3],
-            "owner": 1,
-            "capacity": 7
+            "owner": 3,
+            "capacity": 7,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
@@ -300,7 +309,7 @@
             "end_date": "2023-12-15T00:00:00Z",
             "payment_method": "EFECTIVO",
             "amount_people": 7,
-            "user": 72,
+            "user": 2,
             "is_active": false,
             "accommodation": 1 
         }
@@ -313,7 +322,7 @@
             "end_date": "2023-11-30T20:48:00Z",
             "payment_method": "EFECTIVO",
             "amount_people": 8,
-            "user": 71,
+            "user": 1,
             "is_active": false,
             "accommodation": 2
         }
@@ -325,7 +334,7 @@
             "title": "Idea policy region example only our it performance.",
             "description": "Certainly office method answer clearly physical business. Throw crime main different stock.\nIssue option girl later job necessary. Project do market morning whether less bag.",
             "publication_date": "2023-04-09",
-            "user": 72,
+            "user": 2,
             "accommodation": 3
         }
     },
@@ -333,7 +342,7 @@
         "model": "core.favorite",
         "pk": 1,
         "fields": {
-            "client": 71,
+            "user": 1,
             "accommodation": 1,
             "date": "2023-04-28"
         }
@@ -342,7 +351,7 @@
         "model": "core.favorite",
         "pk": 2,
         "fields": {
-            "client": 71,
+            "user": 1,
             "accommodation": 3,
             "date": "2023-02-06"
         }
@@ -380,7 +389,7 @@
             "title": "Great experience",
             "description": "Had a great time staying at this place, would recommend!",
             "publication_date": "2023-11-17",
-            "user": 72,
+            "user": 2,
             "rating": 5,
             "accommodation": 1
         }
@@ -392,7 +401,7 @@
             "title": "Not as expected",
             "description": "The place was decent but had some maintenance issues.",
             "publication_date": "2023-11-17",
-            "user": 71,
+            "user": 1,
             "rating": 3,
             "accommodation": 2
         }

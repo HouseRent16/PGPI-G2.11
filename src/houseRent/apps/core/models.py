@@ -178,14 +178,14 @@ class Favorite(models.Model):
     class Meta:
         verbose_name = "Favorito"
         verbose_name_plural = "Favoritos"
-        unique_together = ('accommodation', 'client')
+        unique_together = ('accommodation', 'user')
         indexes = [
-            models.Index(fields=['client']),
+            models.Index(fields=['user']),
             models.Index(fields=['accommodation']),
         ]
 
     def __str__(self):
-        return f"{self.client.username} : {self.accommodation.name} - {self.date}"
+        return f"{self.user.username} : {self.accommodation.name} - {self.date}"
 
 class Book(models.Model):
     start_date=models.DateTimeField(blank=False, null=False)

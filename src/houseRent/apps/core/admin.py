@@ -73,8 +73,8 @@ class ClaimAdmin(ModelAdmin):
 
 @admin.register(Favorite)
 class FavoriteAdmin(ModelAdmin):
-    list_display = ['date', 'accommodation','client']
-    list_filter = ['date', 'accommodation','client']
+    list_display = ['date', 'accommodation','user']
+    list_filter = ['date', 'accommodation','user']
     search_fields = ['date']
 
 @admin.register(Book)
