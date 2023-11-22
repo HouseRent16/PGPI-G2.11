@@ -2,18 +2,19 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
-from .enums import *
+from .enums import Gender, Request, Category, PaymentMethod
 from django_countries.fields import CountryField
+from phonenumber_field.modelfields import PhoneNumberField
 
 class Address(models.Model):
-    unit_number = models.CharField(max_length=10, blank=True, null=True)
+    unit_number = models.CharField(max_length=10)
     street_number = models.CharField(max_length=10)
-    city = models.CharField(max_length=200)
     address_line_1 = models.TextField()
-    address_line_2 = models.TextField(blank=True, null=True)
+    address_line_2 = models.TextField()
+    city = models.CharField(max_length=200)
     region = models.CharField(max_length=200)
-    postal_code = models.CharField(max_length=10)
     country = CountryField()
+    postal_code = models.CharField(max_length=10)
 
     class Meta:
         verbose_name = "Dirección"
@@ -31,22 +32,30 @@ class Address(models.Model):
 
 class CustomUser(AbstractUser):
     birthDate = models.DateField(blank=True, null=True)
-    phone = models.CharField(max_length=9, blank=True, null=True)
+    phone = PhoneNumberField(max_length=9, blank=True, null=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, null=True, blank=True)
-    dni = models.CharField(max_length=9, 
+    dni = models.CharField(
+        max_length=9, 
+        unique=True, 
+        blank=False, 
+        null=False, 
         validators=[
             RegexValidator(
                 regex='^\d{8}[a-zA-Z]$',
                 message='Introducza un DNI válido',
-                code='invalid_chart_field'
+                code='invalid_dni'
                 )
             ])
-    gender = models.CharField(max_length=10, choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
+    gender = models.CharField(choices=Gender.choices(), max_length=10, blank=False, null=False)
     request = models.CharField(max_length=32, choices=Request.choices(), default=Request.NOT_REQUESTED)
 
     class Meta:
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
+        indexes = [
+            models.Index(fields=['dni']),
+            models.Index(fields=['phone']),
+        ]
     
     def __str__(self):
         return f"{self.username}"
@@ -64,7 +73,7 @@ class Service(models.Model):
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField(max_length=1024,blank=True, null=True)
+    description = models.TextField(max_length=1024)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     price = models.DecimalField(decimal_places=2, max_digits=10)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
@@ -83,9 +92,9 @@ class Accommodation(models.Model):
         return f"{self.name} - {str(self.address)}"
     
 class Image(models.Model):
-    title = models.TextField(max_length=100,blank=True, null=True)
-    description = models.TextField(max_length=1024,blank=True, null=True)
-    order = models.PositiveIntegerField(blank=True, null=True)
+    title = models.TextField(max_length=100)
+    description = models.TextField(max_length=1024)
+    order = models.PositiveIntegerField()
     image = models.ImageField(upload_to="images/")
     alt = models.CharField(max_length=200)
     publicationDate = models.DateField(auto_now=True)
@@ -99,8 +108,8 @@ class Image(models.Model):
         return f"{self.accommodation} - {self.alt}"    
     
 class Comment(models.Model):
-    title = models.TextField(max_length=100,blank=True, null=True)
-    description = models.TextField(max_length=1024,blank=True, null=True)
+    title = models.TextField(max_length=100)
+    description = models.TextField(max_length=1024)
     publicationDate = models.DateField(auto_now_add=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(0)])
@@ -115,8 +124,8 @@ class Comment(models.Model):
 
 
 class Claim(models.Model):
-    title = models.CharField(max_length=100,blank=True, null=True)
-    description = models.CharField(max_length=1024,blank=True, null=True)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=1024)
     publicationDate = models.DateField(auto_now=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE)

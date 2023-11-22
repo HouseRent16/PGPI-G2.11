@@ -16,9 +16,9 @@ add_to_owners.short_description = "Añadir como propietario"
 
 @admin.register(Address)
 class AddressAdmin(ModelAdmin):
-    list_display = ['street', 'number', 'city', 'province', 'country', 'zipcode']
-    list_filter = ['street', 'number', 'city', 'province', 'country', 'zipcode']
-    search_fields = ['street', 'number', 'city', 'province', 'country', 'zipcode']
+    list_display = ['unit_number', 'street_number', 'address_line_1', 'address_line_2', 'city', 'region', 'country', 'postal_code']
+    list_filter = ['unit_number', 'street_number', 'address_line_1', 'address_line_2', 'city', 'region', 'country', 'postal_code']
+    search_fields = ['unit_number', 'street_number', 'address_line_1', 'address_line_2', 'city', 'region', 'country', 'postal_code']
 
 @admin.register(Accommodation)
 class AccommodationAdmin(ModelAdmin):

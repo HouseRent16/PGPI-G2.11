@@ -28,7 +28,17 @@ class Request(Enum):
 class PaymentMethod(Enum):
 
     ONLINE = 'ONLINE'
-    EFECTIVO = 'EFECTIVO'
+    CASH = 'EFECTIVO'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+    
+class Gender(Enum):
+
+    MALE = 'Masculino'
+    FEMALE = 'Femenino'
+    OTHER = 'Otro'
 
     @classmethod
     def choices(cls):
