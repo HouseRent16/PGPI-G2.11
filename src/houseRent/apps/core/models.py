@@ -83,6 +83,9 @@ class Accommodation(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     category = models.CharField(max_length=16, choices=Category.choices(), blank=False, null=False)
     service = models.ManyToManyField(Service)
+    creation_date = models.DateField(auto_now_add=True, blank=False, null=False)
+    modification_date = models.DateField(auto_now=True, blank=False, null=False)
+    is_active = models.BooleanField(default=True, blank=False, null=False)
 
     class Meta:
         verbose_name = "Alojamiento"
@@ -170,7 +173,7 @@ class Claim(models.Model):
 class Favorite(models.Model):
     date = models.DateField(auto_now=True, blank=False, null=False)
     accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
-    client = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
 
     class Meta:
         verbose_name = "Favorito"
