@@ -3,35 +3,30 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator
 from django.forms import ValidationError
 from .enums import Category,PaymentMethod
+from django_countries.fields import CountryField
 
 class Address(models.Model):
-    street = models.TextField()
+    unit_number = models.CharField(max_length=10, blank=True, null=True)
+    street_number = models.CharField(max_length=10)
     city = models.CharField(max_length=200)
-    province = models.CharField(max_length=200)
-    zipcode = models.CharField(max_length=10, 
-        validators=[
-            RegexValidator(
-                regex='^[0-9]*$',
-                message='Introduzca un código postal válido',
-                code='invalid_chart_field'
-            ),
-        ])
-    number = models.CharField(max_length=10, 
-        validators=[
-            RegexValidator(
-                regex='^[0-9]*$',
-                message='Introduzca un número válido',
-                code='invalid_chart_field'
-            )
-        ])
-    country = models.CharField(max_length=100)
+    address_line_1 = models.TextField()
+    address_line_2 = models.TextField(blank=True, null=True)
+    region = models.CharField(max_length=200)
+    postal_code = models.CharField(max_length=10)
+    country = CountryField()
 
     class Meta:
         verbose_name = "Dirección"
         verbose_name_plural = "Direcciones"
+        indexes = [
+            models.Index(fields=['city']),
+            models.Index(fields=['region']),
+            models.Index(fields=['postal_code'])
+        ]
 
     def __str__(self):
-        return f"{self.street} {self.number}, {self.city}, {self.province}, {self.country}"
+        parts = [self.unit_number, self.street_number, self.address_line_1, self.address_line_2, self.city, self.region, self.postal_code]
+        return ", ".join(filter(None, parts))
 
 
 class CustomUser(AbstractUser):
