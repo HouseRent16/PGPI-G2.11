@@ -260,7 +260,8 @@
             "price": 7041,
             "category": "Apartamento",
             "service": [1],
-            "owner": 1
+            "owner": 1,
+            "capacity": 5
         }
     },
     {
@@ -273,7 +274,8 @@
             "price": 26735,
             "category": "Casa",
             "service": [2],
-            "owner": 1
+            "owner": 1,
+            "capacity": 6
         }
     },
     {
@@ -286,7 +288,8 @@
             "price": 78839,
             "category": "Dúplex",
             "service": [3],
-            "owner": 1
+            "owner": 1,
+            "capacity": 7
         }
     },
     {

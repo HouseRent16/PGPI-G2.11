@@ -26,7 +26,7 @@ class Address(models.Model):
         ]
 
     def __str__(self):
-        parts = [self.unit_number, self.street_number, self.address_line_1, self.address_line_2, self.city, self.region, self.postal_code]
+        parts = [self.unit_number, self.street_number, self.address_line_1, self.address_line_2, self.city, self.region, self.country.name]
         return ", ".join(filter(None, parts))
 
 
@@ -77,6 +77,7 @@ class Service(models.Model):
 class Accommodation(models.Model):
     name = models.CharField(max_length=256, blank=False, null=False)
     description = models.TextField(max_length=1024, blank=False, null=False)
+    capacity = models.PositiveIntegerField(blank=False, null=False)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
     price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
