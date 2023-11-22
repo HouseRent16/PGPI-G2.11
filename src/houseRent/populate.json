@@ -169,9 +169,10 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address_id": null,
+            "address": 4,
             "groups": [70],
-            "dni": "784437896x"
+            "dni": "784437896x",
+            "birth_date": "1963-02-24"
         }
     },
     {
@@ -187,9 +188,11 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address_id": null,
+            "address": 4,
             "groups": [71],
-            "dni": "784437896z"
+            "dni": "784437896z",
+            "birth_date": "1963-02-24"
+            
         }
     },
     {
@@ -198,7 +201,7 @@
         "fields": {
             "dni": "784437896y",
             "address": 1,
-            "birthDate": "1963-02-24",
+            "birth_date": "1963-02-24",
             "gender": "Other",
             "phone": "+1-606-406-9746x5270",
             "email": "jamesowens@franklin-green.org",
@@ -292,10 +295,10 @@
         "fields": {
             "start_date": "2023-11-30T00:00:00Z",
             "end_date": "2023-12-15T00:00:00Z",
-            "paymentMethod": "EFECTIVO",
-            "amountPeople": 7,
+            "payment_method": "EFECTIVO",
+            "amount_people": 7,
             "user": 72,
-            "isActive": false,
+            "is_active": false,
             "accommodation": 1 
         }
     },
@@ -305,10 +308,10 @@
         "fields": {
             "start_date": "2023-11-18T01:20:30Z",
             "end_date": "2023-11-30T20:48:00Z",
-            "paymentMethod": "EFECTIVO",
-            "amountPeople": 8,
+            "payment_method": "EFECTIVO",
+            "amount_people": 8,
             "user": 71,
-            "isActive": false,
+            "is_active": false,
             "accommodation": 2
         }
     },
@@ -318,7 +321,7 @@
         "fields": {
             "title": "Idea policy region example only our it performance.",
             "description": "Certainly office method answer clearly physical business. Throw crime main different stock.\nIssue option girl later job necessary. Project do market morning whether less bag.",
-            "publicationDate": "2023-04-09",
+            "publication_date": "2023-04-09",
             "user": 72,
             "accommodation": 3
         }
@@ -350,7 +353,7 @@
             "order": 1,
             "image": "uploads/images/sunset.jpg",
             "alt": "Sunset view",
-            "publicationDate": "2023-11-17",
+            "publication_date": "2023-11-17",
             "accommodation": 1
         }
     },
@@ -363,7 +366,7 @@
             "order": 2,
             "image": "uploads/images/living_room.jpg",
             "alt": "Living room",
-            "publicationDate": "2023-11-17",
+            "publication_date": "2023-11-17",
             "accommodation": 1
         }
     },
@@ -373,7 +376,7 @@
         "fields": {
             "title": "Great experience",
             "description": "Had a great time staying at this place, would recommend!",
-            "publicationDate": "2023-11-17",
+            "publication_date": "2023-11-17",
             "user": 72,
             "rating": 5,
             "accommodation": 1
@@ -385,7 +388,7 @@
         "fields": {
             "title": "Not as expected",
             "description": "The place was decent but had some maintenance issues.",
-            "publicationDate": "2023-11-17",
+            "publication_date": "2023-11-17",
             "user": 71,
             "rating": 3,
             "accommodation": 2

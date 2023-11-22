@@ -61,15 +61,15 @@ class ServiceAdmin(ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(ModelAdmin):
-    list_display = ['title', 'description','publicationDate','user','rating','accommodation']
-    list_filter = ['title', 'description','publicationDate','user','rating','accommodation']
-    search_fields = ['title','publicationDate','rating']
+    list_display = ['title', 'description','publication_date','user','rating','accommodation']
+    list_filter = ['title', 'description','publication_date','user','rating','accommodation']
+    search_fields = ['title','publication_date','rating']
 
 @admin.register(Claim)
 class ClaimAdmin(ModelAdmin):
-    list_display = ['title', 'description','publicationDate','user','accommodation']
-    list_filter = ['title', 'description','publicationDate','user','accommodation']
-    search_fields = ['title','publicationDate']
+    list_display = ['title', 'description','publication_date','user','accommodation']
+    list_filter = ['title', 'description','publication_date','user','accommodation']
+    search_fields = ['title','publication_date']
 
 @admin.register(Favorite)
 class FavoriteAdmin(ModelAdmin):
@@ -79,6 +79,6 @@ class FavoriteAdmin(ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(ModelAdmin):
-    list_display = ['start_date', 'end_date','paymentMethod','user','amountPeople','isActive','accommodation']
-    list_filter = ['start_date', 'end_date','paymentMethod','user','amountPeople','isActive','accommodation']
-    search_fields = ['start_date','end_date','user','amountPeople']
+    list_display = ['start_date', 'end_date','payment_method','user','amount_people','is_active','accommodation']
+    list_filter = ['start_date', 'end_date','payment_method','user','amount_people','is_active','accommodation']
+    search_fields = ['start_date','end_date','user','amount_people']

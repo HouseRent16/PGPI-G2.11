@@ -43,3 +43,24 @@ class Gender(Enum):
     @classmethod
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)
+
+class ClaimStatus(Enum):
+
+    PENDING = 'Pendiente'
+    RESOLVED = 'Resuelta'
+    REJECTED = 'Rechazada'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)
+
+# choices=[('Pending', 'Pendiente'), ('Confirmed', 'Confirmada'), ('Cancelled', 'Cancelada')
+class BookingStatus(Enum):
+    
+        PENDING = 'Pendiente'
+        CONFIRMED = 'Confirmada'
+        CANCELLED = 'Cancelada'
+    
+        @classmethod
+        def choices(cls):
+            return tuple((i.name, i.value) for i in cls)
