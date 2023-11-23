@@ -10,3 +10,4 @@ django-unfold
 django-countries
 django-phonenumbers
 django-phonenumber-field
+babel

@@ -32,7 +32,7 @@ class Address(models.Model):
 
 class CustomUser(AbstractUser):
     birth_date = models.DateField(blank=False, null=False)
-    phone = PhoneNumberField(max_length=12, blank=False, null=False)
+    phone = PhoneNumberField(blank=False, null=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     dni = models.CharField(
         max_length=9, 

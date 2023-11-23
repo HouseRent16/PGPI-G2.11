@@ -3,6 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
 from apps.core.models import CustomUser, Address
 from django.contrib.auth.forms import AuthenticationForm
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
+
 
 
 class LoginForm(forms.Form):
@@ -10,24 +13,66 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 class RegisterUser(forms.ModelForm):
+    phone = PhoneNumberField(
+        widget=PhoneNumberPrefixWidget(attrs={'class': 'form-control'}, initial='ES')
+    )
     class Meta:
         model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'birth_date', 'phone', 'password', 'dni', 'gender']
 
-        exclude = ['request','is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'is_active', 'address']
-        fields = "__all__"
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control'}),
+            'dni': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
+        }
 
-        birthDate = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
-        phone = forms.CharField(max_length=9, required=False)
-        address = forms.ModelChoiceField(queryset=Address.objects.all(), required=False)
-        dni = forms.CharField(max_length=9, validators=[RegexValidator(
-            regex='^\d{8}[a-zA-Z]$', message='Introduzca un DNI válido', code='invalid_chart_field')])
-        gender = forms.ChoiceField(choices=[('M', 'Masculino'), ('F', 'Femenino'), ('O', 'Otro')])
-        isOwner = forms.BooleanField(required=False)
+        labels = {
+            'username': 'Nombre de usuario',
+            'email': 'Correo electrónico',
+            'password': 'Contraseña',
+            'first_name': 'Nombre',
+            'last_name': 'Apellido',
+            'phone': 'Número de teléfono',
+            'birth_date': 'Fecha de nacimiento',
+            'dni': 'DNI',
+            'gender': 'Género',
+        }
 
-    def clean_dni(self):
-        dni = self.cleaned_data.get('dni')
-        # Puedes realizar validaciones adicionales para el DNI si es necesario
-        return dni
+        help_texts = {
+            'username': None,
+            'email': None,
+            'password': None,
+            'first_name': None,
+            'last_name': None,
+            'phone': None,
+            'birth_date': None,
+            'dni': None,
+            'gender': None,
+        }
+
+        error_messages = {
+            'username': {
+                'unique': 'Ya existe un usuario con ese nombre de usuario'
+            },
+            'email': {
+                'unique': 'Ya existe un usuario con ese correo electrónico'
+            }
+        }
+
+        validators = {
+            'username': [
+                RegexValidator(
+                    regex='^[a-zA-Z0-9]*$',
+                    message='El nombre de usuario solo puede contener letras y números',
+                    code='invalid_username'
+                )
+            ]
+        }
     
 class RegisterAddress(forms.ModelForm):
     class Meta:
