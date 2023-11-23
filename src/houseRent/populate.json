@@ -1,7 +1,7 @@
 [
     {
-        "model": "core.address",
-        "pk": 1,
+        "model": "auth.group",
+        "pk": 70,
         "fields": {
             "street": "97822 Stanley Grove",
             "city": "Lake Mary",
@@ -124,7 +124,211 @@
         "pk": 70,
         "fields": {
             "name": "Administradores",
-            "permissions": [] 
+            "permissions": [
+                1,
+                2,
+                3,
+                4,
+                9,
+                10,
+                11,
+                12,
+                5,
+                6,
+                7,
+                8,
+                13,
+                14,
+                15,
+                16,
+                25,
+                26,
+                27,
+                28,
+                29,
+                30,
+                31,
+                32,
+                53,
+                54,
+                55,
+                56,
+                49,
+                50,
+                51,
+                52,
+                45,
+                46,
+                47,
+                48,
+                21,
+                22,
+                23,
+                24,
+                41,
+                42,
+                43,
+                44,
+                37,
+                38,
+                39,
+                40,
+                33,
+                34,
+                35,
+                36,
+                17,
+                18,
+                19,
+                20
+            ]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 71,
+        "fields": {
+            "name": "Personal",
+            "permissions": [
+                27,
+                28,
+                55,
+                56,
+                51,
+                52,
+                47,
+                48,
+                21,
+                22,
+                23,
+                24,
+                39,
+                40,
+                33,
+                34,
+                35,
+                36
+            ]
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 1,
+        "fields": {
+            "street": "97822 Stanley Grove",
+            "city": "Lake Mary",
+            "province": "Vermont",
+            "zipcode": "06091",
+            "number": "2",
+            "country": "CG"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 2,
+        "fields": {
+            "street": "58042 Wanda Square Suite 547",
+            "city": "North Gail",
+            "province": "Arizona",
+            "zipcode": "75760",
+            "number": "2",
+            "country": "LB"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 3,
+        "fields": {
+            "street": "069 Tracy Way",
+            "city": "West Candicemouth",
+            "province": "California",
+            "zipcode": "36236",
+            "number": "2",
+            "country": "TR"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 4,
+        "fields": {
+            "street": "47938 Noble Cape",
+            "city": "North Matthew",
+            "province": "Florida",
+            "zipcode": "27347",
+            "number": "2",
+            "country": "US"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 5,
+        "fields": {
+            "street": "9769 Garza Brook",
+            "city": "South Thomas",
+            "province": "New Mexico",
+            "zipcode": "59736",
+            "number": "2",
+            "country": "YE"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 6,
+        "fields": {
+            "street": "2176 Michael Trail",
+            "city": "Lisaton",
+            "province": "Montana",
+            "zipcode": "93277",
+            "number": "2",
+            "country": "LB"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 7,
+        "fields": {
+            "street": "4001 Steven Trail",
+            "city": "North Victoriaport",
+            "province": "Oregon",
+            "zipcode": "60540",
+            "number": "2",
+            "country": "SZ"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 8,
+        "fields": {
+            "street": "95988 Amber Underpass",
+            "city": "New Elizabeth",
+            "province": "Missouri",
+            "zipcode": "42375",
+            "number": "2",
+            "country": "DM"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 9,
+        "fields": {
+            "street": "7974 Christian Turnpike",
+            "city": "Ramosmouth",
+            "province": "Montana",
+            "zipcode": "86434",
+            "number": "2",
+            "country": "MY"
+        }
+    },
+    {
+        "model": "core.address",
+        "pk": 10,
+        "fields": {
+            "street": "657 Evans Mall",
+            "city": "West Laura",
+            "province": "California",
+            "zipcode": "98714",
+            "number": "2",
+            "country": "MA"
         }
     },
     {
@@ -150,18 +354,17 @@
         "model": "core.CustomUser",
         "pk": 72,
         "fields": {
-            "password": "pbkdf2_sha256$390000$zBM8rutpt89kLu3cF7ieev$4RMNvBNGZISO4tABc6V60vkHyZqNJUSr06C+ODBCSGk=",
+            "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
             "last_login": "2022-12-05T16:54:46.872Z",
-            "is_superuser": true,
-            "username": "admin2",
+            "username": "staff",
             "first_name": "",
             "last_name": "",
-            "email": "admin2@us.es",
+            "email": "staff@us.es",
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
             "address_id": null,
-            "groups": [70],
+            "groups": [71],
             "user_permissions": []
         }
     },
