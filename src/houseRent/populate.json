@@ -103,7 +103,6 @@
         "model": "core.address",
         "pk": 1,
         "fields": {
-            "unit_number": "Apt. 012",
             "street_number": "012",
             "address_line": "012 Main St.",
             "city": "Springfield",
@@ -116,7 +115,6 @@
         "model": "core.address",
         "pk": 2,
         "fields": {
-            "unit_number": "Apt. 123",
             "street_number": "123",
             "address_line": "123 Main St.",
             "city": "Springfield",
@@ -129,7 +127,6 @@
         "model": "core.address",
         "pk": 3,
         "fields": {
-            "unit_number": "Apt. 456",
             "street_number": "456",
             "address_line": "456 Main St.",
             "city": "Springfield",
@@ -142,7 +139,6 @@
         "model": "core.address",
         "pk": 4,
         "fields": {
-            "unit_number": "Apt. 789",
             "street_number": "789",
             "address_line": "789 Main St.",
             "city": "Springfield",

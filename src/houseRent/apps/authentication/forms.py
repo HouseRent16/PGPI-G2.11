@@ -13,7 +13,7 @@ class RegisterUser(forms.ModelForm):
     class Meta:
         model = CustomUser
 
-        exclude = ['is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'is_active', 'address']
+        exclude = ['request','is_staff', 'is_superuser', 'groups', 'user_permissions', 'last_login', 'date_joined', 'is_active', 'address']
         fields = "__all__"
 
         birthDate = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))

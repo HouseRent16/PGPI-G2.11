@@ -7,7 +7,6 @@ class AccommodationTestCase(TestCase):
     def setUp(self):
         # Crear una dirección
         self.address = Address.objects.create(
-            unit_number='1',
             street_number='1',
             address_line='Calle Ejemplo',
             city='Ciudad Ejemplo',
@@ -45,4 +44,4 @@ class AccommodationTestCase(TestCase):
 
     def test_accommodation_str(self):
         # Comprobar que el método __str__ funciona como se espera
-        self.assertEqual(str(self.accommodation), f"{self.accommodation.name} - {self.address.unit_number}, {self.address.street_number}, {self.address.address_line}, {self.address.city}, {self.address.region}, {self.address.country.name}")
+        self.assertEqual(str(self.accommodation), f"{self.accommodation.name} - {self.address.street_number}, {self.address.address_line}, {self.address.city}, {self.address.region}, {self.address.country.name}")

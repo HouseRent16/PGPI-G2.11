@@ -55,12 +55,12 @@
             <!-- Campos de la clase dirección -->
             <div class="columna">
                 <div class="entrada">
-                    <label for="id_street">Calle:</label>
-                    <textarea id="id_street" name="street" required></textarea>
+                    <label for="address_line">Calle:</label>
+                    <input type="text" id="address_line" name="address_line" required>
                 </div>
                 <div class="entrada">
-                    <label for="unit_number">Número:</label>
-                    <input type="text" id="unit_number" name="number" pattern="^[0-9]*$" title="Introduzca un número válido" required>
+                    <label for="street_number">Número:</label>
+                    <input type="text" id="street_number" name="street_number" pattern="^[0-9]*$" title="Introduzca un número válido" required>
                 </div>
             </div>
 
@@ -91,9 +91,9 @@
                 <div class="entrada">
                 <label for="gender">Género:</label>
                         <select id="gender" name="gender">
-                            <option value="M">Masculino</option>
-                            <option value="F">Femenino</option>
-                            <option value="O">Otro</option>
+                            <option value="MALE">Masculino</option>
+                            <option value="FEMALE">Femenino</option>
+                            <option value="OTHER">Otro</option>
                         </select>
                 </div>
             </div>

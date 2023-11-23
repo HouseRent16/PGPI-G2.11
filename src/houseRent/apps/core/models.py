@@ -7,8 +7,6 @@ from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
 class Address(models.Model):
-    # Contiene el número de la unidad, como el número de apartamento, o el número de oficina
-    unit_number = models.CharField(max_length=8)
     # Es el número asignado a un edificio a lo largo de una calle o una vía
     street_number = models.CharField(max_length=8, blank=False, null=False)
     # Contiene la parte principal de la dirección, como el nombre de la calle o de la vía
@@ -28,13 +26,13 @@ class Address(models.Model):
         ]
 
     def __str__(self):
-        parts = [self.unit_number, self.street_number, self.address_line, self.city, self.region, self.country.name]
+        parts = [self.street_number, self.address_line, self.city, self.region, self.country.name]
         return ", ".join(filter(None, parts))
 
 
 class CustomUser(AbstractUser):
     birth_date = models.DateField(blank=False, null=False)
-    phone = PhoneNumberField(max_length=9, blank=False, null=False)
+    phone = PhoneNumberField(max_length=12, blank=False, null=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     dni = models.CharField(
         max_length=9, 
