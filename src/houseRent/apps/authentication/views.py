@@ -1,10 +1,14 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+
 from .forms import RegisterUser, RegisterAddress
 from django.contrib.auth.views import LoginView
 
-from .forms import LoginForm
+from .forms import LoginForm, GuestLoginForm
+from apps.core.models import CustomUser, Address
+from django.contrib import messages
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -29,14 +33,16 @@ def login_view(request):
 
 def register(request):
     if request.method == 'POST':
-        formUser = RegisterUser(request.POST)
-        formAddress = RegisterAddress(request.POST)
+        user = CustomUser()
+        address = Address()
+        formUser = RegisterUser(request.POST, instance=user)
+        formAddress = RegisterAddress(request.POST, instance=address)
         if formUser.is_valid() and formAddress.is_valid():
-            address = formAddress.save()
-            user = formUser.save(commit=False)
+            user.set_password(formUser.cleaned_data['password'])
+            address.save()
             user.address = address
             user.save()
-
+            messages.success(request, 'Usuario registrado correctamente')
             return redirect('login')
            
     else:

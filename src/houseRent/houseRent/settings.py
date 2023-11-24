@@ -31,20 +31,20 @@ ALLOWED_HOSTS = []
 # User model
 AUTH_USER_MODEL = "core.CustomUser"
 
-# Application definitions
+# Application definition
 
 INSTALLED_APPS = [
     "unfold",
+    "django_countries",
+    "phonenumber_field",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-# Add the following line to the list of installed apps
-    'apps.core',
-    'apps.authentication',
+    "apps.core",
+    "apps.authentication",
 ]
 
 MIDDLEWARE = [
@@ -139,3 +139,9 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'houserent2324@gmail.com'
+EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'

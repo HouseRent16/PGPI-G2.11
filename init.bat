@@ -7,6 +7,7 @@ REM ****************************************************************************
 
 chcp 65001
 
+SET nocheck=0
 SET novenv=0
 SET nodependencies=0
 SET persist=0
@@ -15,6 +16,7 @@ SET notest=0
 :loop
 IF "%1"=="" GOTO start
 IF "%1"=="--help" GOTO help
+IF "%1"=="--nocheck" SET "nocheck=1" & GOTO nextarg
 IF "%1"=="--novenv" SET "novenv=1" & GOTO nextarg
 IF "%1"=="--nodependencies" SET "nodependencies=1" & GOTO nextarg
 IF "%1"=="--persist" SET "persist=1" & GOTO nextarg
@@ -25,9 +27,10 @@ SHIFT
 GOTO loop
 
 :help
-echo Usage: init.bat [--novenv] [--nodependencies] [--persist] [--notest] [--help]
+echo Usage: init.bat [--nocheck] [--novenv] [--nodependencies] [--persist] [--notest] [--help]
 echo Options:
 echo   --help    Show this help message.
+echo   --nocheck  Skip the Python version check.
 echo   --novenv  Skip the virtual environment creation.
 echo   --nodependencies  Skip the dependencies installation.
 echo   --persist  Persist the database.
@@ -55,14 +58,20 @@ echo ###########################################################################
 echo.
 echo.
 
-echo ========== CHECKING PYTHON VERSION ==========
-echo Checking Python version...
-python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 10) else 1)"
-if %errorlevel% neq 0 (
-    echo Python version is not 3.10. Exiting...
-    exit /b
+IF "%nocheck%"=="1" (
+    echo ========== SKIPPING PYTHON VERSION CHECK ==========
+    echo Skipping Python version check because of --nocheck argument.
+    echo.
+) ELSE (
+    echo ========== CHECKING PYTHON VERSION ==========
+    echo Checking Python version...
+    python -c "import sys; sys.exit(0 if sys.version_info[:2] == (3, 10) else 1)"
+    if %errorlevel% neq 0 (
+        echo Python version is not 3.10. Exiting...
+        exit /b
+    )
+    echo.
 )
-echo.
 
 IF "%novenv%"=="1" (
     echo ========== SKIPPING VENV ==========
