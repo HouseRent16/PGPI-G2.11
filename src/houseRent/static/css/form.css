@@ -1,19 +1,167 @@
 /* Import Google font - Poppins */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+:root {
+  --c1: #EFEFEF;
+  --c2: #BCBCBC;
+  --c3: #343434;
+  --c4: #1D1D1D;
+  --c5: #9D4EDD;
+
+  --f1: 2.5rem;
+  --f2: 1.5rem;
+  --f3: 1rem;
+  --f4: 0.8rem;
+  --f5: 0.6rem;
+
+  --navbar-altura: 80px;
+  --content-padding: 50px;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Open Sans', sans-serif !important;
 }
-.cuerpo {
+
+body {
+  background-color: var(--c1) !important;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: rgb(0, 166, 255);
 }
+
+.page-container {
+  display: grid;
+  grid-template-rows: var(--navbar-altura) 1fr;
+  height: 100vh;
+}
+
+.page-content {
+  padding: var(--content-padding) !important;
+  background-color: var(--c1) !important;
+}
+
+.btn-primary {
+  background-color: var(--c5) !important;
+  border-color: var(--c5) !important;
+  border-radius: 30px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  font-size: var(--f3) !important;
+}
+
+.container-fluid {
+  padding: 0 !important;
+}
+
+.navbar {
+  background-color: var(--c1) !important;
+  border-bottom: 1px solid var(--c2) !important;
+  height: var(--navbar-altura) !important;
+  padding: 0px 100px !important;
+}
+
+.navbar-logo {
+  font-family: 'Pacifico', cursive !important;
+  font-size: var(--f1) !important;
+  color: var(--c5) !important;
+  font-weight: 600 !important;
+  margin-right: 50px !important;
+  text-decoration: none !important;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+}
+
+.navbar-brand {
+  color: var(--c5) !important;
+  font-size: var(--f2) !important;
+  font-weight: 800 !important;
+  padding-right: 100px !important;
+}
+
+.nav-link {
+  color: var(--c4) !important;
+  font-size: var(--f3) !important;
+  font-weight: 600 !important;
+  padding: 0 25px 0 0 !important;
+  text-decoration: none !important;
+}
+
+.nav-link:hover {
+  color: var(--c5) !important;
+}
+
+.navbar-collapse {
+  justify-content: flex-start !important;
+}
+
+.filter {
+  background-color: var(--c1) !important;
+  border-left: 1px solid var(--c2) !important;
+  padding: 0 0 0 50px !important;
+  height: calc(100vh - var(--navbar-altura) - var(--content-padding)*2) !important;
+}
+
+.form-label {
+  font-size: var(--f3) !important;
+  font-weight: 800 !important;
+  color: var(--c4) !important;
+}
+
+.form-control {
+  border-radius: 30px !important;
+  border-color: var(--c2) !important;
+  font-size: var(--f3) !important;
+  font-weight: 600 !important;
+  color: var(--c3) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  background-color: var(--c1) !important;
+}
+
+.card {
+  border-radius: 30px !important;
+  border-color: var(--c2) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  background-color: var(--c1) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  width: 300px !important;
+}
+
+.card-image {
+  position: relative !important;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.heart-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.card-content {
+  padding: 16px;
+  text-align: left;
+  position: relative !important;
+}
+
+.rating {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+}
+
 .contenedor {
   position: relative;
   max-width: 700px;
@@ -81,7 +229,7 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: rgb(0, 166, 255);
+  background: #9D4EDD;
 }
 
 .formulario button:hover {
