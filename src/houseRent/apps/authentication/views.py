@@ -45,5 +45,5 @@ def register(request):
 
     return render(request, 'authentication/register.html', {'formUser': formUser, 'formAddress': formAddress})
 
-def login_guest(request):
+def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
