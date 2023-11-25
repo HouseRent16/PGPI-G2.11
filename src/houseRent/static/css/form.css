@@ -1,6 +1,6 @@
 /* Import Google font - Poppins */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 :root {
   --c1: #EFEFEF;
@@ -26,20 +26,37 @@
   font-family: 'Open Sans', sans-serif !important;
 }
 
+/* Estilo general de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 10px; /* o el ancho que prefieras */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c1); /* Color de fondo */
+}
+
+/* Estilo del thumb de la barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+  background: var(--c2); /* Color del thumb */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Cambia el color al pasar el cursor o al arrastrar */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c3); /* Color al pasar el cursor */
+}
+
 body {
   background-color: var(--c1) !important;
-  min-height: 100vh;
 }
 
 .page-container {
   display: grid;
   grid-template-rows: var(--navbar-altura) 1fr;
-  height: 100vh;
 }
 
-.page-content {
-  padding: var(--content-padding) !important;
-  background-color: var(--c1) !important;
+.shadow-navbar {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary {
@@ -57,8 +74,10 @@ body {
 .navbar {
   background-color: var(--c1) !important;
   border-bottom: 1px solid var(--c2) !important;
-  height: var(--navbar-altura) !important;
   padding: 0px 100px !important;
+  position: sticky !important;
+  top: 0;
+  z-index: 1000;
 }
 
 .navbar-logo {
@@ -94,11 +113,21 @@ body {
   justify-content: flex-start !important;
 }
 
+.page-content {
+  padding: 0 var(--content-padding) !important;
+  background-color: var(--c1) !important;
+}
+
 .filter {
   background-color: var(--c1) !important;
   border-left: 1px solid var(--c2) !important;
   padding: 0 0 0 50px !important;
+  margin-top: 50px !important;
+  margin-bottom: 50px !important;
   height: calc(100vh - var(--navbar-altura) - var(--content-padding)*2) !important;
+  position: sticky !important;
+  top: calc(var(--navbar-altura) + var(--content-padding)) !important;
+  width: 300px !important;
 }
 
 .form-label {
@@ -115,6 +144,13 @@ body {
   color: var(--c3) !important;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
   background-color: var(--c1) !important;
+}
+
+.accommodation-container {
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+  padding: 50px 0 0 0 !important;
+  top: 0 !important;
 }
 
 .card {

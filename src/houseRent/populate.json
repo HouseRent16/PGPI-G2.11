@@ -367,11 +367,24 @@
         "fields": {
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
-            "order": 2,
-            "image": "uploads/images/living_room.jpg",
+            "order": 1,
+            "image": "uploads/images/accommodation2.jpg",
             "alt": "Living room",
             "publication_date": "2023-11-17",
-            "accommodation": 1
+            "accommodation": 2
+        }
+    },
+    {
+        "model": "core.image",
+        "pk":3,
+        "fields": {
+        "title": "Spacious Living Room",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation1.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 3
         }
     },
     {

@@ -32,37 +32,59 @@
 
     <div class="page-content">
         <div class="row">
-            <div class="col">
+            <!-- ... -->
+            <!-- Área para mostrar los alojamientos -->
+            <div class="col accommodation-container">
                 <div class="row">
-                    <!-- Repeat this div for each listing -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-image">
-                              <img src="static/imagenes/accommodation.png" alt="Imagen">
-                              <button class="heart-button">❤</button>
-                            </div>
-                            <div class="card-content">
-                              <h3>Nombre</h3>
-                              <p>Ciudad, Provincia, País</p>
-                              <p class="rating">★ #.##</p>
-                              <p>##.## € Noche</p>
-                            </div>
-                          </div>                          
-                    </div>
-                    <!-- ... -->
+                    {% for accommodation in accommodations %}
+                        <!-- Añade clases adicionales para diferentes tamaños de pantalla -->
+                        <div class="col-md-4 col-sm-6 col-12 mb-4">
+                            <div class="card">
+                                {% if accommodation.first_image %}
+                                    <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                                {% endif %}
+                                <div class="card-body">
+                                    <!-- Nombre del alojamiento -->
+                                    <h5 class="card-title">{{ accommodation.name }}</h5>
+                                    <!-- Ubicación -->
+                                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                                    <!-- Puntuación promedio -->
+                                    <p class="card-text">Puntuación: {{ accommodation.average_rating|default:"No disponible" }} ★</p>
+                                    <!-- Precio -->
+                                    <p class="card-text">Precio: {{ accommodation.price }} € por noche</p>
+                                </div>
+                            </div>                          
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <p>No se encontraron alojamientos con los criterios especificados.</p>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
-
+            <!-- ... -->
+            <!-- Área de filtro -->
             <div class="col-md-3 filter">
-                <form>
-                    <!-- Form fields here -->
-                    <div class="filter-fild">
-                        <label for="inputName" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="inputName" placeholder="Buscar">
-                    </div>
+                <form method="get">
+                    <!-- ... campos de filtro ... -->
+                    <input type="text" name="name" placeholder="Nombre del alojamiento">
+                    <input type="text" name="owner" placeholder="Propietario">
+                    <input type="text" name="type" placeholder="Tipo">
+                    <!-- ... otros campos ... -->
+                    <button type="submit">Filtrar</button>
                 </form>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
+<script>
+    window.addEventListener('scroll', function() {
+        var navbar = document.querySelector('.navbar');
+        if (window.scrollY > 0) {
+            navbar.classList.add('shadow-navbar');
+        } else {
+            navbar.classList.remove('shadow-navbar');
+        }
+    });
+</script>
 {% endblock %}
