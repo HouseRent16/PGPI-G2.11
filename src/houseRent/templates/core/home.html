@@ -70,14 +70,86 @@
             </div>
             <!-- ... -->
             <!-- Área de filtro -->
-            <div class="col-md-3 filter">
+            <div class="col-md-3 filter-form">
                 <form method="get">
-                    <!-- ... campos de filtro ... -->
-                    <input type="text" name="name" placeholder="Nombre del alojamiento">
-                    <input type="text" name="owner" placeholder="Propietario">
-                    <input type="text" name="type" placeholder="Tipo">
-                    <!-- ... otros campos ... -->
-                    <button type="submit">Filtrar</button>
+                    <div class="form-buttons">
+                        <button type="submit" class="btn btn-primary">Activar</button>
+                        <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="owner" class="form-label">Propietario</label>
+                        <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="capacity" class="form-label">Capacidad</label>
+                        <div id="capacity" class="input-group">
+                            <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
+                            <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="price" class="form-label">Precio</label>
+                        <div id="price" class="input-group">
+                            <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
+                            <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="date" class="form-label">Periodo</label>
+                        <div id="date" class="input-group">
+                            <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
+                            <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="services" class="form-label">Servicios</label>
+                        <select id="services" name="services" class="form-control" multiple>
+                            {% for service in services %}
+                                <option value="{{ service.id }}" 
+                                    {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
+                                    selected
+                                    {% endif %}>
+                                    {{ service.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+            
+                    <div class="form-group">
+                        <label class="form-label">Ubicación</label>
+                        <div class="input-group mb-2">
+                            <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
+                            <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
+                            <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
+                        </div>
+                    </div>
+            
+                    <div class="form-group">
+                        <label for="rating" class="form-label">Características</label>
+                        <div class="input-group">
+                            <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
+                            <select id="type" name="type" class="form-control">
+                                <option value="">Todos</option>
+                                {% for key, value in types %}
+                                    <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -100,6 +172,73 @@
             console.log('Alojamiento añadido a favoritos');
             this.classList.toggle('heart-button-selected');
         });
-    });    
+    });
+
+    // Obtener los elementos de entrada de capacidad mínima y máxima
+    var minCapacityInput = document.getElementById('min_capacity');
+    var maxCapacityInput = document.getElementById('max_capacity');
+
+    // Función para asegurarse de que la capacidad máxima no sea menor que la mínima
+    function validateCapacity() {
+        var minCapacity = parseInt(minCapacityInput.value);
+        var maxCapacity = parseInt(maxCapacityInput.value);
+
+        if (minCapacity && maxCapacity && minCapacity > maxCapacity) {
+            maxCapacityInput.value = "";
+        }
+    }
+
+    // Event listeners para validar cuando los valores cambian
+    minCapacityInput.addEventListener('change', validateCapacity);
+    maxCapacityInput.addEventListener('change', validateCapacity);
+
+    // Validación para precio
+    var minPriceInput = document.getElementById('min_price');
+    var maxPriceInput = document.getElementById('max_price');
+
+    function validatePrice() {
+        var minPrice = parseFloat(minPriceInput.value);
+        var maxPrice = parseFloat(maxPriceInput.value);
+
+        if (minPrice && maxPrice && minPrice > maxPrice) {
+            maxPriceInput.value = "";
+        }
+    }
+
+    minPriceInput.addEventListener('change', validatePrice);
+    maxPriceInput.addEventListener('change', validatePrice);
+
+    // Validación para fechas
+    var startDateInput = document.getElementById('start_date');
+    var endDateInput = document.getElementById('end_date');
+
+    function validateDates() {
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        if (startDate && endDate && startDate > endDate) {
+            endDateInput.value = "";
+        }
+    }
+
+    startDateInput.addEventListener('blur', validateDates);
+    endDateInput.addEventListener('blur', validateDates);
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        // Obtén los valores de los campos
+        var start_date = document.getElementById('start_date').value;
+        var end_date = document.getElementById('end_date').value;
+        
+        // Conviértelos a objetos Date para comparar
+        var startDate = start_date ? new Date(start_date) : null;
+        var endDate = end_date ? new Date(end_date) : null;
+
+        // Validación de fechas
+        if (startDate && endDate && startDate > endDate) {
+            endDateInput.value = "";
+        }
+
+        // Aquí puedes añadir más validaciones según sea necesario
+    });
 </script>
 {% endblock %}
