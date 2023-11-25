@@ -15,7 +15,8 @@
     font-size: 1rem;
     font-weight: 400;
     margin-top: 30px;
-    border: 1px solid rgb(0, 166, 255);
+    border: 1px solid #9D4EDD;
+    color:#9D4EDD;
     cursor: pointer;
     transition: all 0.2s ease;
     background:  #fff;
