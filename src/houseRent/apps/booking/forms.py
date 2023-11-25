@@ -1,5 +1,5 @@
 from django import forms
-from apps.core.models  import Book
+from apps.core.models  import Book, CustomUser
 from utils.validators import Validators
 from django.utils import timezone 
 
@@ -14,7 +14,7 @@ class BookingRequest(forms.ModelForm):
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'payment_method': forms.Select(attrs={'class': 'form-control'}),
             'amount_people': forms.NumberInput(attrs={'class': 'form-control'}),
-            'special_requests': forms.Textarea(attrs={'class': 'form-control'})
+            'special_requests': forms.Textarea(attrs={'class': 'form-control', 'required': False})
         }
 
         labels = {
@@ -51,3 +51,32 @@ class BookingRequest(forms.ModelForm):
         Validators.validate_dates(start_date, end_date)
 
         return end_date
+    
+
+class UserBookRequest2(forms.Form):
+    email = forms.EmailField(label='Email')
+    first_name = forms.CharField(label='Nombre')
+    last_name = forms.CharField(label='Apellido')
+    dni = forms.CharField(label='DNI')
+    birth_date = forms.DateField(label='Fecha de Nacimiento', widget=forms.DateInput(attrs={'type': 'date','class': 'form-control'}))
+
+class UserBookRequest(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'first_name', 'last_name', 'birth_date', 'phone', 'dni']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'dni': forms.TextInput(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'email': 'Correo electrónico',
+            'first_name': 'Nombre',
+            'last_name': 'Apellido',
+            'phone': 'Número de teléfono',
+            'birth_date': 'Fecha de nacimiento',
+            'dni': 'DNI',
+        }
