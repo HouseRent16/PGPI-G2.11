@@ -3,10 +3,10 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from email.mime.image import MIMEImage
 
-def send_mail(subject, body, receivers, template="email.html", context=None, attachments=None):
+def send_mail(subject, body, receivers, template="mailer/email.html", context=None, attachments=None):
     if context is None:
         context = {}
-    context['image_path'] = 'Logo_S_T.png'
+    context['body'] = body
     mail = EmailMessage(
         subject,
         render_to_string(template, context),

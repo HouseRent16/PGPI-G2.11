@@ -212,128 +212,64 @@
         }
     },
     {
+        "model": "auth.group",
+        "pk": 72,
+        "fields": {
+            "name": "Propietarios",
+            "permissions": []
+        }
+    },
+    {
         "model": "core.address",
         "pk": 1,
         "fields": {
-            "street": "97822 Stanley Grove",
-            "city": "Lake Mary",
-            "province": "Vermont",
-            "zipcode": "06091",
-            "number": "2",
-            "country": "CG"
+            "street_number": "012",
+            "address_line": "012 Main St.",
+            "city": "Springfield",
+            "region": "IL",
+            "country": "US",
+            "postal_code": "12345"
         }
     },
     {
         "model": "core.address",
         "pk": 2,
         "fields": {
-            "street": "58042 Wanda Square Suite 547",
-            "city": "North Gail",
-            "province": "Arizona",
-            "zipcode": "75760",
-            "number": "2",
-            "country": "LB"
+            "street_number": "123",
+            "address_line": "123 Main St.",
+            "city": "Springfield",
+            "region": "IL",
+            "country": "US",
+            "postal_code": "12345"
         }
     },
     {
         "model": "core.address",
         "pk": 3,
         "fields": {
-            "street": "069 Tracy Way",
-            "city": "West Candicemouth",
-            "province": "California",
-            "zipcode": "36236",
-            "number": "2",
-            "country": "TR"
+            "street_number": "456",
+            "address_line": "456 Main St.",
+            "city": "Springfield",
+            "region": "IL",
+            "country": "US",
+            "postal_code": "12345"
         }
     },
     {
         "model": "core.address",
         "pk": 4,
         "fields": {
-            "street": "47938 Noble Cape",
-            "city": "North Matthew",
-            "province": "Florida",
-            "zipcode": "27347",
-            "number": "2",
-            "country": "US"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 5,
-        "fields": {
-            "street": "9769 Garza Brook",
-            "city": "South Thomas",
-            "province": "New Mexico",
-            "zipcode": "59736",
-            "number": "2",
-            "country": "YE"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 6,
-        "fields": {
-            "street": "2176 Michael Trail",
-            "city": "Lisaton",
-            "province": "Montana",
-            "zipcode": "93277",
-            "number": "2",
-            "country": "LB"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 7,
-        "fields": {
-            "street": "4001 Steven Trail",
-            "city": "North Victoriaport",
-            "province": "Oregon",
-            "zipcode": "60540",
-            "number": "2",
-            "country": "SZ"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 8,
-        "fields": {
-            "street": "95988 Amber Underpass",
-            "city": "New Elizabeth",
-            "province": "Missouri",
-            "zipcode": "42375",
-            "number": "2",
-            "country": "DM"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 9,
-        "fields": {
-            "street": "7974 Christian Turnpike",
-            "city": "Ramosmouth",
-            "province": "Montana",
-            "zipcode": "86434",
-            "number": "2",
-            "country": "MY"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 10,
-        "fields": {
-            "street": "657 Evans Mall",
-            "city": "West Laura",
-            "province": "California",
-            "zipcode": "98714",
-            "number": "2",
-            "country": "MA"
+            "street_number": "789",
+            "address_line": "789 Main St.",
+            "city": "Springfield",
+            "region": "IL",
+            "country": "US",
+            "postal_code": "12345"
         }
     },
     {
         "model": "core.CustomUser",
-        "pk": 71,
+        "pk": 1,
         "fields": {
             "password": "pbkdf2_sha256$390000$t9M20jSrAZnAqKDpiYEZcp$GVxTIh3fOyTQKSpVSOgjEYOrxl82TEm9xncl2L5d9lc=",
             "last_login": "2022-12-05T16:54:46.872Z",
@@ -345,14 +281,15 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address_id": null,
+            "address": 4,
             "groups": [70],
-            "user_permissions": []
+            "dni": "784437896x",
+            "birth_date": "1963-02-24"
         }
     },
     {
         "model": "core.CustomUser",
-        "pk": 72,
+        "pk": 2,
         "fields": {
             "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
             "last_login": "2022-12-05T16:54:46.872Z",
@@ -363,164 +300,31 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address_id": null,
+            "address": 4,
             "groups": [71],
-            "user_permissions": []
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 1,
-        "fields": {
-            "dni": "784437896x",
-            "address": 1,
-            "birthDate": "1963-02-24",
-            "gender": "Other",
-            "phone": "+1-606-406-9746x5270",
-            "isOwner": true,
-            "email": "jamesowens@franklin-green.org",
-            "username":"jame1",
-            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI="
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 2,
-        "fields": {
-            "dni": "230810220r",
-            "address": 2,
-            "birthDate": "1993-10-01",
-            "gender": "Male",
-            "phone": "400.216.0250x1122",
-            "isOwner": true,
-            "email": "katherineforbes@young.com",
-            "username":"katherine1",
-            "password": "aE$O8NomwH"
+            "dni": "784437896z",
+            "birth_date": "1963-02-24"            
         }
     },
     {
         "model": "core.CustomUser",
         "pk": 3,
         "fields": {
-            "dni": "333163951k",
-            "address": 3,
-            "birthDate": "1968-03-08",
-            "gender": "Male",
-            "phone": "(571)343-4560",
-            "isOwner": false,
-            "username": "Rachel Holt",
-            "email": "debbie24@hotmail.com",
-            "password": "5*40YejClw"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 4,
-        "fields": {
-            "dni": "388149381s",
-            "address": 4,
-            "birthDate": "1942-04-27",
-            "gender": "Male",
-            "phone": "001-229-491-5202x9112",
-            "isOwner": false,
-            "username": "Ernest Murphy MD",
-            "email": "michellemckee@gmail.com",
-            "password": "*wPVm!AXf7"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 5,
-        "fields": {
-            "dni": "346250602h",
-            "address": 5,
-            "birthDate": "2005-01-08",
-            "gender": "Male",
-            "phone": "+1-137-883-8802x9126",
-            "isOwner": false,
-            "username": "Carl Lee",
-            "email": "jdavis@adkins-vazquez.org",
-            "password": "$6BCifc4G0"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 6,
-        "fields": {
-            "dni": "435340510s",
-            "address": 6,
-            "birthDate": "1965-02-10",
-            "gender": "Female",
-            "phone": "087.593.9688",
-            "isOwner": true,
-            "username": "Ryan Harris",
-            "email": "mitchelllauren@yahoo.com",
-            "password": "E9Vypma9)e"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 7,
-        "fields": {
-            "dni": "858316668c",
-            "address": 7,
-            "birthDate": "1962-08-19",
-            "gender": "Female",
-            "phone": "001-504-659-4264x227",
-            "isOwner": true,
-            "username": "John Hicks",
-            "email": "gwolfe@gmail.com",
-            "password": "r4g4Y%CkF!"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 8,
-        "fields": {
-            "dni": "635630987P",
-            "address": 8,
-            "birthDate": "1944-11-01",
+            "dni": "784437896y",
+            "address": 1,
+            "birth_date": "1963-02-24",
             "gender": "Other",
-            "phone": "(613)624-5868x090",
-            "isOwner": false,
-            "username": "Louis Levine",
-            "email": "batescarol@mccall.com",
-            "password": ")F7hNXppa8"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 9,
-        "fields": {
-            "dni": "034600682s",
-            "address": 9,
-            "birthDate": "1994-08-14",
-            "gender": "Other",
-            "phone": "001-659-040-8597x22085",
-            "isOwner": false,
-            "username": "Brandi Hernandez",
-            "email": "daniellebennett@hotmail.com",
-            "password": "(cW7SBseqF"
-        }
-    },
-    {
-        "model": "core.CustomUser",
-        "pk": 10,
-        "fields": {
-            "dni": "540847442g",
-            "address": 10,
-            "birthDate": "1943-10-29",
-            "gender": "Other",
-            "phone": "(907)906-6039x041",
-            "isOwner": false,
-            "username": "Tina Wright",
-            "email": "simonkathryn@gmail.com",
-            "password": "&A$4Mr1kkZ"
-        }
+            "phone": "+1-606-406-9746x5270",
+            "email": "jamesowens@franklin-green.org",
+            "username":"jame1",
+            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
+            "groups": [72],
+            "request": "ACCEPTED"
+        }   
     },
     {
         "model": "core.service",
-        "pk": 21,
+        "pk": 1,
         "fields": {
             "name": "revolutionize cutting-edge networks",
             "description": "I woman least information painting find. Piece wait program she wrong include happen.\nAlmost material the young. Environment successful study."
@@ -528,7 +332,7 @@
     },
     {
         "model": "core.service",
-        "pk": 22,
+        "pk": 2,
         "fields": {
             "name": "synthesize efficient relationships",
             "description": "Anything their break computer several. Government real southern usually billion skill. Everything build name fine."
@@ -536,7 +340,7 @@
     },
     {
         "model": "core.service",
-        "pk": 23,
+        "pk": 3,
         "fields": {
             "name": "maximize impactful info-mediaries",
             "description": "Movie industry election positive bill. Glass particularly claim. Wall brother agent certainly realize quite. Interview base human board idea she."
@@ -544,7 +348,7 @@
     },
     {
         "model": "core.service",
-        "pk": 24,
+        "pk": 4,
         "fields": {
             "name": "leverage leading-edge initiatives",
             "description": "Whose day fall hear. My gun bed measure.\nA song daughter summer center indeed. Apply paper radio. Those edge heart significant."
@@ -552,562 +356,166 @@
     },
     {
         "model": "core.service",
-        "pk": 25,
+        "pk": 5,
         "fields": {
             "name": "unleash rich e-services",
             "description": "Bad require reality long. Popular above forward work book quite contain. Reason enter Congress finish. Together investment PM movement indicate bad."
         }
     },
     {
-        "model": "core.service",
-        "pk": 26,
-        "fields": {
-            "name": "empower customized initiatives",
-            "description": "Help financial lead yourself. Participant year identify modern party election moment.\nTrip high attention defense. Stand leader decide wear. Suddenly fast his TV sing high young result."
-        }
-    },
-    {
-        "model": "core.service",
-        "pk": 27,
-        "fields": {
-            "name": "visualize extensible content",
-            "description": "Identify that wait money black. Test job character bar. Race get level development for. Draw around stock realize personal eye positive."
-        }
-    },
-    {
-        "model": "core.service",
-        "pk": 28,
-        "fields": {
-            "name": "envisioneer leading-edge e-business",
-            "description": "Might Democrat team authority. Treat product also nature in just image.\nTrouble character continue cup best customer bit tough. Do education environmental interesting development investment herself."
-        }
-    },
-    {
-        "model": "core.service",
-        "pk": 29,
-        "fields": {
-            "name": "evolve best-of-breed markets",
-            "description": "Popular family himself early clearly leg. Identify government professor oil focus impact political lawyer."
-        }
-    },
-    {
-        "model": "core.service",
-        "pk": 30,
-        "fields": {
-            "name": "transition synergistic web-readiness",
-            "description": "Which federal mother general remain south dark. Magazine door rule.\nMoney tend throughout must agree allow of. Charge wall if."
-        }
-    },
-     {
         "model": "core.accommodation",
-        "pk": 11,
+        "pk": 1,
         "fields": {
             "name": "Hoffman LLC",
             "description": "Policy room artist from blue hard number small. Own argue course itself enter just down. Kind goal stuff address painting century.",
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "service": [21],
-            "owner": 9
+            "service": [1],
+            "owner": 3,
+            "capacity": 5,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
         "model": "core.accommodation",
-        "pk": 12,
+        "pk": 2,
         "fields": {
             "name": "Keller-Gordon",
             "description": "And finally view course western perform prevent. Describe daughter school loss point fly key. Guess ability enter first movement join.\nNation find visit shake why. Radio see idea late fight care.",
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "service": [22],
-            "owner": 9
+            "service": [2],
+            "owner": 3,
+            "capacity": 6,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
         "model": "core.accommodation",
-        "pk": 13,
+        "pk": 3,
         "fields": {
             "name": "Torres, Phillips and Sims",
             "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "service": [23],
-            "owner": 3
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 14,
-        "fields": {
-            "name": "Grant and Sons",
-            "description": "Guess as dark give box listen relate. Force often smile about exist film kind study.\nSouth product expect. Beautiful significant stay ground hard bad.",
-            "address": 4,
-            "price": 70453,
-            "category": "Dúplex",
-            "service": [24],
-            "owner": 9
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 15,
-        "fields": {
-            "name": "Jacobs-Mullins",
-            "description": "Four result third fund personal firm sit. Maintain their feel however threat less. Final camera mother professor soon black.\nRate back financial service beat economic.",
-            "address":5,
-            "price": 85077,
-            "category": "Duplex",
-            "service": [25],
-            "owner": 6
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 16,
-        "fields": {
-            "name": "Williams, Moore and Walker",
-            "description": "Mention news leader our write. Anything station our out study management drug break.\nFive against sometimes million fund who. Quality respond democratic someone religious.",
-            "address": 6,
-            "price": 64763,
-            "category": "Ático",
-            "service": [26],
-            "owner": 3
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 17,
-        "fields": {
-            "name": "Graves PLC",
-            "description": "Full focus play fear. Point state each leave.\nHere specific service head. Authority last nice owner personal hand. Long water cup view national pick. Above once unit hold learn season television.",
-            "address": 7,
-            "price": 84322,
-            "category": "Chalet",
-            "service": [27],
-            "owner": 1
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 18,
-        "fields": {
-            "name": "Brooks-Medina",
-            "description": "Perhaps spend program get range show opportunity doctor. After store right door as these write relationship. Type television production investment. Individual say stuff dream in science.",
-            "address": 8,
-            "price": 81446,
-            "category": "Ático",
-            "service": [28],
-            "owner": 5
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 19,
-        "fields": {
-            "name": "Lynch-Andrews",
-            "description": "Manage war just officer little today parent. West serve tend.",
-            "address": 9,
-            "price": 99758,
-            "category": "Chalet",
-            "service": [29],
-            "owner": 6
-        }
-    },
-    {
-        "model": "core.accommodation",
-        "pk": 20,
-        "fields": {
-            "name": "Frazier and Sons",
-            "description": "Discover increase article spring accept interview. Traditional down data officer inside week.\nYeah rule table ago ten hit president. Rather newspaper including wish need plant follow.",
-            "address": 10,
-            "price": 93179,
-            "category": "Chalet",
-            "service":[30],
-            "owner": 10
+            "service": [3],
+            "owner": 3,
+            "capacity": 7,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
         }
     },
     {
         "model": "core.book",
-        "pk": 31,
+        "pk": 1,
         "fields": {
             "start_date": "2023-11-30T00:00:00Z",
             "end_date": "2023-12-15T00:00:00Z",
-            "paymentMethod": "EFECTIVO",
-            "amountPeople": 7,
-            "user": 10,
-            "isActive": false,
-            "accommodation": 11 
+            "payment_method": "EFECTIVO",
+            "amount_people": 7,
+            "user": 2,
+            "is_active": false,
+            "accommodation": 1 
         }
     },
     {
         "model": "core.book",
-        "pk": 32,
+        "pk": 2,
         "fields": {
             "start_date": "2023-11-18T01:20:30Z",
             "end_date": "2023-11-30T20:48:00Z",
-            "paymentMethod": "EFECTIVO",
-            "amountPeople": 8,
-            "user": 6,
-            "isActive": false,
-            "accommodation": 12
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 33,
-        "fields": {
-            "start_date": "2023-11-30T06:00:00Z",
-            "end_date": "2023-12-10T03:50:00Z",
-            "paymentMethod": "EFECTIVO",
-            "amountPeople": 5,
-            "user": 9,
-            "isActive": false,
-            "accommodation": 13
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 34,
-        "fields": {
-            "start_date": "2023-11-24T00:00:00Z",
-            "end_date": "2023-11-22T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 6,
-            "user": 10,
-            "isActive": true,
-            "accommodation": 14
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 35,
-        "fields": {
-            "start_date": "2023-12-01T00:00:00Z",
-            "end_date": "2023-11-19T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 9,
-            "user": 5,
-            "isActive": false,
-            "accommodation": 15
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 36,
-        "fields": {
-            "start_date": "2023-11-25T00:00:00Z",
-            "end_date": "2023-11-20T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 3,
-            "user": 8,
-            "isActive": false,
-            "accommodation": 16
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 37,
-        "fields": {
-            "start_date": "2023-12-15T00:00:00Z",
-            "end_date": "2023-11-29T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 1,
-            "user": 8,
-            "isActive": false,
-            "accommodation": 17
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 38,
-        "fields": {
-            "start_date": "2023-12-04T00:00:00Z",
-            "end_date": "2023-12-09T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 7,
-            "user": 4,
-            "isActive": false,
-            "accommodation": 18
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 39,
-        "fields": {
-            "start_date": "2023-12-01T00:00:00Z",
-            "end_date": "2023-12-14T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 10,
-            "user": 10,
-            "isActive": true,
-            "accommodation": 19
-        }
-    },
-    {
-        "model": "core.book",
-        "pk": 40,
-        "fields": {
-            "start_date": "2023-11-25T00:00:00Z",
-            "end_date": "2023-11-27T00:00:00Z",
-            "paymentMethod": "ONLINE",
-            "amountPeople": 8,
-            "user": 2,
-            "isActive": true,
-            "accommodation": 20
+            "payment_method": "EFECTIVO",
+            "amount_people": 8,
+            "user": 1,
+            "is_active": false,
+            "accommodation": 2
         }
     },
     {
         "model": "core.claim",
-        "pk": 41,
+        "pk": 1,
         "fields": {
             "title": "Idea policy region example only our it performance.",
             "description": "Certainly office method answer clearly physical business. Throw crime main different stock.\nIssue option girl later job necessary. Project do market morning whether less bag.",
-            "publicationDate": "2023-04-09",
-            "user": 6,
-            "accommodation": 12
-        }
-    },
-    {
-        "model": "core.claim",
-        "id": 42,
-        "fields": {
-            "title": "No open year people college field career.",
-            "description": "Individual body senior magazine executive along unit. Provide each inside necessary even.\nPhysical understand but president determine.",
-            "publicationDate": "2023-04-27",
-            "user": 8,
-            "accommodation": 14
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 43,
-        "fields": {
-            "title": "Think season house blue commercial buy successful behind.",
-            "description": "Candidate window marriage very raise real season. Theory bring front your cover necessary parent project.",
-            "publicationDate": "2023-09-15",
-            "user": 10,
-            "accommodation": 14
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 44,
-        "fields": {
-            "title": "Act event speech have huge.",
-            "description": "Region discuss where for least while support skill. Personal land entire my hit. What ever range officer control.",
-            "publicationDate": "2023-07-06",
-            "user": 4,
-            "accommodation": 20
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 45,
-        "fields": {
-            "title": "Everything charge collection himself cultural environmental.",
-            "description": "Write seem foreign second do speech him. The television nice bank unit. Far research state anything out.",
-            "publicationDate": "2023-08-05",
+            "publication_date": "2023-04-09",
             "user": 2,
-            "accommodation": 19
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 46,
-        "fields": {
-            "title": "Three turn can central toward no half.",
-            "description": "Before medical radio much sense daughter. Able accept watch very national newspaper.\nLawyer fly those soldier. Return usually drive mention Republican pull happy. Behind find leave.",
-            "publicationDate": "2023-06-11",
-            "user": 7,
-            "accommodation": 11
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 47,
-        "fields": {
-            "title": "State student pattern impact position trade.",
-            "description": "Scene some activity address former front.\nDiscussion keep rock tree never parent describe. Discover whole despite play same time.",
-            "publicationDate": "2023-10-14",
-            "user": 2,
-            "accommodation": 13
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 48,
-        "fields": {
-            "title": "I audience point radio theory.",
-            "description": "Meet nor manage pass bring trip. Store on population treatment.\nFront bring final. Account six senior eight those. Whole girl would buy say position development.",
-            "publicationDate": "2023-03-27",
-            "user": 10,
-            "accommodation": 19
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 49,
-        "fields": {
-            "title": "Right herself often.",
-            "description": "Story scene become child. Suddenly college security. Travel happen PM major specific. Material allow while attack team interview cost room.",
-            "publicationDate": "2023-05-29",
-            "user": 7,
-            "accommodation": 11
-        }
-    },
-    {
-        "model": "core.claim",
-        "pk": 50,
-        "fields": {
-            "title": "Present see single do son.",
-            "description": "Local mission own a special last whose. Too everybody finally police teacher.\nTreat economic up region indicate. Ever prevent answer people movement reach.\nUntil her as development door.",
-            "publicationDate": "2023-04-13",
-            "user": 5,
-            "accommodation": 17
+            "accommodation": 3
         }
     },
     {
         "model": "core.favorite",
-        "pk": 51,
+        "pk": 1,
         "fields": {
-            "client": 3,
-            "accommodation": 16,
+            "user": 1,
+            "accommodation": 1,
             "date": "2023-04-28"
         }
     },
     {
         "model": "core.favorite",
-        "pk": 52,
+        "pk": 2,
         "fields": {
-            "client": 1,
-            "accommodation": 14,
+            "user": 1,
+            "accommodation": 3,
             "date": "2023-02-06"
         }
     },
     {
-        "model": "core.favorite",
-        "pk": 53,
+        "model": "core.image",
+        "pk":1,
         "fields": {
-            "client": 8,
-            "accommodation": 20,
-            "date": "2023-06-30"
+            "title": "Sunset View",
+            "description": "Beautiful sunset view from the balcony.",
+            "order": 1,
+            "image": "uploads/images/sunset.jpg",
+            "alt": "Sunset view",
+            "publication_date": "2023-11-17",
+            "accommodation": 1
         }
     },
     {
-        "model": "core.favorite",
-        "pk": 54,
+        "model": "core.image",
+        "pk":2,
         "fields": {
-            "client": 5,
-            "accommodation": 12,
-            "date": "2023-03-16"
+        "title": "Spacious Living Room",
+            "description": "Spacious living room with modern amenities.",
+            "order": 2,
+            "image": "uploads/images/living_room.jpg",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 1
         }
     },
     {
-        "model": "core.favorite",
-        "pk": 55,
+        "model": "core.comment",
+        "pk":1,
         "fields": {
-            "client": 6,
-            "accommodation": 14,
-            "date": "2023-04-29"
+            "title": "Great experience",
+            "description": "Had a great time staying at this place, would recommend!",
+            "publication_date": "2023-11-17",
+            "user": 2,
+            "rating": 5,
+            "accommodation": 1
         }
     },
     {
-        "model": "core.favorite",
-        "pk": 56,
+        "model": "core.comment",
+        "pk":2,
         "fields": {
-            "client": 2,
-            "accommodation": 11,
-            "date": "2023-01-03"
+            "title": "Not as expected",
+            "description": "The place was decent but had some maintenance issues.",
+            "publication_date": "2023-11-17",
+            "user": 1,
+            "rating": 3,
+            "accommodation": 2
         }
-    },
-    {
-        "model": "core.favorite",
-        "pk": 57,
-        "fields": {
-            "client": 2,
-            "accommodation": 16,
-            "date": "2023-07-02"
-        }
-    },
-    {
-        "model": "core.favorite",
-        "pk": 58,
-        "fields": {
-            "client": 9,
-            "accommodation": 19,
-            "date": "2023-09-27"
-        }
-    },
-    {
-        "model": "core.favorite",
-        "pk": 59,
-        "fields": {
-            "client": 5,
-            "accommodation": 19,
-            "date": "2023-02-03"
-        }
-    },
-    {
-        "model": "core.favorite",
-        "pk": 60,
-        "fields": {
-            "client": 2,
-            "accommodation": 11,
-            "date": "2023-09-15"
-        }
-    },
-    
-        {
-            "model": "core.image",
-            "pk":61,
-            "fields": {
-                "title": "Sunset View",
-                "description": "Beautiful sunset view from the balcony.",
-                "order": 1,
-                "image": "uploads/images/sunset.jpg",
-                "alt": "Sunset view",
-                "publicationDate": "2023-11-17",
-                "accommodation": 14
-            }
-        },
-        {
-            "model": "core.image",
-            "pk":62,
-            "fields": {
-            "title": "Spacious Living Room",
-                "description": "Spacious living room with modern amenities.",
-                "order": 7,
-                "image": "uploads/images/living_room.jpg",
-                "alt": "Living room",
-                "publicationDate": "2023-11-17",
-                "accommodation": 13
-            }
-        },
-        {
-            "model": "core.comment",
-            "pk":63,
-            "fields": {
-                "title": "Great experience",
-                "description": "Had a great time staying at this place, would recommend!",
-                "publicationDate": "2023-11-17",
-                "user": 6,
-                "rating": 5,
-                "accommodation": 12
-            }
-        },
-        {
-            "model": "core.comment",
-            "pk":64,
-            "fields": {
-                "title": "Not as expected",
-                "description": "The place was decent but had some maintenance issues.",
-                "publicationDate": "2023-11-17",
-                "user": 5,
-                "rating": 3,
-                "accommodation": 11
-            }
-        }
-
+    }
 ]

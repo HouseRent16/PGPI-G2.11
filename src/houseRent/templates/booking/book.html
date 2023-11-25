@@ -1,0 +1,19 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+{% load static %} 
+
+<link rel="stylesheet" type="text/css" href="/static/css/book.css">
+
+<section class="container">
+    <h1>Reservar</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button class="outlined-button mt-3">
+            Guardar
+        </button>
+    </form>
+</section>
+
+{% endblock %}

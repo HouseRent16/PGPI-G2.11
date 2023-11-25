@@ -1,8 +1,13 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-from .forms import CustomUserCreationForm
-from .forms import LoginForm
+
+from .forms import RegisterUser, RegisterAddress
+from django.contrib.auth.views import LoginView
+
+from .forms import LoginForm, GuestLoginForm
+from apps.core.models import CustomUser, Address
+from django.contrib import messages
 
 def login_view(request):
     if request.method == 'POST':
@@ -27,12 +32,29 @@ def login_view(request):
 
 def register(request):
     if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Redirigir a la página principal o a la página que desees
-            #return redirect('home')
+        user = CustomUser()
+        address = Address()
+        formUser = RegisterUser(request.POST, instance=user)
+        formAddress = RegisterAddress(request.POST, instance=address)
+        if formUser.is_valid() and formAddress.is_valid():
+            user.set_password(formUser.cleaned_data['password'])
+            address.save()
+            user.address = address
+            user.save()
+            messages.success(request, 'Usuario registrado correctamente')
+            return redirect('login')
+           
     else:
-        form = CustomUserCreationForm()
+        formUser = RegisterUser()
+        formAddress = RegisterAddress()
 
-    return render(request, 'authentication/register.html', {'form': form})
+    return render(request, 'authentication/register.html', {'formUser': formUser, 'formAddress': formAddress})
+
+class GuestLoginView(LoginView):
+    template_name = 'login.html'
+    form_class = GuestLoginForm
+
+    def form_valid(self, form):
+        # Añade la lógica de acceso como invitado aquí
+        return super().form_valid(form)
+
