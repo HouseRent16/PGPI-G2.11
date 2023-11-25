@@ -188,6 +188,34 @@ a.nav-link {
   width: fit-content !important;
 }
 
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para oscurecer la imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.3s ease;
+  text-decoration: none;
+}
+
+.accommodation-name {
+  color: white; /* Color del texto */
+  display: none; /* Inicialmente oculto */
+}
+
+.card:hover .card-overlay {
+  opacity: 1; /* Mostrar al pasar el cursor */
+}
+
+.card:hover .card-overlay .accommodation-name {
+  display: block; /* Mostrar nombre al pasar el cursor */
+}
+
 .card-image {
   position: relative !important;
 }
@@ -251,7 +279,6 @@ a.nav-link {
   right: 10px;
   background: none;
   border: none;
-  /* Center text */
   display: flex;
   align-items: center;
   justify-content: center;

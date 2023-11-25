@@ -39,6 +39,10 @@
                     {% for accommodation in accommodations %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
                             <div class="card">
+                                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                                </a>
+
                                 <span class="material-symbols-outlined heart-button">favorite</span>
                                 
                                 {% if accommodation.first_image %}
@@ -79,6 +83,7 @@
         </div>
     </div>    
 </div>
+
 <script>
     window.addEventListener('scroll', function() {
         var navbar = document.querySelector('.navbar');
