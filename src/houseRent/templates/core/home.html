@@ -37,21 +37,23 @@
             <div class="col accommodation-container">
                 <div class="row">
                     {% for accommodation in accommodations %}
-                        <!-- Añade clases adicionales para diferentes tamaños de pantalla -->
-                        <div class="col-md-4 col-sm-6 col-12 mb-4">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
                             <div class="card">
+                                <span class="material-symbols-outlined heart-button">favorite</span>
+                                
                                 {% if accommodation.first_image %}
                                     <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
                                 {% endif %}
                                 <div class="card-body">
-                                    <!-- Nombre del alojamiento -->
-                                    <h5 class="card-title">{{ accommodation.name }}</h5>
-                                    <!-- Ubicación -->
+                                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
                                     <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
                                     <!-- Puntuación promedio -->
-                                    <p class="card-text">Puntuación: {{ accommodation.average_rating|default:"No disponible" }} ★</p>
-                                    <!-- Precio -->
-                                    <p class="card-text">Precio: {{ accommodation.price }} € por noche</p>
+                                    <div class="rating">
+                                        <span class="material-symbols-outlined rating-star">
+                                            star
+                                        </span>
+                                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                                    </div>
                                 </div>
                             </div>                          
                         </div>
@@ -86,5 +88,13 @@
             navbar.classList.remove('shadow-navbar');
         }
     });
+
+    document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
+        heartIcon.addEventListener('click', function() {
+            // Aquí puedes añadir la lógica para manejar el favorito
+            console.log('Alojamiento añadido a favoritos');
+            this.classList.toggle('heart-button-selected');
+        });
+    });    
 </script>
 {% endblock %}

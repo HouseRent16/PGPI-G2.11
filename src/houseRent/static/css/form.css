@@ -1,6 +1,7 @@
 /* Import Google font - Poppins */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
   --c1: #EFEFEF;
@@ -44,6 +45,15 @@
 /* Cambia el color al pasar el cursor o al arrastrar */
 ::-webkit-scrollbar-thumb:hover {
   background: var(--c3); /* Color al pasar el cursor */
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 body {
@@ -97,12 +107,16 @@ body {
   padding-right: 100px !important;
 }
 
-.nav-link {
+a.nav-link {
   color: var(--c4) !important;
   font-size: var(--f3) !important;
   font-weight: 600 !important;
   padding: 0 25px 0 0 !important;
   text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
 .nav-link:hover {
@@ -153,6 +167,10 @@ body {
   top: 0 !important;
 }
 
+.accommodation-container .row {
+  justify-content: flex-start;
+}
+
 .card {
   border-radius: 30px !important;
   border-color: var(--c2) !important;
@@ -161,10 +179,24 @@ body {
   overflow: hidden !important;
   position: relative !important;
   width: 300px !important;
+  height: 400px !important;
+}
+
+.card-container {
+  margin: 0 !important;
+  margin-right: 25px !important;
+  width: fit-content !important;
 }
 
 .card-image {
   position: relative !important;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .card-image img {
@@ -181,12 +213,36 @@ body {
   border: none;
   cursor: pointer;
   font-size: 24px;
+  color: var(--c1) !important;
+  text-shadow: 0px 0px 4px var(--c4) !important;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
-.card-content {
-  padding: 16px;
+.heart-button-selected {
+  color: var(--c4) !important;
+  text-shadow: 0px 0px 8px var(--c1) !important;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+.card-body {
+  padding: 15px !important;
   text-align: left;
   position: relative !important;
+  height: 100px !important;
+  color: var(--c3) !important;
+}
+
+.price {
+  color: var(--c4) !important;
+  font-weight: 800 !important;
 }
 
 .rating {
@@ -195,7 +251,19 @@ body {
   right: 10px;
   background: none;
   border: none;
-  font-size: 24px;
+  /* Center text */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rating-star {
+  color: var(--c4) !important;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 20;
 }
 
 .contenedor {
