@@ -29,7 +29,10 @@ def change_password(request, user_id):
     })
 
 def home(request):
-    accommodations = Accommodation.objects.all().annotate(average_rating=Avg('comment__rating'))
+    accommodations = Accommodation.objects.all().annotate(
+        average_rating=Avg('comment__rating'),
+        is_booked=Value(False, output_field=BooleanField())
+    )
 
     # Filtros
     name_query = request.GET.get('name')
@@ -47,8 +50,6 @@ def home(request):
     postal_code_query = request.GET.get('pcode')
     services_query = request.GET.getlist('services')
     min_rating = request.GET.get('min_rating')
-
-    accommodations = Accommodation.objects.all().annotate(is_booked=Value(False, output_field=BooleanField()))
 
     try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
