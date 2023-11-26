@@ -294,6 +294,40 @@
         }
     },
     {
+        "model": "core.accommodation",
+        "pk": 4,
+        "fields": {
+            "name": "Prueba 1",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 789,
+            "category": "Casa",
+            "service": [2],
+            "owner": 3,
+            "capacity": 4,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 5,
+        "fields": {
+            "name": "Prueba 2",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 889,
+            "category": "Apartamento",
+            "service": [1],
+            "owner": 3,
+            "capacity": 3,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
         "model": "core.book",
         "pk": 1,
         "fields": {
@@ -315,7 +349,7 @@
             "payment_method": "EFECTIVO",
             "amount_people": 8,
             "user": 1,
-            "is_active": false,
+            "is_active": true,
             "accommodation": 2
         }
     },
@@ -350,7 +384,7 @@
     },
     {
         "model": "core.image",
-        "pk":1,
+        "pk": 1,
         "fields": {
             "title": "Sunset View",
             "description": "Beautiful sunset view from the balcony.",
@@ -363,7 +397,7 @@
     },
     {
         "model": "core.image",
-        "pk":2,
+        "pk": 2,
         "fields": {
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
@@ -376,7 +410,7 @@
     },
     {
         "model": "core.image",
-        "pk":3,
+        "pk": 3,
         "fields": {
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
@@ -385,6 +419,32 @@
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 3
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 4,
+        "fields": {
+        "title": "Spacious Living Room 2",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation3.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 4
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 5,
+        "fields": {
+        "title": "Spacious Living Room 3",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation4.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 5
         }
     },
     {
