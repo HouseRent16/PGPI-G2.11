@@ -36,102 +36,94 @@
             {% endfor %}
         </div>
     </div>
-
-    <button id="toggle-btn" class="toggle-btn">☰</button>
-    <div class="col-md-3 filter-form">
-        <form method="get">
-            <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Activar</button>
-                <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
-            </div>
-            
-            <div class="form-group">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
-            </div>
-    
-            <div class="form-group">
-                <label for="owner" class="form-label">Propietario</label>
-                <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
-            </div>
-    
-            <div class="form-group">
-                <label for="capacity" class="form-label">Capacidad</label>
-                <div id="capacity" class="input-group">
-                    <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
-                    <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
+    <div class="col-md-3 filter-form-container">
+        <button id="toggle-btn" class="toggle-btn">☰</button>
+        <div class="filter-form">
+            <form method="get">
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Activar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
                 </div>
-            </div>
-    
-            <div class="form-group">
-                <label for="price" class="form-label">Precio</label>
-                <div id="price" class="input-group">
-                    <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
-                    <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
                 </div>
-            </div>
-    
-            <div class="form-group">
-                <label for="date" class="form-label">Periodo</label>
-                <div id="date" class="input-group">
-                    <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
-                    <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
+        
+                <div class="form-group">
+                    <label for="owner" class="form-label">Propietario</label>
+                    <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="services" class="form-label">Servicios</label>
-                <select id="services" name="services" class="form-control" multiple>
-                    {% for service in services %}
-                        <option value="{{ service.id }}" 
-                            {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
-                            selected
-                            {% endif %}>
-                            {{ service.name }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            
-    
-            <div class="form-group">
-                <label class="form-label">Ubicación</label>
-                <div class="input-group mb-2">
-                    <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
-                    <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
+        
+                <div class="form-group">
+                    <label for="capacity" class="form-label">Capacidad</label>
+                    <div id="capacity" class="input-group">
+                        <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
+                        <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
+                    </div>
                 </div>
-                <div class="input-group">
-                    <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
-                    <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
+        
+                <div class="form-group">
+                    <label for="price" class="form-label">Precio</label>
+                    <div id="price" class="input-group">
+                        <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
+                        <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                    </div>
                 </div>
-            </div>
+        
+                <div class="form-group">
+                    <label for="date" class="form-label">Periodo</label>
+                    <div id="date" class="input-group">
+                        <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
+                        <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
+                    </div>
+                </div>
     
-            <div class="form-group">
-                <label for="rating" class="form-label">Características</label>
-                <div class="input-group">
-                    <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
-                    <select id="type" name="type" class="form-control">
-                        <option value="">Todos</option>
-                        {% for key, value in types %}
-                            <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
+                <div class="form-group">
+                    <label for="services" class="form-label">Servicios</label>
+                    <select id="services" name="services" class="form-control" multiple>
+                        {% for service in services %}
+                            <option value="{{ service.id }}" 
+                                {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
+                                selected
+                                {% endif %}>
+                                {{ service.name }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
-            </div>
-        </form>
+                
+        
+                <div class="form-group">
+                    <label class="form-label">Ubicación</label>
+                    <div class="input-group mb-2">
+                        <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
+                        <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
+                        <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="rating" class="form-label">Características</label>
+                    <div class="input-group">
+                        <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
+                        <select id="type" name="type" class="form-control">
+                            <option value="">Todos</option>
+                            {% for key, value in types %}
+                                <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>    
 
 <script>
-    window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('.navbar');
-        if (window.scrollY > 0) {
-            navbar.classList.add('shadow-navbar');
-        } else {
-            navbar.classList.remove('shadow-navbar');
-        }
-    });
-
     document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
         heartIcon.addEventListener('click', function() {
             // Aquí puedes añadir la lógica para manejar el favorito

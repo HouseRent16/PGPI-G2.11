@@ -6,41 +6,51 @@
 
 .page-container {
   padding: 0 !important;
-  display: grid;
+  display: flex;
   height: calc(100vh - var(--navbar-altura)) !important;
   overflow-x: hidden !important;
   width: 100vw !important;
 }
 
-.filter-form {
-  background-color: var(--c1) !important;
-  border-left: 1px solid var(--c2) !important;
-  padding: 25px 50px 0 50px !important;
+.filter-form-container {
   height: calc(100vh - var(--navbar-altura)) !important;
   position: sticky !important;
-  top: 0 !important;
-  width: 400px !important;
-  z-index: 1000;
+  display: flex;
   overflow-y: auto !important;
-
+  z-index: 1000;
   right: 0;
-  display: none;
+  top: 0 !important;
+  width: fit-content !important;
+  min-width: 40px;
+  padding-left: 20px !important;
+  padding-right: 0 !important;
 }
 
 .toggle-btn {
-  position: sticky; /* Posición absoluta para moverse con el panel */
-  top: 10px; /* Espaciado desde la parte superior */
-  left: -50px; /* Posición inicial del botón fuera del panel */
-  height: 40px; /* Altura del botón */
+  background-color: var(--c5) !important;
+  color: var(--c1) !important;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 40px;
   width: 40px !important; /* Anchura del botón */
   border-radius: 50%; /* Hace que el botón sea circular */
-  transition: left 0.3s ease-in-out; /* Animación suave para el movimiento del botón */
-  z-index: 1000;
+  border-color: var(--c5) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  z-index: 1001;
+}
+
+.filter-form {
+  border-left: 1px solid var(--c2) !important;
+  display: none;
+  padding: 25px 50px 0 50px !important;
+  width: 350px !important;
+  height: calc(100vh - var(--navbar-altura)) !important;
 }
 
 /* Clase para cuando el panel está expandido */
 .filter-form.expanded {
-  display: block
+  display: block;
 }
 
 .form-buttons {
@@ -77,9 +87,10 @@
 }
 
 .accommodation-container {
+  flex-grow: 1 !important;
   overflow-y: visible !important;
   overflow-x: hidden !important;
-  padding: 50px 50px 0 50px !important;
+  padding: 25px 25px 0 25px !important;
   top: 0 !important;
 }
 
