@@ -9,6 +9,7 @@
   display: grid;
   height: calc(100vh - var(--navbar-altura)) !important;
   overflow-x: hidden !important;
+  width: 100vw !important;
 }
 
 .filter-form {
