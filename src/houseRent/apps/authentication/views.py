@@ -9,6 +9,7 @@ from .forms import LoginForm, GuestLoginForm
 from apps.core.models import CustomUser, Address
 from django.contrib import messages
 
+
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -50,11 +51,5 @@ def register(request):
 
     return render(request, 'authentication/register.html', {'formUser': formUser, 'formAddress': formAddress})
 
-class GuestLoginView(LoginView):
-    template_name = 'login.html'
-    form_class = GuestLoginForm
-
-    def form_valid(self, form):
-        # Añade la lógica de acceso como invitado aquí
-        return super().form_valid(form)
-
+def private_policy(request):
+    return render(request, 'authentication/privatePolicy.html')
