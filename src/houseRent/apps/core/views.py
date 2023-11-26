@@ -3,8 +3,9 @@ from django.contrib import messages
 from .models import CustomUser, Accommodation, Service, Image
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render 
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg
+
 
 @staff_member_required
 def change_password(request, user_id):
@@ -21,6 +22,7 @@ def change_password(request, user_id):
     return render(request, 'core/change_password.html', {
         'form': form
     })
+
 
 def home(request):
     accommodations = Accommodation.objects.all().annotate(average_rating=Avg('comment__rating'))
@@ -71,3 +73,14 @@ def home(request):
         'accommodations': accommodations,
     }
     return render(request, 'core/home.html', context)
+
+
+def accommodation_details(request, accommodation_id):
+    accommodation = Accommodation.objects.get(pk=accommodation_id)
+    # accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
+
+    context = {
+        "accommodation": accommodation,
+    }
+
+    return render(request, 'core/accommodation-detail.html', context)

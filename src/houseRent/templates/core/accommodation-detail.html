@@ -1,0 +1,61 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<body>
+
+<h1>{{ accommodation.name }}</h1>
+<h3>{{ accommodation.address.city }}, {{ accommodation.address.country }}</h3>
+<div class="rating">
+  <span class="material-symbols-outlined rating-star">
+    star
+  </span>
+  <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+</div>
+
+<!-- Carousel de fotos -->
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    {% for image in accommodation.image_set.all %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.alt }}">
+      </div>
+    {% endfor %}
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Anterior</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Siguiente</span>
+  </a>
+</div>
+
+<!-- Descripción del alojamiento -->
+<p>{{ accommodation.description }}</p>
+
+<!-- Categoría del alojamiento -->
+<h3>Categoría</h3>
+<ul>
+  {% for category in accommodation.category %}
+    <li>{{ category.get_category_display }}</li>
+  {% endfor %}
+</ul>
+
+<!-- Servicios del alojamiento -->
+<h3>Servicios</h3>
+<ul>
+  {% for service in accommodation.service.all %}
+    <li>{{ service.name }} - {{ service.description }}</li>
+  {% endfor %}
+</ul>
+
+<!-- Botones de reserva y favoritos -->
+<a href="#" class="btn btn-primary">Reservar</a>
+<button class="btn btn-danger">❤️ Añadir a favoritos</button>
+
+<!-- Agrega tus scripts JavaScript aquí si es necesario -->
+
+</body>
+{% endblock %}
