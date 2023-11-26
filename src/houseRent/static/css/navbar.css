@@ -1,0 +1,104 @@
+@import url('var.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif !important;
+  }
+  
+  /* Estilo general de la barra de desplazamiento */
+  ::-webkit-scrollbar {
+    width: 10px; /* o el ancho que prefieras */
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--c1); /* Color de fondo */
+  }
+  
+  /* Estilo del thumb de la barra de desplazamiento */
+  ::-webkit-scrollbar-thumb {
+    background: var(--c2); /* Color del thumb */
+    border-radius: 10px; /* Bordes redondeados */
+  }
+  
+  /* Cambia el color al pasar el cursor o al arrastrar */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--c3); /* Color al pasar el cursor */
+  }
+  
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  }
+  
+  body {
+    background-color: var(--c1) !important;
+  }
+  
+  .shadow-navbar {
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+  
+  .btn-primary {
+    background-color: var(--c5) !important;
+    border-color: var(--c5) !important;
+    border-radius: 30px !important;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+    font-size: var(--f3) !important;
+  }
+  
+  .container-fluid {
+    padding: 0 !important;
+  }
+  
+  .navbar {
+    background-color: var(--c1) !important;
+    border-bottom: 1px solid var(--c2) !important;
+    padding: 0px 100px !important;
+    position: sticky !important;
+    top: 0;
+    z-index: 1000;
+    height: var(--navbar-altura) !important;
+  }
+  
+  .navbar-logo {
+    font-family: 'Pacifico', cursive !important;
+    font-size: var(--f1) !important;
+    color: var(--c5) !important;
+    font-weight: 600 !important;
+    margin-right: 50px !important;
+    text-decoration: none !important;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25) !important;
+  }
+  
+  .navbar-brand {
+    color: var(--c5) !important;
+    font-size: var(--f2) !important;
+    font-weight: 800 !important;
+    padding-right: 100px !important;
+  }
+  
+  a.nav-link {
+    color: var(--c4) !important;
+    font-size: var(--f3) !important;
+    font-weight: 600 !important;
+    padding: 0 25px 0 0 !important;
+    text-decoration: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .nav-link:hover {
+    color: var(--c5) !important;
+  }
+  
+  .navbar-collapse {
+    justify-content: flex-start !important;
+  }
