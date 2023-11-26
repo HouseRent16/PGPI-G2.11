@@ -8,22 +8,15 @@
 <section class="container">
     
         
-        <form method="POST">
+        <form method="POST" action="{% url 'request_booking' accommodation.id %}">
             {% csrf_token %}
             <div id="form1" class="form visible">
-                <h1>Datos de la reserva</h1>
+                <h1>Datos de la reserva para {{accommodation.name}}</h1>
             
             
                 {{form.as_p}}
             
-                <div class="row-spaced">
-                    <button id="return" class="filled-button mt-3">
-                        Volver
-                    </button>
-                    <button id="next" class="filled-button mt-3">
-                        Siguiente
-                    </button>
-                </div>
+               
 
             </div>
 
@@ -43,7 +36,14 @@
             </div>
             
         </form>
-    
+        <div class="row-spaced">
+            <button id="return" class="filled-button mt-3">
+                Volver
+            </button>
+            <button id="next" class="filled-button mt-3" >
+                Siguiente
+            </button>
+        </div>
     <div class="row">
         <div class="circulo"></div>
         <div class="circulo activo"></div>
