@@ -59,14 +59,4 @@
   <!-- Otros scripts necesarios para tu proyecto -->
   {% block extrabody %}{% endblock %}
 </body>
-<script>
-  window.addEventListener('scroll', function() {
-    var navbar = document.querySelector('.navbar');
-    if (window.scrollY > 0) {
-        navbar.classList.add('shadow-navbar');
-    } else {
-        navbar.classList.remove('shadow-navbar');
-    }
-  });
-</script>
 </html>
