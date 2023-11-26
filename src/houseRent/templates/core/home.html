@@ -37,6 +37,7 @@
         </div>
     </div>
 
+    <button id="toggle-btn" class="toggle-btn">☰</button>
     <div class="col-md-3 filter-form">
         <form method="get">
             <div class="form-buttons">
@@ -241,6 +242,15 @@
     document.addEventListener("DOMContentLoaded", function() {
         const accommodationRow = document.getElementById('accommodation-row');
         resizeObserver.observe(accommodationRow);
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggleBtn = document.getElementById('toggle-btn');
+        const filterForm = document.querySelector('.filter-form');
+    
+        toggleBtn.addEventListener('click', function() {
+            filterForm.classList.toggle('expanded');
+        });
     });
     
 </script>

@@ -22,6 +22,30 @@
   width: 400px !important;
   z-index: 1000;
   overflow-y: auto !important;
+
+  right: 0;
+  display: none;
+}
+
+.toggle-btn {
+  position: sticky; /* Posición absoluta para moverse con el panel */
+  top: 10px; /* Espaciado desde la parte superior */
+  left: -50px; /* Posición inicial del botón fuera del panel */
+  height: 40px; /* Altura del botón */
+  width: 40px !important; /* Anchura del botón */
+  border-radius: 50%; /* Hace que el botón sea circular */
+  transition: left 0.3s ease-in-out; /* Animación suave para el movimiento del botón */
+  z-index: 1000;
+}
+
+/* Clase para cuando el panel está expandido */
+.filter-form.expanded {
+  display: block
+}
+
+/* Clase para cambiar la posición del botón cuando el panel está expandido */
+.toggle-btn.expanded {
+  
 }
 
 .form-buttons {
