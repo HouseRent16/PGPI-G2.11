@@ -62,8 +62,8 @@ def register_acommodation(request):
         formAddress = RegisterAddress(request.POST, instance=address)
         if formAccommodation.is_valid() and formAddress.is_valid():
             address.save()
-            accommodation.address = address
-            formAccommodation.instance.customUser = request.user
+            accommodation.address = address            
+            formAccommodation.instance.owner = CustomUser.objects.get(id=request.user.id)
             # Guarda la instancia del formulario en la base de datos
             formAccommodation.save()
             messages.success(request, 'Alojamiento registrado correctamente')
