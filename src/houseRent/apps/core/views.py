@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Service, Image
+from .models import CustomUser, Accommodation, Image
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render 

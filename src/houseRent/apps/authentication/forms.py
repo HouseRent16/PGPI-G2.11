@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
-from apps.core.models import CustomUser, Address
+from apps.core.models import Accommodation, CustomUser, Address
 from django.contrib.auth.forms import AuthenticationForm
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
@@ -85,4 +85,8 @@ class GuestLoginForm(AuthenticationForm):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
     )
 
+class RegisterAccommodation(forms.ModelForm):
+    class Meta:
+        model = Accommodation
+        fields = ['name', 'description', 'capacity', 'price', 'category', 'services']
 

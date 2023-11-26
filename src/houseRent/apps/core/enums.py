@@ -64,3 +64,29 @@ class BookingStatus(Enum):
         @classmethod
         def choices(cls):
             return tuple((i.name, i.value) for i in cls)
+        
+class Service(Enum):
+
+    WIFI = 'Wifi'
+    WASHING_MACHINE = 'Lavadora'
+    AIR_CONDITIONING = 'Aire acondicionado'
+    HAIRDRYER = 'Secador de pelo'
+    KITCHEN = 'Cocina'
+    HEATER = 'Calefacción'
+    TV = 'Televisión'
+    IRON = 'Plancha'
+    FREE_PARKING = 'Parking gratuito'
+    LAUNDRY_SERVICE = 'Servicio de Lavandería'
+    HOUR_RECEPTION_24H = 'Recepción 24h'
+    BREAKFAST_INCLUDED = 'Desayuno incluido'
+    SWIMMING_POOL = 'Piscina'
+    JACUZZI = 'Jacuzzi'
+    BARBECUE = 'Barbacoa'
+    GYM = 'Gimnasio'
+    PETS_ALLOWED = 'Mascotas permitidas'
+    ACCESSIBILITY = 'Accesibilidad'
+    SMOKING_AREA = 'Zona de fumadores'
+
+    @classmethod
+    def choices(cls):
+        return tuple((i.name, i.value) for i in cls)

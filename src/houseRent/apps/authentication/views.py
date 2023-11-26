@@ -2,11 +2,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .forms import RegisterUser, RegisterAddress
+from .forms import RegisterUser, RegisterAddress, RegisterAccommodation
 from django.contrib.auth.views import LoginView
 
 from .forms import LoginForm, GuestLoginForm
-from apps.core.models import CustomUser, Address
+from apps.core.models import Accommodation, CustomUser, Address
 from django.contrib import messages
 
 
@@ -31,7 +31,7 @@ def login_view(request):
 
     return render(request, 'authentication/login.html', {'form': form})
 
-def register(request):
+def register_user(request):
     if request.method == 'POST':
         user = CustomUser()
         address = Address()
@@ -53,3 +53,23 @@ def register(request):
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
+
+def register_acommodation(request):
+    if request.method == 'POST':
+        accommodation = Accommodation()
+        address = Address()
+        formAccommodation = RegisterAccommodation(request.POST, instance=accommodation)
+        formAddress = RegisterAddress(request.POST, instance=address)
+        if formAccommodation.is_valid() and formAddress.is_valid():
+            address.save()
+            accommodation.address = address
+            formAccommodation.instance.customUser = request.user
+            # Guarda la instancia del formulario en la base de datos
+            formAccommodation.save()
+            messages.success(request, 'Alojamiento registrado correctamente')
+            return redirect('home')
+    else:
+        formAccommodation = RegisterAccommodation()
+        formAddress = RegisterAddress()
+
+    return render(request, 'accommodation/add.html', {'formAccommodation': formAccommodation,'formAddress': formAddress})

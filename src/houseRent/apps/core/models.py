@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.forms import ValidationError
-from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, BookingStatus
+from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, BookingStatus, Service
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -59,20 +59,6 @@ class CustomUser(AbstractUser):
     
     def __str__(self):
         return f"{self.username}"
-    
-class Service(models.Model):
-    name = models.CharField(max_length=256, unique=True, blank=False, null=False)
-    description = models.CharField(max_length=512, blank=False, null=False)
-
-    class Meta:
-        verbose_name = "Servicio"
-        verbose_name_plural = "Servicios"
-        indexes = [
-            models.Index(fields=['name']),
-        ]
-
-    def __str__(self):
-        return f"{self.name} - {self.description}"
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=256, blank=False, null=False)
@@ -82,7 +68,7 @@ class Accommodation(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False)
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     category = models.CharField(max_length=16, choices=Category.choices(), blank=False, null=False)
-    service = models.ManyToManyField(Service)
+    services = models.CharField(max_length=20, choices=Service.choices(), blank=True, null=True)
     creation_date = models.DateField(auto_now_add=True, blank=False, null=False)
     modification_date = models.DateField(auto_now=True, blank=False, null=False)
     is_active = models.BooleanField(default=True, blank=False, null=False)
