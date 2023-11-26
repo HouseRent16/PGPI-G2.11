@@ -10,7 +10,7 @@ from datetime import datetime
 from datetime import date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect
-from django.db.models import Q, Exists, OuterRef
+from django.db.models import Q, Exists, OuterRef, Value, BooleanField
 
 @staff_member_required
 def change_password(request, user_id):
@@ -47,6 +47,8 @@ def home(request):
     postal_code_query = request.GET.get('pcode')
     services_query = request.GET.getlist('services')
     min_rating = request.GET.get('min_rating')
+
+    accommodations = Accommodation.objects.all().annotate(is_booked=Value(False, output_field=BooleanField()))
 
     try:
         start_date = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
@@ -126,6 +128,7 @@ def home(request):
         accommodations = accommodations.filter(address__city__icontains=city_query)
     if postal_code_query:
         accommodations = accommodations.filter(address__postal_code__icontains=postal_code_query)
+    
     if start_date and end_date:
     # Encuentra reservas que se solapen con el rango de fechas
         overlapping_books = Book.objects.filter(
@@ -137,10 +140,7 @@ def home(request):
         accommodations = accommodations.annotate(
             is_booked=Exists(overlapping_books)
         )
-    for accommodation in accommodations:
-        print("=====================================")
-        print(accommodation.name)
-        print(accommodation.is_booked)
+
     if services_query:
         accommodations = accommodations.filter(service__id__in=services_query).distinct()
     if min_rating:
