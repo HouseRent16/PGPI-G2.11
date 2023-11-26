@@ -1,65 +1,105 @@
-<head>
-    <style>
-        body{
-            background-color: #FFEEDB;
-        }
-        header {
-        background: rgba(0,0,0,0.7);
-        width: 100%;
-        position: fixed;
-        z-index: 100;
-        margin-top: -0.3%;
-        margin-left: -0.3%;
-        }
+{% extends 'base_generic.html' %}
+{% load static %}
 
-        nav {
-        float: left;
-        }
-        nav ul {
-        list-style: none;
-        overflow: hidden; 
-        }
+{% block content %}
+<div class="page-container">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-logo" href="#">H</a>
+            <a class="navbar-brand" href="#">HousRent</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Política</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Ayuda</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Favoritos</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+        </div>
+    </nav>
 
-        nav ul li {
-        float: left;
-        font-family: Arial, sans-serif;
-        font-size: 25px;
-        margin-top: 1%;
-        }
-        nav ul li a {
-        display: block;
-        padding: 10px;
-        color: #fff;
-        text-decoration: none;
-        }
-        nav ul img{
-        float: right;
-        max-width: 5%;
-        border-radius: 10%;
-        margin-right: 5%;
+    <div class="page-content">
+        <div class="row">
+            <!-- ... -->
+            <!-- Área para mostrar los alojamientos -->
+            <div class="col accommodation-container">
+                <div class="row">
+                    {% for accommodation in accommodations %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
+                            <div class="card">
+                                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                                </a>
 
-        }
-        nav ul li:hover {
-        background: #eca023;
-        }
-    </style>
-    <script src="https://kit.fontawesome.com/b061fd2f45.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <header>
-    <nav>
-        <ul>
-            <li><a href="#">Reclamaciones <i class="fa-solid fa-file-circle-exclamation"></i></a></li>
-            <li><a href="#">Alojamientos <i class="fa-solid fa-house"></i></a></li>
-            <li><a href="#">Reservas <i class="fa-solid fa-suitcase"></i></a></l>
-            <li><a href="/login">Inicio de sesión <i class="fa-solid fa-user"></i></a></li>
-            <a href="/"><img src="/static/imagenes/Logo.png"></a>
-        </ul>
+                                <span class="material-symbols-outlined heart-button">favorite</span>
+                                
+                                {% if accommodation.first_image %}
+                                    <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                                {% endif %}
+                                <div class="card-body">
+                                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                                    <!-- Puntuación promedio -->
+                                    <div class="rating">
+                                        <span class="material-symbols-outlined rating-star">
+                                            star
+                                        </span>
+                                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                                    </div>
+                                </div>
+                            </div>                          
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <p>No se encontraron alojamientos con los criterios especificados.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- ... -->
+            <!-- Área de filtro -->
+            <div class="col-md-3 filter">
+                <form method="get">
+                    <!-- ... campos de filtro ... -->
+                    <input type="text" name="name" placeholder="Nombre del alojamiento">
+                    <input type="text" name="owner" placeholder="Propietario">
+                    <input type="text" name="type" placeholder="Tipo">
+                    <!-- ... otros campos ... -->
+                    <button type="submit">Filtrar</button>
+                </form>
+            </div>
+        </div>
+    </div>    
+</div>
 
-         
-         
-       
-    </div>
-</header>
-</body>
+<script>
+    window.addEventListener('scroll', function() {
+        var navbar = document.querySelector('.navbar');
+        if (window.scrollY > 0) {
+            navbar.classList.add('shadow-navbar');
+        } else {
+            navbar.classList.remove('shadow-navbar');
+        }
+    });
 
+    document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
+        heartIcon.addEventListener('click', function() {
+            // Aquí puedes añadir la lógica para manejar el favorito
+            console.log('Alojamiento añadido a favoritos');
+            this.classList.toggle('heart-button-selected');
+        });
+    });    
+</script>
+{% endblock %}
