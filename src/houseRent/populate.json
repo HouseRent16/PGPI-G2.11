@@ -349,7 +349,7 @@
             "payment_method": "EFECTIVO",
             "amount_people": 8,
             "user": 1,
-            "is_active": false,
+            "is_active": true,
             "accommodation": 2
         }
     },

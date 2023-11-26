@@ -7,15 +7,20 @@
         <div class="row" id="accommodation-row">
             {% for accommodation in accommodations %}
                 <div class="col card-container">
-                    <div class="card">
+                    <div class="card {% if accommodation.is_booked %}booked{% endif %}">
                         <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
                             <h5 class="accommodation-name">{{ accommodation.name }}</h5>
                         </a>
-
-                        <span class="material-symbols-outlined heart-button">favorite</span>
-                        
                         {% if accommodation.first_image %}
-                            <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                            <div class="card-img-container">
+                                <span class="material-symbols-outlined heart-button">favorite</span>
+                                {% if accommodation.is_booked %}
+                                    <div class="booked-indicator">
+                                        <p>Ocupado</p>
+                                    </div>
+                                {% endif %}
+                                <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                            </div>
                         {% endif %}
                         <div class="card-body">
                             <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
@@ -37,7 +42,11 @@
         </div>
     </div>
     <div class="col-md-3 filter-form-container">
-        <button id="toggle-btn" class="btn btn-primary toggle-btn">☰</button>
+        <button id="toggle-btn" class="btn btn-primary toggle-btn">
+            <span class="material-symbols-outlined toggle-icon">
+                arrow_back_ios
+            </span>
+        </button>
         <div class="filter-form">
             <form method="get">
                 <div class="form-buttons">
@@ -238,12 +247,26 @@
 
     document.addEventListener("DOMContentLoaded", function() {
         const toggleBtn = document.getElementById('toggle-btn');
+        const iconSpan = toggleBtn.querySelector('.toggle-icon');
         const filterForm = document.querySelector('.filter-form');
     
+        // Verifica el estado guardado al cargar la página y actualiza la interfaz de usuario en consecuencia
+        const isExpanded = localStorage.getItem('isFilterFormExpanded') === 'true';
+        filterForm.classList.toggle('expanded', isExpanded);
+        iconSpan.classList.toggle('toggle-icon-reversed', isExpanded);
+        iconSpan.textContent = isExpanded ? 'arrow_forward_ios' : 'arrow_back_ios';
+    
         toggleBtn.addEventListener('click', function() {
+            const isExpanded = !filterForm.classList.contains('expanded');
+            // Cambia el icono y el estado expandido
             filterForm.classList.toggle('expanded');
+            iconSpan.classList.toggle('toggle-icon-reversed', isExpanded);
+            iconSpan.textContent = isExpanded ? 'arrow_forward_ios' : 'arrow_back_ios';
+            // Guarda el nuevo estado en localStorage
+            localStorage.setItem('isFilterFormExpanded', isExpanded);
         });
     });
+    
     
 </script>
 {% endblock %}

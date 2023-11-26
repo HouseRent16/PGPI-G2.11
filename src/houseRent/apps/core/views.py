@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Service, Image
+from .models import CustomUser, Accommodation, Service, Image, Book
 from .enums import Category
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
@@ -10,6 +10,7 @@ from datetime import datetime
 from datetime import date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect
+from django.db.models import Q, Exists, OuterRef
 
 @staff_member_required
 def change_password(request, user_id):
@@ -126,10 +127,20 @@ def home(request):
     if postal_code_query:
         accommodations = accommodations.filter(address__postal_code__icontains=postal_code_query)
     if start_date and end_date:
-        accommodations = accommodations.exclude(
-            book__start_date__lt=end_date,
-            book__end_date__gt=start_date
+    # Encuentra reservas que se solapen con el rango de fechas
+        overlapping_books = Book.objects.filter(
+            accommodation=OuterRef('pk'),
+            start_date__lt=end_date,
+            end_date__gt=start_date,
+            is_active=True
         )
+        accommodations = accommodations.annotate(
+            is_booked=Exists(overlapping_books)
+        )
+    for accommodation in accommodations:
+        print("=====================================")
+        print(accommodation.name)
+        print(accommodation.is_booked)
     if services_query:
         accommodations = accommodations.filter(service__id__in=services_query).distinct()
     if min_rating:
