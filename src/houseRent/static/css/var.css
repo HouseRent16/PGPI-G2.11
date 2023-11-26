@@ -1,0 +1,17 @@
+:root {
+    --c1: #EFEFEF;
+    --c2: #BCBCBC;
+    --c3: #343434;
+    --c4: #1D1D1D;
+    --c5: #9333EA;
+    --c6: #9e1d1d;
+  
+    --f1: 2.5rem;
+    --f2: 1.5rem;
+    --f3: 1rem;
+    --f4: 0.8rem;
+    --f5: 0.6rem;
+  
+    --navbar-altura: 80px;
+    --content-padding: 50px;
+  }
