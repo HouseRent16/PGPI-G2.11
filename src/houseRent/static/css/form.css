@@ -43,11 +43,6 @@
   display: block
 }
 
-/* Clase para cambiar la posición del botón cuando el panel está expandido */
-.toggle-btn.expanded {
-  
-}
-
 .form-buttons {
   display: flex;
   justify-content: space-between;
