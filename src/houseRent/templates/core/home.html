@@ -67,16 +67,16 @@
                 <div class="form-group">
                     <label for="capacity" class="form-label">Capacidad</label>
                     <div id="capacity" class="input-group">
-                        <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
-                        <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
+                        <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}" min="0">
+                        <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}" min="0">
                     </div>
                 </div>
         
                 <div class="form-group">
                     <label for="price" class="form-label">Precio</label>
                     <div id="price" class="input-group">
-                        <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
-                        <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
+                        <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}" min="0">
+                        <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}" min="0">
                     </div>
                 </div>
         
