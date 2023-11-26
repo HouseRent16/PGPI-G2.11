@@ -320,7 +320,7 @@
   background: #9D4EDD;
 }
 
-.formulario button:hover {
+.formulario button:hover,.formulario button:focus {
   background: rgb(107, 107, 107);
 }
 
@@ -336,4 +336,22 @@
   transition: all 0.2s ease;
   background:  #fff;
  
+}
+.outlined-button:hover,.outlined-button:focus {
+  background: rgb(107, 107, 107);
+  color: white;
+}
+
+.contenedor-max-width {
+  max-width: 960px;
+  margin: 0 auto; 
+  padding: 80px 0;
+}
+
+.return {
+  align-items: center;
+  display: inline-flex;
+  color: rgb(0, 166, 255);
+  text-decoration: none;
+  padding: 20px 0;
 }
