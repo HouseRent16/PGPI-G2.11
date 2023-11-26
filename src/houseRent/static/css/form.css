@@ -124,22 +124,19 @@ a.nav-link {
 }
 
 .page-container {
-  padding: 0 var(--content-padding) !important;
+  padding: 0 !important;
   display: grid;
-  grid-template-rows: var(--navbar-altura) 1fr;
-  background-color: var(--c1) !important;
   height: calc(100vh - var(--navbar-altura)) !important;
+  overflow-x: hidden !important;
 }
 
 .filter-form {
   background-color: var(--c1) !important;
   border-left: 1px solid var(--c2) !important;
-  padding: 0 0 0 50px !important;
-  margin-top: 50px !important;
-  margin-bottom: 50px !important;
-  height: calc(100vh - var(--navbar-altura) - var(--content-padding)*2) !important;
+  padding: 25px 50px 0 50px !important;
+  height: calc(100vh - var(--navbar-altura)) !important;
   position: sticky !important;
-  top: calc(var(--navbar-altura) + var(--content-padding)) !important;
+  top: 0 !important;
   width: 350px !important;
   z-index: 1000;
   overflow-y: auto !important;
