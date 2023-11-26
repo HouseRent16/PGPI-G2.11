@@ -4,7 +4,7 @@
 {% block content %}
 <div class="row page-container">
     <div class="col accommodation-container">
-        <div class="row">
+        <div class="row" id="accommodation-row">
             {% for accommodation in accommodations %}
                 <div class="col card-container">
                     <div class="card">
@@ -205,5 +205,43 @@
 
         // Aquí puedes añadir más validaciones según sea necesario
     });
+    
+    function adjustCardLayout() {
+        const accommodationRow = document.getElementById('accommodation-row');
+        const cardContainers = accommodationRow.querySelectorAll('.card-container:not(.invisible)');
+        const cardWidth = cardContainers[0].offsetWidth;
+        const rowWidth = accommodationRow.offsetWidth;
+    
+        // Calcula el número de tarjetas por fila con un redondeo personalizado
+        const cardsPerRowEstimate = rowWidth / cardWidth;
+        let cardsPerRow;
+        if (cardsPerRowEstimate - Math.floor(cardsPerRowEstimate) >= 0.7) {
+            cardsPerRow = Math.ceil(cardsPerRowEstimate); // Redondea hacia arriba si está cerca del siguiente número entero
+        } else {
+            cardsPerRow = Math.floor(cardsPerRowEstimate); // Redondea hacia abajo en otros casos
+        }
+    
+        const lastRowCardCount = cardContainers.length % cardsPerRow;
+        const emptyCardsNeeded = lastRowCardCount > 0 ? cardsPerRow - lastRowCardCount : 0;
+    
+        // Elimina las tarjetas vacías existentes y añade las nuevas
+        accommodationRow.querySelectorAll('.card-container.invisible').forEach(card => card.remove());
+        for (let i = 0; i < emptyCardsNeeded; i++) {
+            const emptyCardContainer = document.createElement('div');
+            emptyCardContainer.classList.add('col', 'card-container', 'invisible');
+            accommodationRow.appendChild(emptyCardContainer);
+        }
+    }
+    
+    // Observa los cambios en el tamaño de #accommodation-row
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) adjustCardLayout();
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const accommodationRow = document.getElementById('accommodation-row');
+        resizeObserver.observe(accommodationRow);
+    });
+    
 </script>
 {% endblock %}
