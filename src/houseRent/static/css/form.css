@@ -60,11 +60,6 @@ body {
   background-color: var(--c1) !important;
 }
 
-.page-container {
-  display: grid;
-  grid-template-rows: var(--navbar-altura) 1fr;
-}
-
 .shadow-navbar {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
@@ -128,9 +123,12 @@ a.nav-link {
   justify-content: flex-start !important;
 }
 
-.page-content {
+.page-container {
   padding: 0 var(--content-padding) !important;
+  display: grid;
+  grid-template-rows: var(--navbar-altura) 1fr;
   background-color: var(--c1) !important;
+  height: calc(100vh - var(--navbar-altura)) !important;
 }
 
 .filter-form {

@@ -3,131 +3,129 @@
 
 {% block content %}
 <div class="page-container">
-    <div class="page-content">
-        <div class="row">
-            <!-- ... -->
-            <!-- Área para mostrar los alojamientos -->
-            <div class="col accommodation-container">
-                <div class="row">
-                    {% for accommodation in accommodations %}
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
-                            <div class="card">
-                                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
-                                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
-                                </a>
+    <div class="row">
+        <!-- ... -->
+        <!-- Área para mostrar los alojamientos -->
+        <div class="col accommodation-container">
+            <div class="row">
+                {% for accommodation in accommodations %}
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
+                        <div class="card">
+                            <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                                <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                            </a>
 
-                                <span class="material-symbols-outlined heart-button">favorite</span>
-                                
-                                {% if accommodation.first_image %}
-                                    <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
-                                {% endif %}
-                                <div class="card-body">
-                                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
-                                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
-                                    <!-- Puntuación promedio -->
-                                    <div class="rating">
-                                        <span class="material-symbols-outlined rating-star">
-                                            star
-                                        </span>
-                                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
-                                    </div>
+                            <span class="material-symbols-outlined heart-button">favorite</span>
+                            
+                            {% if accommodation.first_image %}
+                                <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                            {% endif %}
+                            <div class="card-body">
+                                <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                                <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                                <!-- Puntuación promedio -->
+                                <div class="rating">
+                                    <span class="material-symbols-outlined rating-star">
+                                        star
+                                    </span>
+                                    <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
                                 </div>
-                            </div>                          
-                        </div>
-                    {% empty %}
-                        <div class="col-12">
-                            <p>No se encontraron alojamientos con los criterios especificados.</p>
-                        </div>
-                    {% endfor %}
-                </div>
+                            </div>
+                        </div>                          
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <p>No se encontraron alojamientos con los criterios especificados.</p>
+                    </div>
+                {% endfor %}
             </div>
-            <!-- ... -->
-            <!-- Área de filtro -->
-            <div class="col-md-3 filter-form">
-                <form method="get">
-                    <div class="form-buttons">
-                        <button type="submit" class="btn btn-primary">Activar</button>
-                        <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
+        </div>
+        <!-- ... -->
+        <!-- Área de filtro -->
+        <div class="col-md-3 filter-form">
+            <form method="get">
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Activar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="owner" class="form-label">Propietario</label>
+                    <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="capacity" class="form-label">Capacidad</label>
+                    <div id="capacity" class="input-group">
+                        <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
+                        <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="price" class="form-label">Precio</label>
+                    <div id="price" class="input-group">
+                        <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
+                        <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
                     </div>
-            
-                    <div class="form-group">
-                        <label for="owner" class="form-label">Propietario</label>
-                        <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="date" class="form-label">Periodo</label>
+                    <div id="date" class="input-group">
+                        <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
+                        <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
                     </div>
-            
-                    <div class="form-group">
-                        <label for="capacity" class="form-label">Capacidad</label>
-                        <div id="capacity" class="input-group">
-                            <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}">
-                            <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}">
-                        </div>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="price" class="form-label">Precio</label>
-                        <div id="price" class="input-group">
-                            <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}">
-                            <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}">
-                        </div>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="date" class="form-label">Periodo</label>
-                        <div id="date" class="input-group">
-                            <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
-                            <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
-                        </div>
-                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="services" class="form-label">Servicios</label>
-                        <select id="services" name="services" class="form-control" multiple>
-                            {% for service in services %}
-                                <option value="{{ service.id }}" 
-                                    {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
-                                    selected
-                                    {% endif %}>
-                                    {{ service.name }}
-                                </option>
+                <div class="form-group">
+                    <label for="services" class="form-label">Servicios</label>
+                    <select id="services" name="services" class="form-control" multiple>
+                        {% for service in services %}
+                            <option value="{{ service.id }}" 
+                                {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
+                                selected
+                                {% endif %}>
+                                {{ service.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+        
+                <div class="form-group">
+                    <label class="form-label">Ubicación</label>
+                    <div class="input-group mb-2">
+                        <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
+                        <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
+                        <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="rating" class="form-label">Características</label>
+                    <div class="input-group">
+                        <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
+                        <select id="type" name="type" class="form-control">
+                            <option value="">Todos</option>
+                            {% for key, value in types %}
+                                <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    
-            
-                    <div class="form-group">
-                        <label class="form-label">Ubicación</label>
-                        <div class="input-group mb-2">
-                            <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
-                            <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
-                        </div>
-                        <div class="input-group">
-                            <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
-                            <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
-                        </div>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="rating" class="form-label">Características</label>
-                        <div class="input-group">
-                            <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
-                            <select id="type" name="type" class="form-control">
-                                <option value="">Todos</option>
-                                {% for key, value in types %}
-                                    <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
-    </div>    
-</div>
+    </div>
+</div>    
 
 <script>
     window.addEventListener('scroll', function() {
