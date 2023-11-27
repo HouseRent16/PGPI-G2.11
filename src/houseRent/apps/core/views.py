@@ -77,10 +77,13 @@ def home(request):
 
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
+    images = accommodation.image_set.all()
+
     # accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
 
     context = {
         "accommodation": accommodation,
+        'images': images
     }
 
     return render(request, 'core/accommodation-detail.html', context)

@@ -25,6 +25,9 @@ class Address(models.Model):
             models.Index(fields=['postal_code'])
         ]
 
+    def total_accepted_booking(self):
+        return Book.objects.filter(accommodation=self, status=BookingStatus.CONFIRMED).count()
+
     def __str__(self):
         parts = [self.street_number, self.address_line, self.city, self.region, self.country.name]
         return ", ".join(filter(None, parts))
