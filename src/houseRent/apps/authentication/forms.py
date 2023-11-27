@@ -96,7 +96,28 @@ class RegisterAccommodation(forms.ModelForm):
             'capacity': forms.NumberInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-            'service': forms.Select(attrs={'class': 'form-control'}),
         }
+
+        help_texts = {
+            'name': None,
+            'description': None,
+            'capacity': None,
+            'price': True,
+            'category': None,
+        }
+
+        validators={
+            'price': [
+                RegexValidator(
+                    regex='^[1-9]\d*(\.\d{1,2})?$',
+                    message='El precio debe ser un número decimal estrictamente positivo',
+                    code='invalid_price'
+                )
+            ]
+        },
+
+        
+
+        
 
 

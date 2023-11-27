@@ -78,7 +78,7 @@ class Accommodation(models.Model):
     description = models.TextField(max_length=1024, blank=False, null=False)
     capacity = models.PositiveIntegerField(blank=False, null=False)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
-    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False)
+    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)], help_text='Ingresa un valor positivo')
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     category = models.CharField(max_length=16, choices=Category.choices(), blank=False, null=False)
     service = models.ManyToManyField(Service, blank=True)
