@@ -3,6 +3,8 @@ from apps.core.models  import Book, CustomUser
 from utils.validators import Validators
 from django.db.models import Q
 from django.utils import timezone
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 
 
@@ -68,23 +70,21 @@ class BookingRequest(forms.ModelForm):
             if overlapping_booking.exists():
                 self.add_error('end_date', 'No hay disponibilidad del alojamiento seleccionado en las fechas especificadas.')
 
-class UserBookRequest2(forms.Form):
-    email = forms.EmailField(label='Email')
-    first_name = forms.CharField(label='Nombre')
-    last_name = forms.CharField(label='Apellido')
-    dni = forms.CharField(label='DNI')
-    birth_date = forms.DateField(label='Fecha de Nacimiento', widget=forms.DateInput(attrs={'type': 'date','class': 'form-control', 'type': 'date'})),
-                                                                                            
+                                                                                      
 class UserBookRequest(forms.ModelForm):
+    phone = PhoneNumberField(
+        widget=PhoneNumberPrefixWidget(attrs={'class': 'form-control'}, initial='ES',)
+    )
     class Meta:
         model = CustomUser
-        fields = ['email', 'first_name', 'last_name', 'birth_date', 'phone', 'dni']
+        fields = ['email', 'first_name', 'last_name', 'birth_date', 'phone', 'dni', 'gender']
         widgets = {
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'birth_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'dni': forms.TextInput(attrs={'class': 'form-control'}),
+            'gender': forms.Select(attrs={'class': 'form-control'}),
         }
 
         labels = {
@@ -94,4 +94,28 @@ class UserBookRequest(forms.ModelForm):
             'phone': 'Número de teléfono',
             'birth_date': 'Fecha de nacimiento',
             'dni': 'DNI',
+            'gender': 'Género',
         }
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        id = self.instance.id if self.instance else None
+        exist_user = CustomUser.objects.filter(email=email).exclude(id=id).exists()
+        if(exist_user):
+            raise forms.ValidationError('Ya existe dicho correo. Si tiene una cuenta inicie sesión, en caso contrario ingrese uno válido.')
+        return email
+    
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        id = self.instance.id if self.instance else None
+        exist_user = CustomUser.objects.filter(phone=phone).exclude(id=id).exists()
+        if(exist_user):
+            raise forms.ValidationError('Ya existe dicho teléfono. Si tiene una cuenta inicie sesión, en caso contrario ingrese uno válido.')
+        return phone
+    
+    def clean_dni(self):
+        id = self.instance.id if self.instance else None
+        dni = self.cleaned_data.get('dni')
+        exist_user = CustomUser.objects.filter(dni=dni).exclude(id=id).exists()
+        if(exist_user):
+            raise forms.ValidationError('Ya existe dicho dni. Si tiene una cuenta inicie sesión, en caso contrario ingrese uno válido.')
+        return dni

@@ -32,9 +32,15 @@ class Address(models.Model):
 
 
 class CustomUser(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        null=True,  
+        blank=True,  
+    )
     birth_date = models.DateField(blank=False, null=False)
     phone = PhoneNumberField(blank=False, null=False)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=True)
     dni = models.CharField(
         max_length=9, 
         unique=True, 
