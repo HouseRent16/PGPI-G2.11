@@ -3,6 +3,9 @@ from apps.core.models  import Accommodation
 from django.shortcuts import get_object_or_404
 from .forms import BookingRequest, UserBookRequest
 from django.forms.models import model_to_dict
+from utils.mailer import send_mail
+from datetime import datetime
+
 
 # Create your views here.
 
@@ -38,6 +41,11 @@ def request_booking(request, accommodation_id):
             booking_request.is_active = True
             booking_request.accommodation = accommodation
             booking_request.save()
+            str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
+            str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
+            body = "\nSu reserva para {} ha sido confirmada, para las fechas {} - {}. \n El código de seguimiento es: {}".format(accommodation.name, str_start_date, str_end_date, 1)
+
+            send_mail(user_loaded.email, body, [user_loaded.email],"mailer/email_booking.html")
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})

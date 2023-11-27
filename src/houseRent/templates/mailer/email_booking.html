@@ -1,0 +1,51 @@
+<html lang="es">
+{% load static %} 
+<style>
+    .appBar {
+        background-color: white;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .header-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .title{
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .content {
+        background-color: white;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    </style>
+
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<div class="appBar">
+    <div class="title">
+        <img src="cid:attached_image" alt="Logo" class="header-img">  
+        <h2>Información de reserva</h2>
+    </div>
+</div>
+</head>
+<body>
+<div class="content">
+    <p>Gracias por confiar en nosotros para sus próximas vacaciones</p>
+    <p>{{body}}</p>
+</div>
+
+</body>
+</html>
+
