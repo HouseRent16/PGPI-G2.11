@@ -1,8 +1,7 @@
 # views.py
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
-
-from .forms import RegisterUser, RegisterAddress, RegisterAccommodation
+from .forms import RegisterAccommodation, RegisterUser, RegisterAddress
 from django.contrib.auth.views import LoginView
 
 from .forms import LoginForm, GuestLoginForm
@@ -62,7 +61,7 @@ def register_acommodation(request):
         formAddress = RegisterAddress(request.POST, instance=address)
         if formAccommodation.is_valid() and formAddress.is_valid():
             address.save()
-            accommodation.address = address            
+            accommodation.address = address  
             formAccommodation.instance.owner = CustomUser.objects.get(id=request.user.id)
             # Guarda la instancia del formulario en la base de datos
             formAccommodation.save()
@@ -71,5 +70,5 @@ def register_acommodation(request):
     else:
         formAccommodation = RegisterAccommodation()
         formAddress = RegisterAddress()
-
+   
     return render(request, 'accommodation/add.html', {'formAccommodation': formAccommodation,'formAddress': formAddress})
