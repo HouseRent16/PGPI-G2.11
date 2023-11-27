@@ -7,6 +7,8 @@
 
   <!-- Estilos CSS base -->
   <link rel="icon" type="image/png" href="/static/imagenes/favicon.png">
+  <link rel="stylesheet" type="text/css" href="/static/css/var.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="/static/css/form.css">
 
   <!-- Agrega la referencia a Bootstrap CSS -->
@@ -25,6 +27,38 @@
 </head>
 
 <body> 
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+        <a class="navbar-logo" href="#">H</a>
+        <a class="navbar-brand" href="#">HousRent</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/">Catálogo</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="#">Reservas</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="#">Favoritos</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="#">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="#">Política</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="#">Ayuda</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link text-center" href="/admin">Admin</a>
+                </li>
+            </ul>
+        </div>
+        <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+    </div>
+  </nav>
   <!-- Contenido específico de cada página -->
   {% block content %}
   {% endblock %}
