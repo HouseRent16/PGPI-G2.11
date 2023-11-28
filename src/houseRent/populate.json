@@ -206,40 +206,124 @@
         "model": "core.service",
         "pk": 1,
         "fields": {
-            "name": "revolutionize cutting-edge networks",
-            "description": "I woman least information painting find. Piece wait program she wrong include happen.\nAlmost material the young. Environment successful study."
+            "name": "Wifi"
         }
     },
     {
         "model": "core.service",
         "pk": 2,
         "fields": {
-            "name": "synthesize efficient relationships",
-            "description": "Anything their break computer several. Government real southern usually billion skill. Everything build name fine."
+            "name": "Lavadora"
         }
     },
     {
         "model": "core.service",
         "pk": 3,
         "fields": {
-            "name": "maximize impactful info-mediaries",
-            "description": "Movie industry election positive bill. Glass particularly claim. Wall brother agent certainly realize quite. Interview base human board idea she."
+            "name": "Aire acondicionado"
         }
     },
     {
         "model": "core.service",
         "pk": 4,
         "fields": {
-            "name": "leverage leading-edge initiatives",
-            "description": "Whose day fall hear. My gun bed measure.\nA song daughter summer center indeed. Apply paper radio. Those edge heart significant."
+            "name": "Secador de pelo"
         }
     },
     {
         "model": "core.service",
         "pk": 5,
         "fields": {
-            "name": "unleash rich e-services",
-            "description": "Bad require reality long. Popular above forward work book quite contain. Reason enter Congress finish. Together investment PM movement indicate bad."
+            "name": "Cocina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 6,
+        "fields": {
+            "name": "Calefacción"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 7,
+        "fields": {
+            "name": "Televisión"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 8,
+        "fields": {
+            "name": "Plancha"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 9,
+        "fields": {
+            "name": "Parking gratuito"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 10,
+        "fields": {
+            "name": "Servicio de Lavandería"
+        }
+    },{
+        "model": "core.service",
+        "pk": 11,
+        "fields": {
+            "name": "Recepción 24h"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 12,
+        "fields": {
+            "name": "Desayuno incluido"
+        }
+    },{
+        "model": "core.service",
+        "pk": 13,
+        "fields": {
+            "name": "Piscina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 14,
+        "fields": {
+            "name": "Jacuzzi"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 15,
+        "fields": {
+            "name": "Barbacoa"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 16,
+        "fields": {
+            "name": "Gimnasio"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 17,
+        "fields": {
+            "name": "Mascotas permitidas"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 18,
+        "fields": {
+            "name": "Accesibilidad"
         }
     },
     {
@@ -251,7 +335,6 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "service": [1],
             "owner": 3,
             "capacity": 5,
             "is_active": true,
@@ -268,7 +351,6 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "service": [2],
             "owner": 3,
             "capacity": 6,
             "is_active": true,
@@ -285,7 +367,6 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "service": [3],
             "owner": 3,
             "capacity": 7,
             "is_active": true,
@@ -302,7 +383,6 @@
             "address":3,
             "price": 789,
             "category": "Casa",
-            "service": [2],
             "owner": 3,
             "capacity": 4,
             "is_active": true,
@@ -319,7 +399,6 @@
             "address":3,
             "price": 889,
             "category": "Apartamento",
-            "service": [1],
             "owner": 3,
             "capacity": 3,
             "is_active": true,

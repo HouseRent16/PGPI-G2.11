@@ -51,12 +51,21 @@
                 <li class="nav-item">
                 <a class="nav-link text-center" href="#">Ayuda</a>
                 </li>
+                {% if user.groups.all.0.name == 'Administradores' %}
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/admin">Admin</a>
                 </li>
+                {% endif %}
+                {% if user.groups.all.0.name == 'Propietarios' %}
+                <li class="nav-item">
+                  <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
+        {% if user == null %}
         <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+        {% endif %}
     </div>
   </nav>
   <!-- Contenido específico de cada página -->
