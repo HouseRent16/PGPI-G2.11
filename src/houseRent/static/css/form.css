@@ -134,6 +134,7 @@ a.nav-link {
   padding: 0 var(--content-padding) !important;
   background-color: var(--c1) !important;
 }
+
 .book-container {
   overflow-y: visible !important;
   overflow-x: hidden !important;
@@ -159,13 +160,19 @@ a.nav-link {
   height: calc(100vh - var(--navbar-altura) - var(--content-padding)*2) !important;
   position: sticky !important;
   top: calc(var(--navbar-altura) + var(--content-padding)) !important;
-  width: 425px !important;
+  width: 25% !important;
 }
 .tab-pane{
   display: none;
+  max-height: 1000px;
+  max-width: 100%;
+  margin: 20px;
 }
 .tab-pane.active{
-  display: block;
+  display: flex;
+  max-height: 1000px;
+  max-width: 100%;
+  margin: 20px;
 }
 
 
@@ -215,7 +222,7 @@ a.nav-link {
   background-color: var(--c1) !important;
   overflow: hidden !important;
   position: relative !important;
-  width: 300px !important;
+  width: 300px ;
   height: 400px !important;
 }
 
