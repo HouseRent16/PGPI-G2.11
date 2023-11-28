@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from apps.core.models import Accommodation,Book,Image, Service, Favorite, Comment,Claim
+from apps.core.models import Accommodation,Book,Image, Service, Favorite, Comment,Claim,Image
 from datetime import datetime,timezone
 
 def books(request):
@@ -35,6 +35,7 @@ def detailsBooks(request,ID):
                      cancelBook.append(book)
                 else:
                     pastBook.append(book)
+            imagenInicial=accomodationImages(request,ID)[0]
             context={
                 'nextBooks': sorted(nextBook,key=lambda x: x.id,reverse=True),
                 'pastBooks':sorted(pastBook,key=lambda x: x.id,reverse=True),
@@ -44,7 +45,9 @@ def detailsBooks(request,ID):
                 'services':services,
                 'numFavoritos': conteoFavoritos(request,ID),
                 'rating': ratingAccommodation(request,ID),
-                'claim': conteoReclamaciones(request,ID)
+                'claim': conteoReclamaciones(request,ID),
+                'imagenInicial': imagenInicial,
+                'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))]
 
             }
             
@@ -70,3 +73,7 @@ def ratingAccommodation(request,id_accommodation):
 def conteoReclamaciones(request,id_accommodation):
     reclamaciones=Claim.objects.filter(accommodation_id=id_accommodation)
     return len(reclamaciones)
+
+def accomodationImages(request,id_accommodation):
+    images=Image.objects.filter(accommodation_id=id_accommodation)
+    return images
