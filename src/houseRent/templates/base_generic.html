@@ -63,10 +63,11 @@
                 {% endif %}
             </ul>
         </div>
-        {% if user == null %}
-        <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+        {% if user.is_authenticated %}
+          <a class="btn btn-primary" href="/logout">Cerrar Sesión</a> 
+        {% else %}
+          <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
         {% endif %}
-    </div>
   </nav>
   <!-- Contenido específico de cada página -->
   {% block content %}
