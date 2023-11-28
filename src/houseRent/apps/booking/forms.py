@@ -59,7 +59,7 @@ class BookingRequest(forms.ModelForm):
     
     def clean_accommodation(self):
         accommodation = self.cleaned_data.get('accommodation')
-        start_date = self.cleaned_data.get('start_date')  # Usa get() para evitar KeyError
+        start_date = self.cleaned_data.get('start_date') 
         end_date = self.cleaned_data.get('end_date')
         amount_people = self.cleaned_data['amount_people']
         if accommodation and accommodation.capacity < amount_people:
@@ -68,7 +68,7 @@ class BookingRequest(forms.ModelForm):
             overlapping_booking = Book.objects.filter(
                   Q(accommodation=accommodation) &
                   (Q(end_date__gt=start_date, start_date__lt=end_date) | Q(end_date__lt=end_date, end_date__gt=start_date) | Q(start_date__gt=start_date, start_date__lt=end_date))
-            )
+            ).exclude(is_active=False)
             if overlapping_booking.exists():
                 self.add_error('end_date', 'No hay disponibilidad del alojamiento seleccionado en las fechas especificadas.')
         
