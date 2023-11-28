@@ -13,7 +13,9 @@
                         </a>
                         {% if accommodation.first_image %}
                             <div class="card-img-container">
-                                <span class="material-symbols-outlined heart-button">favorite</span>
+                                {% if user != null %}
+                                <span class="material-symbols-outlined heart-button" data-value="{{accommodation.id}}">favorite</span>
+                                {% endif %}
                                 {% if accommodation.is_booked %}
                                     <div class="booked-indicator">
                                         <p>Ocupado</p>
@@ -134,12 +136,46 @@
 
 <script>
     document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
-        heartIcon.addEventListener('click', function() {
-            // Aquí puedes añadir la lógica para manejar el favorito
-            console.log('Alojamiento añadido a favoritos');
-            this.classList.toggle('heart-button-selected');
-        });
+    heartIcon.addEventListener('click', async function(event) {
+         // Obtener el ID del alojamiento
+        const {value} = event.currentTarget.dataset;
+        const classSelected = event.currentTarget.classList.contains('heart-button-selected');
+
+        event.currentTarget.setAttribute('disabled', true);
+
+        // Aquí puedes realizar una petición al servidor para agregar el alojamiento a favoritos
+        await toggleFavorites(value, classSelected);
+
+        event.currentTarget.removeAttribute('disabled');
+
+        // Cambiar la apariencia del botón
+        this.classList.toggle('heart-button-selected');
+
+        
     });
+});
+
+function toggleFavorites(accommodationId, classSelected) {
+    // Realizar una petición al servidor (puedes usar Fetch API o cualquier librería AJAX)
+    fetch('/api/togglefavorites/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            accommodationId: accommodationId,
+            classSelected: classSelected,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Alojamiento añadido a favoritos en el servidor:', data);
+    })
+    .catch(error => {
+        console.error('Error al agregar alojamiento a favoritos:', error);
+    });
+}
+
 
     // Obtener los elementos de entrada de capacidad mínima y máxima
     var minCapacityInput = document.getElementById('min_capacity');
