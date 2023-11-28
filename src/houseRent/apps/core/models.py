@@ -70,7 +70,6 @@ class CustomUser(AbstractUser):
     
 class Service(models.Model):
     name = models.CharField(max_length=256, unique=True, blank=False, null=False)
-    description = models.CharField(max_length=512, blank=False, null=False)
 
     class Meta:
         verbose_name = "Servicio"
@@ -80,17 +79,17 @@ class Service(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.name} - {self.description}"
+        return f"{self.name}"
 
 class Accommodation(models.Model):
     name = models.CharField(max_length=256, blank=False, null=False)
     description = models.TextField(max_length=1024, blank=False, null=False)
     capacity = models.PositiveIntegerField(blank=False, null=False, default=1)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
-    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False)
+    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)], help_text='Ingresa un valor positivo')
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
     category = models.CharField(max_length=16, choices=Category.choices(), blank=False, null=False)
-    service = models.ManyToManyField(Service)
+    service = models.ManyToManyField(Service, blank=True)
     creation_date = models.DateField(auto_now_add=True, blank=False, null=False)
     modification_date = models.DateField(auto_now=True, blank=False, null=False)
     is_active = models.BooleanField(default=True, blank=False, null=False)
