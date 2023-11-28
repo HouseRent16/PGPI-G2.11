@@ -177,9 +177,6 @@ def togglefavorites(request):
         
         class_selected = data.get('classSelected')
 
-        print("##################################")
-        print(request.body)
-
         #Verificar la classe del botón para añadir o eliminar a favoritos
         if class_selected == False:
             # Verificar si ya existe la entrada en favoritos para evitar duplicados
