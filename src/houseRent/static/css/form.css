@@ -80,7 +80,10 @@ body {
 .container-fluid {
   padding: 0 !important;
 }
-
+.nav-tab-size{
+  font-size:medium !important;
+  height: 20 px;
+}
 .navbar {
   background-color: var(--c1) !important;
   border-bottom: 1px solid var(--c2) !important;
@@ -131,6 +134,40 @@ a.nav-link {
   padding: 0 var(--content-padding) !important;
   background-color: var(--c1) !important;
 }
+.book-container {
+  overflow-y: visible !important;
+  overflow-x: hidden !important;
+  padding: 50px 0 0 0 !important;
+  top: 0 !important;
+}
+.book-photos {
+  background-color: var(--c1) !important;
+  height: 700px !important;
+  overflow: hidden;
+  object-fit: contain;
+  justify-content: center;
+  display: flex;
+  margin: 15px;
+
+}
+.book {
+  background-color: var(--c1) !important;
+  border-left: 1px solid var(--c2) !important;
+  padding: 0 0 0 25px !important;
+  margin-top: 50px !important;
+  margin-bottom: 0px !important;
+  height: calc(100vh - var(--navbar-altura) - var(--content-padding)*2) !important;
+  position: sticky !important;
+  top: calc(var(--navbar-altura) + var(--content-padding)) !important;
+  width: 425px !important;
+}
+.tab-pane{
+  display: none;
+}
+.tab-pane.active{
+  display: block;
+}
+
 
 .filter {
   background-color: var(--c1) !important;
@@ -398,3 +435,5 @@ a.nav-link {
   text-decoration: none;
   padding: 20px 0;
 }
+
+

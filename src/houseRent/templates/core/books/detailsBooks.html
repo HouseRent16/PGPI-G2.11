@@ -1,0 +1,209 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-container">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-logo" href="#">H</a>
+            <a class="navbar-brand" href="#">HousRent</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Política</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Ayuda</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="/books">Reservas</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="#">Favoritos</a>
+                    </li>
+                </ul>
+            </div>
+            <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
+        </div>
+    </nav>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col col-md-9 book-container " >
+                <div class="row">
+                    <div class="col col-md-12 ">
+                       <div class="row h-100" >
+                            <div class="col col-md-7  " >
+                                <h1>hola</h1>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center " >
+                                <span class="material-symbols-outlined ">
+                                    done
+                                    </span>
+                                
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <span class="material-symbols-outlined ">
+                                    close
+                                    </span>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <span class="material-symbols-outlined star-symbol">
+                                    star
+                                </span>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <span class="material-symbols-outlined favorite-symbol">
+                                    favorite
+                                    </span>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <span class="material-symbols-outlined manufacturing-symbol">
+                                    manufacturing
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-12 book-photos " >
+                        <div class="row" >
+                        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src="/media/images/accommodation4.png" class="d-block w-100" alt="...">
+                            </div>
+                            <div class="carousel-item">
+                                <img src="/media/uploads/images/accommodation1.png" class="d-block w-100" alt="...">
+                            </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        </div>           
+                    </div>
+                    <div class="col col-md-3  " >
+                        <!-- Sidebar de Servicios -->
+                        <div class="row justify-content-center" >   
+                        <div class="card">
+                            <div class="card-header">
+                                Servicios
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Servicio 1</li>
+                                <li class="list-group-item">Servicio 2</li>
+                                <li class="list-group-item">Servicio 3</li>
+                                <li class="list-group-item">Servicio 4</li>
+                            </ul>
+                            </div>
+                    </div>
+                </div> 
+                    <div class="col col-md-6 " >
+                        <div class="row" >   
+                            <div class="card w-100 p-3 ">
+                                <div class="card-header">
+                                    Descripcion
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Servicio 1</li>
+                                    <li class="list-group-item">Servicio 2</li>
+                                    <li class="list-group-item">Servicio 3</li>
+                                    <li class="list-group-item">Servicio 4</li>
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 " >
+                        <div class="row justify-content-center" >   
+                            <div class="card">
+                                <div class="card-header">
+                                    Detalles
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Servicio 1</li>
+                                    <li class="list-group-item">Servicio 2</li>
+                                    <li class="list-group-item">Servicio 3</li>
+                                    <li class="list-group-item">Servicio 4</li>
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        
+        <div class=" col col-md-3 book  " >
+            <div class="container">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                    <a class="nav-link active tab-link" data-target="#activas" href="#">Activas</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link tab-link" data-target="#canceladas" href="#">Canceladas</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link tab-link" data-target="#pasadas" href="#">Pasadas</a>
+                    </li>
+                </ul>
+                
+                <!-- Tab panes -->
+                <div id="activas" class="tab-pane active">
+                    <!-- Contenido para reservas activas -->
+                    <h1>hola</h1>
+                </div>
+                <div id="canceladas" class="tab-pane">
+                    <!-- Contenido para reservas canceladas -->
+                    <h1>hola2</h1>
+                </div>
+                <div id="pasadas" class="tab-pane">
+                    <!-- Contenido para reservas pasadas -->
+                    <h1>hola3</h1>
+                </div>
+  
+            </div>
+            
+            
+            
+        </div>
+            
+        
+    </div>
+        
+        
+      </div>
+      
+    
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  var tabs = document.querySelectorAll('.tab-link');
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      // Desactivar todas las pestañas y ocultar todos los paneles
+      tabs.forEach(function (tab) {
+        tab.classList.remove('active');
+        var pane = document.querySelector(tab.getAttribute('data-target'));
+        pane.classList.remove('active');
+      });
+
+      // Activar la pestaña clicada y mostrar el panel correspondiente
+      tab.classList.add('active');
+      var activePane = document.querySelector(tab.getAttribute('data-target'));
+      activePane.classList.add('active');
+    });
+  });
+});
+
+</script>
+{% endblock %}
