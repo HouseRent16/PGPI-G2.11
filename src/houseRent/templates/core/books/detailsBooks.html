@@ -37,7 +37,7 @@
                     <div class="col col-md-12 ">
                        <div class="row h-100" >
                             <div class="col col-md-7  " >
-                                <h1>hola</h1>
+                                <h1>{{accommodation.owner}}</h1>
                             </div>
                             <div class="col col-md-1 d-flex justify-content-center align-items-center " >
                                 <span class="material-symbols-outlined ">
@@ -46,24 +46,32 @@
                                 
                             </div>
                             <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="#"> {{claim}}
                                 <span class="material-symbols-outlined ">
                                     close
                                     </span>
+                                </a>
                             </div>
+                            
                             <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="#"> {{rating}}
                                 <span class="material-symbols-outlined star-symbol">
                                     star
                                 </span>
+                                </a>
                             </div>
                             <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                {{numFavoritos}}
                                 <span class="material-symbols-outlined favorite-symbol">
-                                    favorite
+                                        favorite
                                     </span>
                             </div>
                             <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="#"> 
                                 <span class="material-symbols-outlined manufacturing-symbol">
                                     manufacturing
                                     </span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -97,10 +105,9 @@
                                 Servicios
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Servicio 1</li>
-                                <li class="list-group-item">Servicio 2</li>
-                                <li class="list-group-item">Servicio 3</li>
-                                <li class="list-group-item">Servicio 4</li>
+                                {% for service in services %}
+                                    <h5> {{service.name}}</h5>
+                                    {%endfor%}
                             </ul>
                             </div>
                     </div>
@@ -112,15 +119,9 @@
                                     Descripcion
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <h5>asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas
-                                        dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas
-                                        dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-                                        asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas
-                                        dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-                                        asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasda
-                                        sdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd
-                                        asdasdasdasdasdasdasdasdasd
-                                        asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas</h5>
+                                    {% for accommodation in accommodations %}
+                                    <h5> {{accommodation.description}}</h5>
+                                    {%endfor%}
                                 </ul>
                                 </div>
                         </div>
@@ -132,10 +133,18 @@
                                     Detalles
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Servicio 1</li>
-                                    <li class="list-group-item">Servicio 2</li>
-                                    <li class="list-group-item">Servicio 3</li>
-                                    <li class="list-group-item">Servicio 4</li>
+                                    <li class="list-group-item">Fecha de Creación:</li>
+                                    <li class="list-group-item">Última modificacón:</li>
+                                    <li class="list-group-item">Activo:</li>
+                                    <li class="list-group-item">Precio:</li>
+                                    <li class="list-group-item">Capacidad:</li>
+                                    <li class="list-group-item">Categoria:</li>
+                                    <li class="list-group-item">Pais:</li>
+                                    <li class="list-group-item">Ciudad:</li>
+                                    <li class="list-group-item">Código postal:</li>
+                                    <li class="list-group-item">Calle:</li>
+                                    <li class="list-group-item">Numero:</li>
+                                    <li class="list-group-item">Región:</li>
                                 </ul>
                                 </div>
                         </div>
@@ -170,42 +179,40 @@
                                     Servicios1
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Servicio 1</li>
-                                    <li class="list-group-item">Servicio 2</li>
-                                    <li class="list-group-item">Servicio 3</li>
-                                    <li class="list-group-item">Servicio 4</li>
+                                    {% for book in nextBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                    
                                 </ul>
                                 </div>
                         </div>
                     </div>
                     <div id="canceladas" class="tab-pane">
                         <!-- Contenido para reservas canceladas -->
-                        <div class="row justify-content-center" >   
-                            <div class="card">
-                                <div class="card-header">
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header ">
                                     Servicios2
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Servicio 1</li>
-                                    <li class="list-group-item">Servicio 2</li>
-                                    <li class="list-group-item">Servicio 3</li>
-                                    <li class="list-group-item">Servicio 4</li>
+                                    {% for book in cancelBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
                                 </ul>
                                 </div>
                         </div>
                     </div>
                     <div id="pasadas" class="tab-pane">
                         <!-- Contenido para reservas pasadas -->
-                        <div class="row justify-content-center" >   
-                            <div class="card">
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
                                 <div class="card-header">
                                     Servicios3
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Servicio 1</li>
-                                    <li class="list-group-item">Servicio 2</li>
-                                    <li class="list-group-item">Servicio 3</li>
-                                    <li class="list-group-item">Servicio 4</li>
+                                    {% for book in pastBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
                                 </ul>
                                 </div>
                         </div>
