@@ -2,7 +2,7 @@ from django import forms
 from apps.core.models  import Book, CustomUser
 from utils.validators import Validators
 from django.db.models import Q
-from django.utils import timezone
+import datetime
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
@@ -108,6 +108,7 @@ class UserBookRequest(forms.ModelForm):
             'dni': 'DNI',
             'gender': 'Género',
         }
+       
     def clean_email(self):
         email = self.cleaned_data.get('email')
         id = self.instance.id if self.instance else None
@@ -131,3 +132,12 @@ class UserBookRequest(forms.ModelForm):
         if(exist_user):
             raise forms.ValidationError('Ya existe dicho dni. Si tiene una cuenta inicie sesión, en caso contrario ingrese uno válido.')
         return dni
+    
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data.get('birth_date')
+        current_date = datetime.date.today()
+        years = (current_date - birth_date) 
+        years = years.days / 365
+        if years < 18:
+             raise forms.ValidationError('Debe ser mayor de edad')
+        return birth_date
