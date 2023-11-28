@@ -47,7 +47,7 @@ def request_booking(request, accommodation_id):
             str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
             body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. El código de seguimiento es: {}".format(accommodation.name, str_start_date, str_end_date, booking_request.code)
 
-            send_mail(user_loaded.email, body, [user_loaded.email],"mailer/email_booking.html")
+            send_mail("Información de reserva", body, [user_loaded.email],"mailer/email_booking.html")
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
