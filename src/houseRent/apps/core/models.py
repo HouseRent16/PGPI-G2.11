@@ -2,9 +2,11 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator, FileExtensionValidator
 from django.forms import ValidationError
-from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, BookingStatus
 from django_countries.fields import CountryField
+from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, BookingStatus
 from phonenumber_field.modelfields import PhoneNumberField
+from utils.validators import Validators
+from utils.encoder import encoder_sha256
 
 class Address(models.Model):
     # Es el número asignado a un edificio a lo largo de una calle o una vía
@@ -31,9 +33,15 @@ class Address(models.Model):
 
 
 class CustomUser(AbstractUser):
+    username = models.CharField(
+        max_length=150,
+        unique=True,
+        null=True,  
+        blank=True,  
+    )
     birth_date = models.DateField(blank=False, null=False)
     phone = PhoneNumberField(blank=False, null=False)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=True)
     dni = models.CharField(
         max_length=9, 
         unique=True, 
@@ -76,7 +84,7 @@ class Service(models.Model):
 class Accommodation(models.Model):
     name = models.CharField(max_length=256, blank=False, null=False)
     description = models.TextField(max_length=1024, blank=False, null=False)
-    capacity = models.PositiveIntegerField(blank=False, null=False)
+    capacity = models.PositiveIntegerField(blank=False, null=False, default=1)
     owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
     price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)], help_text='Ingresa un valor positivo')
     address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False, null=False)
@@ -187,15 +195,16 @@ class Favorite(models.Model):
         return f"{self.user.username} : {self.accommodation.name} - {self.date}"
 
 class Book(models.Model):
-    start_date=models.DateTimeField(blank=False, null=False)
-    end_date=models.DateTimeField(blank=False, null=False)
+    start_date=models.DateTimeField(blank=False, null=False, validators=[Validators.validate_future_datetime])
+    end_date=models.DateTimeField(blank=False, null=False, validators=[Validators.validate_future_datetime])
     payment_method=models.CharField(max_length=16, choices=PaymentMethod.choices(), blank=False, null=False)
-    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE,  blank=False, null=False)
     amount_people=models.PositiveIntegerField(blank=False, null=False)
     is_active=models.BooleanField()
     accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
+    code = models.CharField(max_length=200, blank=False, null=False)
 
     class Meta:
         verbose_name = "Reserva"
@@ -207,20 +216,17 @@ class Book(models.Model):
         ]
     
     def clean(self):
-        super().clean()
-        if self.start_date > self.end_date:
+        if self.start_date and self.end_date and self.start_date > self.end_date:
             raise ValidationError('La fecha de inicio no puede ser mayor que la fecha de fin')
-        if self.amountPeople < 1:
+        if self.amount_people and self.amount_people < 1:
             raise ValidationError('El número de personas no puede ser menor que 1')
-        
-        overlapping_bookings = Book.objects.filter(
-            accommodation=self.accommodation,
-            start_date__lt=self.end_date,
-            end_date__gt=self.start_date
-        ).exclude(pk=self.pk)  # Excluye la reserva actual en caso de que se esté editando
-
-        if overlapping_bookings.exists():
-            raise ValidationError('El alojamiento no está disponible para las fechas seleccionadas')
     
     def __str__(self):
         return f"{self.user.username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
+    
+    def save(self, *args, **kwargs):
+
+        if not self.pk:
+            self.code = encoder_sha256("{}{}{}".format(self.accommodation.pk,self.user.pk,str(self.start_date), str(self.end_date)))
+
+        super().save(*args, **kwargs)
