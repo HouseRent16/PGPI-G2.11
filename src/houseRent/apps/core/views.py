@@ -1,6 +1,7 @@
+import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Service, Image, Book
+from .models import CustomUser, Accommodation, Favorite, Service, Image, Book
 from .enums import Category
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
@@ -9,8 +10,11 @@ from django.db.models import Avg
 from datetime import datetime
 from datetime import date
 from urllib.parse import urlencode
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.db.models import Q, Exists, OuterRef, Value, BooleanField
+
+from django.views.decorators.csrf import csrf_exempt
+
 
 @staff_member_required
 def change_password(request, user_id):
@@ -161,3 +165,33 @@ def home(request):
     }    
 
     return render(request, 'core/home.html', context)
+
+@csrf_exempt
+def togglefavorites(request):
+    if request.method == 'POST':
+        # Obtener el ID del alojamiento desde la solicitud POST
+        data = json.loads(request.body)
+        accommodation_id = data.get('accommodationId')
+        # Obtener el id del usuario actual
+        user_id = CustomUser.objects.get(id=request.user.id).id  
+        
+        class_selected = data.get('classSelected')
+
+        print("##################################")
+        print(request.body)
+
+        #Verificar la classe del botón para añadir o eliminar a favoritos
+        if class_selected == False:
+            # Verificar si ya existe la entrada en favoritos para evitar duplicados
+            if not Favorite.objects.filter(user_id=user_id, accommodation_id=accommodation_id).exists():
+                Favorite.objects.create(user_id=user_id, accommodation_id=accommodation_id)
+
+            return JsonResponse({'status': 'success'})
+        else:
+            # Eliminar la entrada de favoritos
+            if Favorite.objects.filter(user_id=user_id, accommodation_id=accommodation_id).exists():
+                Favorite.objects.filter(user_id=user_id, accommodation_id=accommodation_id).delete()
+            return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
+
