@@ -1,0 +1,84 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="contenedor">
+        <header>Registro de alojamientos</header>
+        <form method="post" action="{% url 'registerAccommodation' %}" class="formulario">
+        {% csrf_token %}
+
+        <!-- Nombre del alojamiento -->
+        <div class="entrada">
+            <label for="name">Nombre: </label>
+            {{ formAccommodation.name }}
+        </div>
+
+        <!-- Descripcion del alojamiento -->
+        <div class="entrada">
+            <label for="description" style="display: block; margin-bottom: 8px;">Descripción: </label>
+            {{ formAccommodation.description }}
+        </div>
+
+         <!-- Campos de la clase dirección -->
+        <div class="columna">
+            <div class="entrada">
+                <label for="address_line">Calle:</label>
+                <input type="text" id="address_line" name="address_line" required>
+            </div>
+            <div class="entrada">
+                <label for="street_number">Número:</label>
+                <input type="text" id="street_number" name="street_number" pattern="^[0-9]*$" title="Introduzca un número válido" required>
+            </div>
+        </div>
+
+        <div class="entrada">
+            <label for="country">País:</label>
+            {{ formAddress.country }}
+        </div>
+
+        <div class="entrada">
+            <label for="city">Ciudad:</label>
+            <input type="text" id="city" name="city" required>   
+        </div>            
+        
+        <div class="columna">
+            <div class="entrada"> 
+                <label for="region">Provincia:</label>
+                <input type="text" id="region" name="region" required>
+            </div>
+            
+            <div class="entrada">
+                <label for="postal_code">Código Postal:</label>
+                <input type="text" id="postal_code" name="postal_code" pattern="^[0-9]*$" title="Introduzca un código postal válido" required>
+            </div>    
+        </div>
+
+        <!-- Otros campos de la clase Accommodation -->
+        <div class="columna">
+            <div class="entrada">
+                <label for="capacity">Capacidad: </label>
+                {{ formAccommodation.capacity }}
+            </div>
+            <div class="entrada">
+                <label for="price">Precio por noche: </label>
+                {{ formAccommodation.price }}
+            </div>
+        </div>
+        
+        <div class="entrada">
+            <label for="category">Categoría: </label>
+            {{ formAccommodation.category }}
+        </div>  
+
+
+        <!-- Service es una relación ManyToMany -->
+        <div class="entrada">
+            <label for="service">Servicios: </label>
+            {{ formAccommodation.service }}
+        </div>
+
+         <!-- Botón de envío del formulario -->
+         <button type="submit">Registrar apartamento</button>
+        </form>
+    </section>
+{% endblock %}
