@@ -3,126 +3,6 @@
         "model": "auth.group",
         "pk": 70,
         "fields": {
-            "street": "97822 Stanley Grove",
-            "city": "Lake Mary",
-            "province": "Vermont",
-            "zipcode": "06091",
-            "number": "2",
-            "country": "CG"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 2,
-        "fields": {
-            "street": "58042 Wanda Square Suite 547",
-            "city": "North Gail",
-            "province": "Arizona",
-            "zipcode": "75760",
-            "number": "2",
-            "country": "LB"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 3,
-        "fields": {
-            "street": "069 Tracy Way",
-            "city": "West Candicemouth",
-            "province": "California",
-            "zipcode": "36236",
-            "number": "2",
-            "country": "TR"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 4,
-        "fields": {
-            "street": "47938 Noble Cape",
-            "city": "North Matthew",
-            "province": "Florida",
-            "zipcode": "27347",
-            "number": "2",
-            "country": "US"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 5,
-        "fields": {
-            "street": "9769 Garza Brook",
-            "city": "South Thomas",
-            "province": "New Mexico",
-            "zipcode": "59736",
-            "number": "2",
-            "country": "YE"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 6,
-        "fields": {
-            "street": "2176 Michael Trail",
-            "city": "Lisaton",
-            "province": "Montana",
-            "zipcode": "93277",
-            "number": "2",
-            "country": "LB"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 7,
-        "fields": {
-            "street": "4001 Steven Trail",
-            "city": "North Victoriaport",
-            "province": "Oregon",
-            "zipcode": "60540",
-            "number": "2",
-            "country": "SZ"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 8,
-        "fields": {
-            "street": "95988 Amber Underpass",
-            "city": "New Elizabeth",
-            "province": "Missouri",
-            "zipcode": "42375",
-            "number": "2",
-            "country": "DM"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 9,
-        "fields": {
-            "street": "7974 Christian Turnpike",
-            "city": "Ramosmouth",
-            "province": "Montana",
-            "zipcode": "86434",
-            "number": "2",
-            "country": "MY"
-        }
-    },
-    {
-        "model": "core.address",
-        "pk": 10,
-        "fields": {
-            "street": "657 Evans Mall",
-            "city": "West Laura",
-            "province": "California",
-            "zipcode": "98714",
-            "number": "2",
-            "country": "MA"
-        }
-    },
-    {
-        "model": "auth.group",
-        "pk": 70,
-        "fields": {
             "name": "Administradores",
             "permissions": [
                 1,
@@ -326,40 +206,124 @@
         "model": "core.service",
         "pk": 1,
         "fields": {
-            "name": "revolutionize cutting-edge networks",
-            "description": "I woman least information painting find. Piece wait program she wrong include happen.\nAlmost material the young. Environment successful study."
+            "name": "Wifi"
         }
     },
     {
         "model": "core.service",
         "pk": 2,
         "fields": {
-            "name": "synthesize efficient relationships",
-            "description": "Anything their break computer several. Government real southern usually billion skill. Everything build name fine."
+            "name": "Lavadora"
         }
     },
     {
         "model": "core.service",
         "pk": 3,
         "fields": {
-            "name": "maximize impactful info-mediaries",
-            "description": "Movie industry election positive bill. Glass particularly claim. Wall brother agent certainly realize quite. Interview base human board idea she."
+            "name": "Aire acondicionado"
         }
     },
     {
         "model": "core.service",
         "pk": 4,
         "fields": {
-            "name": "leverage leading-edge initiatives",
-            "description": "Whose day fall hear. My gun bed measure.\nA song daughter summer center indeed. Apply paper radio. Those edge heart significant."
+            "name": "Secador de pelo"
         }
     },
     {
         "model": "core.service",
         "pk": 5,
         "fields": {
-            "name": "unleash rich e-services",
-            "description": "Bad require reality long. Popular above forward work book quite contain. Reason enter Congress finish. Together investment PM movement indicate bad."
+            "name": "Cocina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 6,
+        "fields": {
+            "name": "Calefacción"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 7,
+        "fields": {
+            "name": "Televisión"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 8,
+        "fields": {
+            "name": "Plancha"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 9,
+        "fields": {
+            "name": "Parking gratuito"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 10,
+        "fields": {
+            "name": "Servicio de Lavandería"
+        }
+    },{
+        "model": "core.service",
+        "pk": 11,
+        "fields": {
+            "name": "Recepción 24h"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 12,
+        "fields": {
+            "name": "Desayuno incluido"
+        }
+    },{
+        "model": "core.service",
+        "pk": 13,
+        "fields": {
+            "name": "Piscina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 14,
+        "fields": {
+            "name": "Jacuzzi"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 15,
+        "fields": {
+            "name": "Barbacoa"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 16,
+        "fields": {
+            "name": "Gimnasio"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 17,
+        "fields": {
+            "name": "Mascotas permitidas"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 18,
+        "fields": {
+            "name": "Accesibilidad"
         }
     },
     {
@@ -371,7 +335,6 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "service": [1],
             "owner": 3,
             "capacity": 5,
             "is_active": true,
@@ -388,7 +351,6 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "service": [2],
             "owner": 3,
             "capacity": 6,
             "is_active": true,
@@ -405,7 +367,6 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "service": [3],
             "owner": 3,
             "capacity": 7,
             "is_active": true,
@@ -422,7 +383,6 @@
             "address":3,
             "price": 789,
             "category": "Casa",
-            "service": [2],
             "owner": 3,
             "capacity": 4,
             "is_active": true,
@@ -439,7 +399,6 @@
             "address":3,
             "price": 889,
             "category": "Apartamento",
-            "service": [1],
             "owner": 3,
             "capacity": 3,
             "is_active": true,
