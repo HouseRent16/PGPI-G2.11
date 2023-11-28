@@ -1,5 +1,9 @@
-<html lang="es">
+
+{% extends 'mailer/base_email.html' %}
+{% block extrahead %}
 {% load static %} 
+
+
 <style>
     .appBar {
         background-color: white;
@@ -30,22 +34,22 @@
 
     </style>
 
-<head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<div class="appBar">
-    <div class="title">
-        <img src="cid:attached_image" alt="Logo" class="header-img">  
-        <h2>Información de reserva</h2>
+    <div class="appBar">
+        <div class="title">
+            <img src="cid:attached_image" alt="Logo" class="header-img">  
+            <h2>Información de reserva</h2>
+        </div>
     </div>
-</div>
-</head>
 <body>
+
+{% endblock %}
+
+{% block content %}
 <div class="content">
-    <p>Gracias por confiar en nosotros para sus próximas vacaciones</p>
+    <p>Gracias por confiar en nosotros para sus próximas vacaciones<br></p>
     <p>{{body}}</p>
 </div>
 
 </body>
-</html>
+{% endblock %}
 

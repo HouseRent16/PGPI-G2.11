@@ -13,14 +13,13 @@ class BookingRequest(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        # Oculta el campo de elección de la casa
-        self.fields['accommodation'].widget = forms.HiddenInput()
-
+       
     class Meta:
         model=Book
         fields=['start_date','end_date','payment_method','amount_people','special_requests', 'accommodation']
 
         widgets = {
+            'accommodation': forms.HiddenInput(),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'payment_method': forms.Select(attrs={'class': 'form-control'}),
@@ -35,6 +34,7 @@ class BookingRequest(forms.ModelForm):
             'amount_people': 'Número de personas',
             'special_requests': 'Notas especiales'
         }
+
 
         
     def clean_start_date(self):
@@ -57,20 +57,32 @@ class BookingRequest(forms.ModelForm):
         Validators.validate_future_datetime(end_date)
         return end_date
     
-    def clean_overlapping(self):
-        start_date = self.cleaned_data['start_date']
-        end_date = self.cleaned_data['end_date']
+    def clean_accommodation(self):
         accommodation = self.cleaned_data.get('accommodation')
-
-        if start_date and end_date:
+        start_date = self.cleaned_data.get('start_date')  # Usa get() para evitar KeyError
+        end_date = self.cleaned_data.get('end_date')
+        amount_people = self.cleaned_data['amount_people']
+        if accommodation and accommodation.capacity < amount_people:
+                    self.add_error('amount_people', 'Se ha superado la capacidad máxima')
+        if start_date and end_date and accommodation:
             overlapping_booking = Book.objects.filter(
                   Q(accommodation=accommodation) &
                   (Q(end_date__gt=start_date, start_date__lt=end_date) | Q(end_date__lt=end_date, end_date__gt=start_date) | Q(start_date__gt=start_date, start_date__lt=end_date))
             )
             if overlapping_booking.exists():
                 self.add_error('end_date', 'No hay disponibilidad del alojamiento seleccionado en las fechas especificadas.')
+        
+        
+        return accommodation
 
-                                                                                      
+    def clean_amount_people(self):
+        cleaned_data = super().clean()
+        amount_people = self.cleaned_data['amount_people']
+        accommodation = cleaned_data.get('accommodation')
+        if accommodation and accommodation.capacity < amount_people:
+            raise forms.ValidationError('Se ha superado la capacidad máxima')
+        return amount_people
+                                                                        
 class UserBookRequest(forms.ModelForm):
     phone = PhoneNumberField(
         widget=PhoneNumberPrefixWidget(attrs={'class': 'form-control'}, initial='ES',)

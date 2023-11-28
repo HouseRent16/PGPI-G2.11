@@ -6,6 +6,7 @@ from django_countries.fields import CountryField
 from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, BookingStatus
 from phonenumber_field.modelfields import PhoneNumberField
 from utils.validators import Validators
+from utils.encoder import encoder_sha256
 
 class Address(models.Model):
     # Es el número asignado a un edificio a lo largo de una calle o una vía
@@ -204,6 +205,7 @@ class Book(models.Model):
     accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=False, null=False)
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
+    code = models.CharField(max_length=200, blank=False, null=False)
 
     class Meta:
         verbose_name = "Reserva"
@@ -222,3 +224,10 @@ class Book(models.Model):
     
     def __str__(self):
         return f"{self.user.username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
+    
+    def save(self, *args, **kwargs):
+
+        if not self.pk:
+            self.code = encoder_sha256("{}{}{}".format(self.accommodation.pk,self.user.pk,str(self.start_date), str(self.end_date)))
+
+        super().save(*args, **kwargs)
