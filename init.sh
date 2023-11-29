@@ -72,7 +72,11 @@ else
     echo "========== CHECKING PYTHON VERSION =========="
     echo "Checking Python version..."
     python3 -c "import sys; assert sys.version_info[:2] == (3, 10), 'Incorrect Python version, requires Python 3.10'; print('Correct Python version (3.10)')"
-    
+    if [ $? -ne 0 ]; then
+        echo "Python version is not 3.10. Exiting..."
+        exit 1
+    fi
+    echo ""
 fi
 
 if [ $novenv -eq 1 ]; then
