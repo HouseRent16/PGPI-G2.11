@@ -2,56 +2,6 @@
 {% load static %}
 
 {% block content %}
-    <div class="page-content">
-        <div class="row">
-            <!-- ... -->
-            <!-- Área para mostrar los alojamientos -->
-            <div class="col accommodation-container">
-                <div class="row">
-                    {% for accommodation in accommodations %}
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
-                            <div class="card">
-                                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
-                                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
-                                </a>
-
-                                <span class="material-symbols-outlined heart-button">favorite</span>
-                                
-                                {% if accommodation.first_image %}
-                                    <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
-                                {% endif %}
-                                <div class="card-body">
-                                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
-                                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
-                                    <!-- Puntuación promedio -->
-                                    <div class="rating">
-                                        <span class="material-symbols-outlined rating-star">
-                                            star
-                                        </span>
-                                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
-                                    </div>
-                                </div>
-                            </div>                          
-                        </div>
-                    {% empty %}
-                        <div class="col-12">
-                            <p>No se encontraron alojamientos con los criterios especificados.</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-            <!-- ... -->
-            <!-- Área de filtro -->
-            <div class="col-md-3 filter">
-                <form method="get">
-                    <!-- ... campos de filtro ... -->
-                    <input type="text" name="name" placeholder="Nombre del alojamiento">
-                    <input type="text" name="owner" placeholder="Propietario">
-                    <input type="text" name="type" placeholder="Tipo">
-                    <!-- ... otros campos ... -->
-                    <button type="submit">Filtrar</button>
-                </form>
-            </div>
 <div class="row page-container">
     <div class="col accommodation-container">
         <div class="row" id="accommodation-row">

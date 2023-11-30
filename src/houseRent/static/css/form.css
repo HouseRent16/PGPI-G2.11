@@ -107,9 +107,6 @@
 }
 
 
-.filter {
-  background-color: var(--c1) !important;
-}
 .filter-form {
   border-left: 1px solid var(--c2) !important;
   display: none;
