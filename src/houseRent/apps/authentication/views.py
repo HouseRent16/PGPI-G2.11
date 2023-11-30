@@ -8,14 +8,24 @@ from .forms import LoginForm, GuestLoginForm
 from apps.core.models import Accommodation, CustomUser, Address
 from django.contrib import messages
 
+from django.contrib.auth.hashers import check_password
 
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+
+            user = CustomUser.objects.get(email=email)
+            print("Primero:", type(user))
+            if check_password(password, user.password):
+                print("Contraseña correcta")
+            else:
+                print("Contraseña incorrecta")
+            
+            # user = authenticate(request, email=email, password=password)
+            # print("Segundo:",type(user))
 
             if user is not None:
                 login(request, user)
@@ -24,7 +34,7 @@ def login_view(request):
             else:
                 # Usuario no válido
                 # Puedes agregar un mensaje de error en el formulario
-                form.add_error(None, 'Usuario o contraseña incorrectos.')
+                form.add_error(None, 'Correo electrónico o contraseña incorrectos.')
     else:
         form = LoginForm()
 
