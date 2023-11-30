@@ -1,0 +1,29 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="cuerpo">
+  <section class="contenedor">
+    <header>Inicio de Sesión</header>
+      <form method="post" class="formulario">
+        {% csrf_token %}
+        <div class="entrada">
+          <label for="username">Nombre de Usuario:</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="entrada">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="mt-3">Iniciar Sesión</button>
+      </form>
+      <button type="button" class="outlined-button mt-3" onclick="redirigir()">Acceso como invitado</button>
+      <p class="m-0 mt-3 text-muted">Al acceder como invitado, aceptas nuestra <a href="{% url 'privatePolicy' %}">política de privacidad</a></p>
+  </section>
+</div>
+<script>
+   function redirigir() {
+        window.location.href = '{% url "home" %}';
+    }
+</script>
+{% endblock %}

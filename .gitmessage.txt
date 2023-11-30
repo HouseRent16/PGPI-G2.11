@@ -1,0 +1,13 @@
+HOUS-XX asunto
+
+cuerpo
+
+### XX
+# Se referenciará la issue de Jira correspondiente (en caso de existir)
+
+### asunto
+# Consiste en una breve descripción del problema que se ha tratado y que debe de comenzar con un verbo en participio. 
+
+
+### cuerpo (opcional)
+# Se utilizará en caso de que el asunto no sea suficientemente descriptivo.
