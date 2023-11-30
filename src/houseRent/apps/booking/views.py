@@ -11,7 +11,12 @@ def books(request):
             for accommodation in accommodations:
                 accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
                 books[accommodation]=len(Book.objects.filter(accommodation_id=accommodation.id,is_active=True))
-            return render(request,'core/books/books.html',{"books": books})
+                context={
+                    "books": books,
+                    'propietario': es_propietario
+
+                }
+            return render(request,'booking/books.html',context)
         else:
             return redirect('/')
     else:
@@ -47,11 +52,12 @@ def detailsBooks(request,ID):
                 'rating': ratingAccommodation(request,ID),
                 'claim': conteoReclamaciones(request,ID),
                 'imagenInicial': imagenInicial,
-                'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))]
+                'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))],
+                'propietario': es_propietario
 
             }
             
-            return render(request,'core/books/detailsBooks.html',context)
+            return render(request,'booking/detailsBooks.html',context)
         else:
             return redirect('/')
     else: 

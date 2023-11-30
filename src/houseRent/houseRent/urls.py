@@ -23,7 +23,7 @@ urlpatterns = [
     path("", include("apps.core.urls")),
     path("admin/", admin.site.urls),
     path("", include("apps.authentication.urls")),
-    path("books/", include("apps.books.urls"))
+    path("booking/", include("apps.booking.urls"))
 ]
 
 if settings.DEBUG:

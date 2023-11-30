@@ -17,10 +17,11 @@
                     </li>
                     <li class="nav-item">
                     <a class="nav-link text-center" href="#">Ayuda</a>
-                    </li>
+                    {% if request.user.is_authenticated and propietario%}
                     <li class="nav-item">
-                    <a class="nav-link text-center" href="/books">Reservas</a>
+                    <a class="nav-link text-center" href="/booking/owner">Reservas</a>
                     </li>
+                    {%endif%}
                     <li class="nav-item">
                     <a class="nav-link text-center" href="#">Favoritos</a>
                     </li>
@@ -135,18 +136,13 @@
                                     Detalles
                                 </div>
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Fecha de Creación:</li>
-                                    <li class="list-group-item">Última modificacón:</li>
-                                    <li class="list-group-item">Activo:</li>
-                                    <li class="list-group-item">Precio:</li>
-                                    <li class="list-group-item">Capacidad:</li>
-                                    <li class="list-group-item">Categoria:</li>
-                                    <li class="list-group-item">Pais:</li>
-                                    <li class="list-group-item">Ciudad:</li>
-                                    <li class="list-group-item">Código postal:</li>
-                                    <li class="list-group-item">Calle:</li>
-                                    <li class="list-group-item">Numero:</li>
-                                    <li class="list-group-item">Región:</li>
+                                    <li class="list-group-item">Fecha de Creación: {{accommodation.creation_date}}</li>
+                                    <li class="list-group-item">Última modificacón: {{accommodation.modification_date}}</li>
+                                    <li class="list-group-item">Activo: {{accommodation.is_active}}</li>
+                                    <li class="list-group-item">Precio: {{accommodation.price}}</li>
+                                    <li class="list-group-item">Capacidad: {{accommodation.capacity}}</li>
+                                    <li class="list-group-item">Categoria:{{accommodation.category}}</li>
+                                    <li class="list-group-item">Dirección: {{accommodation.address}}</li>
                                 </ul>
                                 </div>
                         </div>

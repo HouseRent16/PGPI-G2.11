@@ -66,8 +66,10 @@ def home(request):
 
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
-
+    es_propietario=request.user.groups.filter(name="Propietarios").exists()
+        
     context = {
         'accommodations': accommodations,
+        'propietario': es_propietario
     }
     return render(request, 'core/home.html', context)

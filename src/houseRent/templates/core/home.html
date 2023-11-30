@@ -18,9 +18,11 @@
                     <li class="nav-item">
                     <a class="nav-link text-center" href="#">Ayuda</a>
                     </li>
+                    {% if request.user.is_authenticated and propietario%}
                     <li class="nav-item">
-                    <a class="nav-link text-center" href="/books">Reservas</a>
+                    <a class="nav-link text-center" href="/booking/owner">Reservas</a>
                     </li>
+                    {%endif%}
                     <li class="nav-item">
                     <a class="nav-link text-center" href="#">Favoritos</a>
                     </li>
