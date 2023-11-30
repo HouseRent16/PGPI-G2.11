@@ -471,7 +471,7 @@
             "title": "Sunset View",
             "description": "Beautiful sunset view from the balcony.",
             "order": 1,
-            "image": "uploads/images/sunset.jpg",
+            "image": "uploads/images/habitacion1.png",
             "alt": "Sunset view",
             "publication_date": "2023-11-17",
             "accommodation": 1
@@ -484,7 +484,7 @@
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
             "order": 1,
-            "image": "uploads/images/accommodation2.jpg",
+            "image": "uploads/images/habitacion2.png",
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 2
@@ -527,6 +527,19 @@
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 5
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 6,
+        "fields": {
+            "title": "Sunset View",
+            "description": "Beautiful sunset view from the balcony.",
+            "order": 2,
+            "image": "uploads/images/habitacion2.png",
+            "alt": "Sunset view",
+            "publication_date": "2023-11-17",
+            "accommodation": 1
         }
     },
     {
