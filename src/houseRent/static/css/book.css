@@ -1,0 +1,87 @@
+
+
+.container {
+    background-color: rgba(255, 255, 255, 0.763);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.235);
+    margin-top: 20px;
+}
+
+.outlined-button {
+    height: 55px;
+    width: 100%;
+    color: rgb(0, 166, 255);
+    font-size: 1rem;
+    font-weight: 400;
+    margin-top: 30px;
+    border: 1px solid #9D4EDD;
+    color:#9D4EDD;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background:  #fff;
+  }
+
+  label {
+    font-weight: bold; /* Otra opción es utilizar valores como '700' en lugar de 'bold' */
+}
+
+.filled-button {
+    background-color: #9D4EDD; 
+    color: white; 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+}
+
+  .form-control {
+    display: flex;
+    border-radius: 5px !important;
+    font-size: var(--f3) !important;
+    background-color: white !important;
+    box-shadow: none;
+  }
+
+  .form{
+    display: none;
+    flex-direction: column;
+  }
+
+  .visible {
+    display: flex;
+}
+
+  input {
+    box-shadow: none;
+  }
+
+  .circulo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #9D4EDD; 
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+}
+
+.activo {
+    background-color: rgba(79, 79, 79, 0.29);
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.row-spaced {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}

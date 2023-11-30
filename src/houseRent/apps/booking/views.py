@@ -1,6 +1,9 @@
-from django.shortcuts import render,redirect
-from apps.core.models import Accommodation,Book,Image, Service, Favorite, Comment,Claim,Image
+from django.shortcuts import render,redirect,get_object_or_404
+from apps.core.models import Accommodation,Book,Image, Service, Favorite, Comment,Claim,Image,CustomUser
 from datetime import datetime,timezone
+from .forms import BookingRequest, UserBookRequest
+from django.forms.models import model_to_dict
+from django.db.models import Q
 
 def books(request):
     if request.user.is_authenticated:
@@ -16,7 +19,7 @@ def books(request):
                     'propietario': es_propietario
 
                 }
-            return render(request,'booking/books.html',context)
+            return render(request,'booking/booksOwner.html',context)
         else:
             return redirect('/')
     else:
@@ -28,7 +31,7 @@ def detailsBooks(request,ID):
         if es_propietario:
             accommodations=Accommodation.objects.filter(id=ID) 
             books=Book.objects.filter(accommodation_id=ID)
-            services=accommodations[0].service.all() 
+            services=accommodations[0].service.all()
             timeNow=datetime.now(timezone.utc)
             nextBook=[]
             pastBook=[]
@@ -57,7 +60,7 @@ def detailsBooks(request,ID):
 
             }
             
-            return render(request,'booking/detailsBooks.html',context)
+            return render(request,'booking/detailsBooksOwner.html',context)
         else:
             return redirect('/')
     else: 
@@ -73,7 +76,8 @@ def ratingAccommodation(request,id_accommodation):
     mediaRating=0
     for comment in comments:
         sumaRating+=comment.rating
-    mediaRating=sumaRating/len(comments)
+    if len(comments)!=0:
+        mediaRating=sumaRating/len(comments)
     return mediaRating
 
 def conteoReclamaciones(request,id_accommodation):
@@ -83,3 +87,44 @@ def conteoReclamaciones(request,id_accommodation):
 def accomodationImages(request,id_accommodation):
     images=Image.objects.filter(accommodation_id=id_accommodation)
     return images
+
+
+
+# Create your views here.
+
+
+def request_booking(request, accommodation_id):
+    accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
+    current_user = request.user
+    if not current_user.is_authenticated:
+        user_form = UserBookRequest()
+    else:
+        user_form = UserBookRequest(instance=current_user)
+
+
+    if request.method == 'GET':
+        form = BookingRequest(initial={'accommodation': accommodation})
+        form.accommodation = accommodation
+        return render(request, 'booking/book.html', {'form': form, 'user_form': user_form, "accommodation":accommodation})
+    else:
+        form = BookingRequest(request.POST, initial={'accommodation': accommodation})
+        form.accommodation = accommodation
+        if not current_user.is_authenticated:
+            user_form = UserBookRequest(request.POST)
+            if CustomUser.objects.filter(email=user_form.data.get('email')).exists():
+                current_user = CustomUser.objects.filter(Q(email=user_form.data.get('email'))).first()
+                user_form = UserBookRequest(request.POST, instance=current_user)
+        else:
+            user_form = UserBookRequest(request.POST, instance=current_user)
+
+        if form.is_valid() and user_form.is_valid():
+
+            booking_request = form.save(commit=False)
+            user_loaded = user_form.save()
+            booking_request.user = user_loaded
+            booking_request.is_active = True
+            booking_request.accommodation = accommodation
+            booking_request.save()
+            return redirect('/')
+        else: 
+            return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
