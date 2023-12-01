@@ -2,104 +2,307 @@
 {% load static %}
 
 {% block content %}
-<div class="page-container">
-    <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid">
-            <a class="navbar-logo" href="#">H</a>
-            <a class="navbar-brand" href="#">HousRent</a>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Sobre Nosotros</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Política</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Ayuda</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Reservas</a>
-                    </li>
-                    <li class="nav-item">
-                    <a class="nav-link text-center" href="#">Favoritos</a>
-                    </li>
-                </ul>
-            </div>
-            <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
-        </div>
-    </nav>
-
-    <div class="page-content">
-        <div class="row">
-            <!-- ... -->
-            <!-- Área para mostrar los alojamientos -->
-            <div class="col accommodation-container">
-                <div class="row">
-                    {% for accommodation in accommodations %}
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
-                            <div class="card">
-                                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
-                                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
-                                </a>
-
-                                <span class="material-symbols-outlined heart-button">favorite</span>
-                                
-                                {% if accommodation.first_image %}
-                                    <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+<div class="row page-container">
+    <div class="col accommodation-container">
+        <div class="row" id="accommodation-row">
+            {% for accommodation in accommodations %}
+                <div class="col card-container">
+                    <div class="card {% if accommodation.is_booked %}booked{% endif %}">
+                        <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                            <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                        </a>
+                        {% if accommodation.first_image %}
+                            <div class="card-img-container">
+                                {% if user != null %}
+                                <span class="material-symbols-outlined heart-button" data-value="{{accommodation.id}}">favorite</span>
                                 {% endif %}
-                                <div class="card-body">
-                                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
-                                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
-                                    <!-- Puntuación promedio -->
-                                    <div class="rating">
-                                        <span class="material-symbols-outlined rating-star">
-                                            star
-                                        </span>
-                                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                                {% if accommodation.is_booked %}
+                                    <div class="booked-indicator">
+                                        <p>Ocupado</p>
                                     </div>
-                                </div>
-                            </div>                          
+                                {% endif %}
+                                <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                            <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                            <div class="rating">
+                                <span class="material-symbols-outlined rating-star">
+                                    star
+                                </span>
+                                <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                            </div>
                         </div>
-                    {% empty %}
-                        <div class="col-12">
-                            <p>No se encontraron alojamientos con los criterios especificados.</p>
-                        </div>
-                    {% endfor %}
+                    </div>                          
                 </div>
-            </div>
-            <!-- ... -->
-            <!-- Área de filtro -->
-            <div class="col-md-3 filter">
-                <form method="get">
-                    <!-- ... campos de filtro ... -->
-                    <input type="text" name="name" placeholder="Nombre del alojamiento">
-                    <input type="text" name="owner" placeholder="Propietario">
-                    <input type="text" name="type" placeholder="Tipo">
-                    <!-- ... otros campos ... -->
-                    <button type="submit">Filtrar</button>
-                </form>
-            </div>
+            {% empty %}
+                <div class="col-12">
+                    <p>No se encontraron alojamientos con los criterios especificados.</p>
+                </div>
+            {% endfor %}
         </div>
-    </div>    
-</div>
+    </div>
+    <div class="col-md-3 filter-form-container">
+        <button id="toggle-btn" class="btn btn-primary toggle-btn">
+            <span class="material-symbols-outlined toggle-icon">
+                arrow_back_ios
+            </span>
+        </button>
+        <div class="filter-form">
+            <form method="get">
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Activar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="owner" class="form-label">Propietario</label>
+                    <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
+                </div>
+        
+                <div class="form-group">
+                    <label for="capacity" class="form-label">Capacidad</label>
+                    <div id="capacity" class="input-group">
+                        <input type="number" id="min_capacity" name="min_capacity" class="form-control" placeholder="Min" value="{{ request.GET.min_capacity }}" min="0">
+                        <input type="number" id="max_capacity" name="max_capacity" class="form-control" placeholder="Max" value="{{ request.GET.max_capacity }}" min="0">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="price" class="form-label">Precio</label>
+                    <div id="price" class="input-group">
+                        <input type="number" id="min_price" name="min_price" class="form-control" placeholder="Min" value="{{ request.GET.min_price }}" min="0">
+                        <input type="number" id="max_price" name="max_price" class="form-control" placeholder="Max" value="{{ request.GET.max_price }}" min="0">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="date" class="form-label">Periodo</label>
+                    <div id="date" class="input-group">
+                        <input type="date" id="start_date" name="start_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.start_date }}">
+                        <input type="date" id="end_date" name="end_date" class="form-control" min="{{ today|date:'Y-m-d' }}" value="{{ request.GET.end_date }}">
+                    </div>
+                </div>
+    
+                <div class="form-group">
+                    <label for="services" class="form-label">Servicios</label>
+                    <select id="services" name="services" class="form-control" multiple>
+                        {% for service in services %}
+                            <option value="{{ service.id }}" 
+                                {% if service.id|stringformat:"s" in request.GET.services|default_if_none:"" %}
+                                selected
+                                {% endif %}>
+                                {{ service.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+        
+                <div class="form-group">
+                    <label class="form-label">Ubicación</label>
+                    <div class="input-group mb-2">
+                        <input type="text" id="country" name="country" class="form-control" placeholder="País" value="{{ request.GET.country }}">
+                        <input type="text" id="region" name="region" class="form-control" placeholder="Región" value="{{ request.GET.region }}">
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="city" name="city" class="form-control" placeholder="Ciudad" value="{{ request.GET.city }}">
+                        <input type="text" id="pcode" name="pcode" class="form-control" placeholder="Código" value="{{ request.GET.pcode }}">
+                    </div>
+                </div>
+        
+                <div class="form-group">
+                    <label for="rating" class="form-label">Características</label>
+                    <div class="input-group">
+                        <input type="number" id="rating" name="min_rating" class="form-control" placeholder="Puntuación" min="1" max="5" value="{{ request.GET.min_rating }}">
+                        <select id="type" name="type" class="form-control">
+                            <option value="">Todos</option>
+                            {% for key, value in types %}
+                                <option value="{{ key }}" {% if request.GET.type == key %}selected{% endif %}>{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>    
 
 <script>
-    window.addEventListener('scroll', function() {
-        var navbar = document.querySelector('.navbar');
-        if (window.scrollY > 0) {
-            navbar.classList.add('shadow-navbar');
-        } else {
-            navbar.classList.remove('shadow-navbar');
+    document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
+    heartIcon.addEventListener('click', async function(event) {
+         // Obtener el ID del alojamiento
+        const {value} = event.currentTarget.dataset;
+        const classSelected = event.currentTarget.classList.contains('heart-button-selected');
+
+        event.currentTarget.setAttribute('disabled', true);
+
+        // Aquí puedes realizar una petición al servidor para agregar el alojamiento a favoritos
+        await toggleFavorites(value, classSelected);
+
+        event.currentTarget.removeAttribute('disabled');
+
+        // Cambiar la apariencia del botón
+        this.classList.toggle('heart-button-selected');
+
+        
+    });
+});
+
+function toggleFavorites(accommodationId, classSelected) {
+    // Realizar una petición al servidor (puedes usar Fetch API o cualquier librería AJAX)
+    fetch('/api/togglefavorites/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            accommodationId: accommodationId,
+            classSelected: classSelected,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Alojamiento añadido a favoritos en el servidor:', data);
+    })
+    .catch(error => {
+        console.error('Error al agregar alojamiento a favoritos:', error);
+    });
+}
+
+
+    // Obtener los elementos de entrada de capacidad mínima y máxima
+    var minCapacityInput = document.getElementById('min_capacity');
+    var maxCapacityInput = document.getElementById('max_capacity');
+
+    // Función para asegurarse de que la capacidad máxima no sea menor que la mínima
+    function validateCapacity() {
+        var minCapacity = parseInt(minCapacityInput.value);
+        var maxCapacity = parseInt(maxCapacityInput.value);
+
+        if (minCapacity && maxCapacity && minCapacity > maxCapacity) {
+            maxCapacityInput.value = "";
         }
+    }
+
+    // Event listeners para validar cuando los valores cambian
+    minCapacityInput.addEventListener('change', validateCapacity);
+    maxCapacityInput.addEventListener('change', validateCapacity);
+
+    // Validación para precio
+    var minPriceInput = document.getElementById('min_price');
+    var maxPriceInput = document.getElementById('max_price');
+
+    function validatePrice() {
+        var minPrice = parseFloat(minPriceInput.value);
+        var maxPrice = parseFloat(maxPriceInput.value);
+
+        if (minPrice && maxPrice && minPrice > maxPrice) {
+            maxPriceInput.value = "";
+        }
+    }
+
+    minPriceInput.addEventListener('change', validatePrice);
+    maxPriceInput.addEventListener('change', validatePrice);
+
+    // Validación para fechas
+    var startDateInput = document.getElementById('start_date');
+    var endDateInput = document.getElementById('end_date');
+
+    function validateDates() {
+        var startDate = new Date(startDateInput.value);
+        var endDate = new Date(endDateInput.value);
+
+        if (startDate && endDate && startDate > endDate) {
+            endDateInput.value = "";
+        }
+    }
+
+    startDateInput.addEventListener('blur', validateDates);
+    endDateInput.addEventListener('blur', validateDates);
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        // Obtén los valores de los campos
+        var start_date = document.getElementById('start_date').value;
+        var end_date = document.getElementById('end_date').value;
+        
+        // Conviértelos a objetos Date para comparar
+        var startDate = start_date ? new Date(start_date) : null;
+        var endDate = end_date ? new Date(end_date) : null;
+
+        // Validación de fechas
+        if (startDate && endDate && startDate > endDate) {
+            endDateInput.value = "";
+        }
+
+        // Aquí puedes añadir más validaciones según sea necesario
+    });
+    
+    function adjustCardLayout() {
+        const accommodationRow = document.getElementById('accommodation-row');
+        const cardContainers = accommodationRow.querySelectorAll('.card-container:not(.invisible)');
+        const cardWidth = cardContainers[0].offsetWidth;
+        const rowWidth = accommodationRow.offsetWidth;
+    
+        // Calcula el número de tarjetas por fila con un redondeo personalizado
+        const cardsPerRowEstimate = rowWidth / cardWidth;
+        let cardsPerRow;
+        if (cardsPerRowEstimate - Math.floor(cardsPerRowEstimate) >= 0.7) {
+            cardsPerRow = Math.ceil(cardsPerRowEstimate); // Redondea hacia arriba si está cerca del siguiente número entero
+        } else {
+            cardsPerRow = Math.floor(cardsPerRowEstimate); // Redondea hacia abajo en otros casos
+        }
+    
+        const lastRowCardCount = cardContainers.length % cardsPerRow;
+        const emptyCardsNeeded = lastRowCardCount > 0 ? cardsPerRow - lastRowCardCount : 0;
+    
+        // Elimina las tarjetas vacías existentes y añade las nuevas
+        accommodationRow.querySelectorAll('.card-container.invisible').forEach(card => card.remove());
+        for (let i = 0; i < emptyCardsNeeded; i++) {
+            const emptyCardContainer = document.createElement('div');
+            emptyCardContainer.classList.add('col', 'card-container', 'invisible');
+            accommodationRow.appendChild(emptyCardContainer);
+        }
+    }
+    
+    // Observa los cambios en el tamaño de #accommodation-row
+    const resizeObserver = new ResizeObserver(entries => {
+        for (let entry of entries) adjustCardLayout();
+    });
+    
+    document.addEventListener("DOMContentLoaded", function() {
+        const accommodationRow = document.getElementById('accommodation-row');
+        resizeObserver.observe(accommodationRow);
     });
 
-    document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
-        heartIcon.addEventListener('click', function() {
-            // Aquí puedes añadir la lógica para manejar el favorito
-            console.log('Alojamiento añadido a favoritos');
-            this.classList.toggle('heart-button-selected');
+    document.addEventListener("DOMContentLoaded", function() {
+        const toggleBtn = document.getElementById('toggle-btn');
+        const iconSpan = toggleBtn.querySelector('.toggle-icon');
+        const filterForm = document.querySelector('.filter-form');
+    
+        // Verifica el estado guardado al cargar la página y actualiza la interfaz de usuario en consecuencia
+        const isExpanded = localStorage.getItem('isFilterFormExpanded') === 'true';
+        filterForm.classList.toggle('expanded', isExpanded);
+        iconSpan.classList.toggle('toggle-icon-reversed', isExpanded);
+        iconSpan.textContent = isExpanded ? 'arrow_forward_ios' : 'arrow_back_ios';
+    
+        toggleBtn.addEventListener('click', function() {
+            const isExpanded = !filterForm.classList.contains('expanded');
+            // Cambia el icono y el estado expandido
+            filterForm.classList.toggle('expanded');
+            iconSpan.classList.toggle('toggle-icon-reversed', isExpanded);
+            iconSpan.textContent = isExpanded ? 'arrow_forward_ios' : 'arrow_back_ios';
+            // Guarda el nuevo estado en localStorage
+            localStorage.setItem('isFilterFormExpanded', isExpanded);
         });
-    });    
+    });
+    
+    
 </script>
 {% endblock %}

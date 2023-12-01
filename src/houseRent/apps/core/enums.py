@@ -14,6 +14,13 @@ class Category(Enum):
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)
     
+    @staticmethod
+    def get_readable_name(name):
+        for category in Category:
+            if category.name == name:
+                return category.value
+        return None
+    
 class Request(Enum):
 
     NOT_REQUESTED = 'Sin solicitar'
@@ -64,3 +71,4 @@ class BookingStatus(Enum):
         @classmethod
         def choices(cls):
             return tuple((i.name, i.value) for i in cls)
+

@@ -206,40 +206,124 @@
         "model": "core.service",
         "pk": 1,
         "fields": {
-            "name": "revolutionize cutting-edge networks",
-            "description": "I woman least information painting find. Piece wait program she wrong include happen.\nAlmost material the young. Environment successful study."
+            "name": "Wifi"
         }
     },
     {
         "model": "core.service",
         "pk": 2,
         "fields": {
-            "name": "synthesize efficient relationships",
-            "description": "Anything their break computer several. Government real southern usually billion skill. Everything build name fine."
+            "name": "Lavadora"
         }
     },
     {
         "model": "core.service",
         "pk": 3,
         "fields": {
-            "name": "maximize impactful info-mediaries",
-            "description": "Movie industry election positive bill. Glass particularly claim. Wall brother agent certainly realize quite. Interview base human board idea she."
+            "name": "Aire acondicionado"
         }
     },
     {
         "model": "core.service",
         "pk": 4,
         "fields": {
-            "name": "leverage leading-edge initiatives",
-            "description": "Whose day fall hear. My gun bed measure.\nA song daughter summer center indeed. Apply paper radio. Those edge heart significant."
+            "name": "Secador de pelo"
         }
     },
     {
         "model": "core.service",
         "pk": 5,
         "fields": {
-            "name": "unleash rich e-services",
-            "description": "Bad require reality long. Popular above forward work book quite contain. Reason enter Congress finish. Together investment PM movement indicate bad."
+            "name": "Cocina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 6,
+        "fields": {
+            "name": "Calefacción"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 7,
+        "fields": {
+            "name": "Televisión"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 8,
+        "fields": {
+            "name": "Plancha"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 9,
+        "fields": {
+            "name": "Parking gratuito"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 10,
+        "fields": {
+            "name": "Servicio de Lavandería"
+        }
+    },{
+        "model": "core.service",
+        "pk": 11,
+        "fields": {
+            "name": "Recepción 24h"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 12,
+        "fields": {
+            "name": "Desayuno incluido"
+        }
+    },{
+        "model": "core.service",
+        "pk": 13,
+        "fields": {
+            "name": "Piscina"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 14,
+        "fields": {
+            "name": "Jacuzzi"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 15,
+        "fields": {
+            "name": "Barbacoa"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 16,
+        "fields": {
+            "name": "Gimnasio"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 17,
+        "fields": {
+            "name": "Mascotas permitidas"
+        }
+    },
+    {
+        "model": "core.service",
+        "pk": 18,
+        "fields": {
+            "name": "Accesibilidad"
         }
     },
     {
@@ -251,7 +335,6 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "service": [1],
             "owner": 3,
             "capacity": 5,
             "is_active": true,
@@ -268,7 +351,6 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "service": [2],
             "owner": 3,
             "capacity": 6,
             "is_active": true,
@@ -285,9 +367,40 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "service": [3],
             "owner": 3,
             "capacity": 7,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 4,
+        "fields": {
+            "name": "Prueba 1",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 789,
+            "category": "Casa",
+            "owner": 3,
+            "capacity": 4,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 5,
+        "fields": {
+            "name": "Prueba 2",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 889,
+            "category": "Apartamento",
+            "owner": 3,
+            "capacity": 3,
             "is_active": true,
             "creation_date": "2023-11-17",
             "modification_date": "2023-11-17"
@@ -315,7 +428,7 @@
             "payment_method": "EFECTIVO",
             "amount_people": 8,
             "user": 1,
-            "is_active": false,
+            "is_active": true,
             "accommodation": 2
         }
     },
@@ -350,7 +463,7 @@
     },
     {
         "model": "core.image",
-        "pk":1,
+        "pk": 1,
         "fields": {
             "title": "Sunset View",
             "description": "Beautiful sunset view from the balcony.",
@@ -363,7 +476,7 @@
     },
     {
         "model": "core.image",
-        "pk":2,
+        "pk": 2,
         "fields": {
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
@@ -376,7 +489,7 @@
     },
     {
         "model": "core.image",
-        "pk":3,
+        "pk": 3,
         "fields": {
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
@@ -385,6 +498,32 @@
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 3
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 4,
+        "fields": {
+        "title": "Spacious Living Room 2",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation3.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 4
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 5,
+        "fields": {
+        "title": "Spacious Living Room 3",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation4.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 5
         }
     },
     {
