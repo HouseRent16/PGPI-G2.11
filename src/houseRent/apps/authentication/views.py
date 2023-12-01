@@ -18,11 +18,7 @@ def login_view(request):
             password = form.cleaned_data['password']
 
             user = CustomUser.objects.get(email=email)
-            # print("Primero:", type(user))
-            # if check_password(password, user.password):
-            #     print("Contraseña correcta")
-            # else:
-            #     print("Contraseña incorrecta")
+    
             
             user2 = authenticate(request, username=user.username, password=password)
             print("Segundo:",type(user))
