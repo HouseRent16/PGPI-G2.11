@@ -18,17 +18,17 @@ def login_view(request):
             password = form.cleaned_data['password']
 
             user = CustomUser.objects.get(email=email)
-            print("Primero:", type(user))
-            if check_password(password, user.password):
-                print("Contraseña correcta")
-            else:
-                print("Contraseña incorrecta")
+            # print("Primero:", type(user))
+            # if check_password(password, user.password):
+            #     print("Contraseña correcta")
+            # else:
+            #     print("Contraseña incorrecta")
             
-            # user = authenticate(request, email=email, password=password)
-            # print("Segundo:",type(user))
+            user2 = authenticate(request, username=user.username, password=password)
+            print("Segundo:",type(user))
 
-            if user is not None:
-                login(request, user)
+            if user2 is not None:
+                login(request, user2)
                 # Redirigir a la página principal o a la página que desees
                 return redirect('home')
             else:
