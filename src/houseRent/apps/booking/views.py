@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from apps.core.models  import Accommodation, CustomUser
 from django.shortcuts import get_object_or_404
 from .forms import BookingRequest, UserBookRequest
+from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
 from django.db.models import Q
 
@@ -24,21 +25,19 @@ def request_booking(request, accommodation_id):
     else:
         form = BookingRequest(request.POST, initial={'accommodation': accommodation})
         form.accommodation = accommodation
-        if not current_user.is_authenticated:
-            user_form = UserBookRequest(request.POST)
-            if CustomUser.objects.filter(email=user_form.data.get('email')).exists():
-                current_user = CustomUser.objects.filter(Q(email=user_form.data.get('email'))).first()
-                user_form = UserBookRequest(request.POST, instance=current_user)
-        else:
+        if current_user.is_authenticated:
             user_form = UserBookRequest(request.POST, instance=current_user)
+        else:
+            user_form = UserBookRequest(request.POST)
 
         if form.is_valid() and user_form.is_valid():
 
             booking_request = form.save(commit=False)
-            user_loaded = user_form.save()
-            booking_request.user = user_loaded
+            if current_user.is_authenticated:
+                booking_request.user = current_user
             booking_request.is_active = True
             booking_request.accommodation = accommodation
+            booking_request.status = BookingStatus.PENDING
             booking_request.save()
             return redirect('/')
         else: 

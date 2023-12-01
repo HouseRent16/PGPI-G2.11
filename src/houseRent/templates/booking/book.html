@@ -10,7 +10,7 @@
             {% csrf_token %}
             <div id="form1" class="form visible">
                 <h1>Datos de la reserva para {{accommodation.name}}</h1>    
-                <h2>Coste de la reserva: {{accommodation.price}}€</h2>
+                <h2>Coste de la reserva (por día): {{accommodation.price}}€</h2>
                 {{form.as_p}}
             </div>
 
