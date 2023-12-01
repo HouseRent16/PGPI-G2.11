@@ -192,3 +192,11 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
+def sobreNosotros(request):
+    return render(request, 'core/sobre_nosotros.html')
+
+def private_policy(request):
+    return render(request, 'authentication/privatePolicy.html')
+
+def ayuda(request):
+    return render(request,'core/ayuda.html')
