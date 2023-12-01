@@ -17,8 +17,13 @@ def login_view(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
 
-            user = CustomUser.objects.get(email=email)
-    
+
+            try:
+                user = CustomUser.objects.get(email=email)
+            except CustomUser.DoesNotExist:
+                # Manejar la situación en la que no se encuentra el usuario
+                form.add_error(None, 'Usuario con este correo electrónico no encontrado.')
+                return render(request, 'authentication/login.html', {'form': form})
             
             user2 = authenticate(request, username=user.username, password=password)
             print("Segundo:",type(user))
