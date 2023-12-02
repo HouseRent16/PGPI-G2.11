@@ -1,7 +1,7 @@
 @import url('var.css');
 
 .carousel-item img {
-  max-width: 100%;
+  width: 800px;
   height: auto;
   border-radius: 10px; /* Agrega un borde redondeado a las imágenes */
 }
