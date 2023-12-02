@@ -67,10 +67,11 @@
         </div>
         {% if user.is_authenticated %}
           <a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
-          <a class="" href="/profile">
-            <span class="material-symbols-outlined">
+          <a class="account-btn" href="/profile">
+            <span class="material-symbols-outlined account">
               account_circle
             </span>
+            <span class="account-name">{{ user.username }}</span>
           </a>
         {% else %}
           <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
