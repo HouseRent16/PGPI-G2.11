@@ -5,7 +5,7 @@ from .models import CustomUser, Accommodation, Favorite, Service, Image, Book
 from .enums import Category
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render 
+from django.shortcuts import render, get_object_or_404
 from django.db.models import Avg
 from datetime import datetime
 from datetime import date
@@ -133,7 +133,7 @@ def home(request):
         accommodations = accommodations.filter(address__city__icontains=city_query)
     if postal_code_query:
         accommodations = accommodations.filter(address__postal_code__icontains=postal_code_query)
-    
+
     if start_date and end_date:
     # Encuentra reservas que se solapen con el rango de fechas
         overlapping_books = Book.objects.filter(
@@ -164,7 +164,7 @@ def home(request):
         'types': tipos,
         'services': servicios,
         'today': date.today(),
-    }    
+    }
 
     return render(request, 'core/home.html', context)
 
@@ -175,8 +175,8 @@ def togglefavorites(request):
         data = json.loads(request.body)
         accommodation_id = data.get('accommodationId')
         # Obtener el id del usuario actual
-        user_id = CustomUser.objects.get(id=request.user.id).id  
-        
+        user_id = CustomUser.objects.get(id=request.user.id).id
+
         class_selected = data.get('classSelected')
 
         #Verificar la classe del botón para añadir o eliminar a favoritos
@@ -194,3 +194,17 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
+
+
+def accommodation_details(request, accommodation_id):
+    accommodation = Accommodation.objects.get(pk=accommodation_id)
+    images = accommodation.image_set.all()
+
+    # accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
+
+    context = {
+        "accommodation": accommodation,
+        'images': images
+    }
+
+    return render(request, 'accommodation/accommodation-detail.html', context)
