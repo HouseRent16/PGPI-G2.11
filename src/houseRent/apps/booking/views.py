@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from apps.core.models  import Accommodation, CustomUser
 from django.shortcuts import get_object_or_404
 from .forms import BookingRequest, UserBookRequest
-from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from apps.core.models import Book
+from apps.core.enums import BookingStatus
 
 # Create your views here.
 
@@ -43,3 +45,14 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+@login_required
+def booking_history(request):
+    current_user = request.user
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & Q(status__ne=BookingStatus.CANCELLED)).order_by('start_date')
+    pass_booking = Book.objects.filter(user=current_user, is_active=False, status=BookingStatus.CONFIRMED).order_by('start_date')
+    cancel_booking = Book.objects.filter(user=current_user, is_active=False, status=BookingStatus.CANCELLED).order_by('start_date')
+    print(pendding_booking)
+    print(pass_booking)
+    print(cancel_booking)
+    return render(request, 'core/home.html')
