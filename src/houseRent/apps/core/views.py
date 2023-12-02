@@ -153,14 +153,12 @@ def home(request):
 
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
-    es_propietario=request.user.groups.filter(name="Propietarios").exists()
-        
+
     tipos = Category.choices()
     servicios = Service.objects.all()
 
     context = {
         'accommodations': accommodations,
-        'propietario': es_propietario,
         'types': tipos,
         'services': servicios,
         'today': date.today(),
