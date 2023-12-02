@@ -3,6 +3,12 @@
 
 {% block content %}
 <body>
+    <form method="get">
+        <div class="form-group">
+            <label for="code" class="form-label">Código</label>
+            <input type="text" id="code" name="code" class="form-control" placeholder="Buscar">
+        </div>
+    </form>
     <div class="page-header">
         <div class="row">
         <h1 style="margin-left: 10px;">{{ accommodation.name }}</h1>

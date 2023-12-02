@@ -89,11 +89,6 @@ def accomodationImages(request,id_accommodation):
     images=Image.objects.filter(accommodation_id=id_accommodation)
     return images
 
-
-
-# Create your views here.
-
-
 def request_booking(request, accommodation_id):
     accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
     current_user = request.user
@@ -127,3 +122,20 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+def booking_details(request):
+
+    code = request.GET.get('code')
+
+    book = None
+    accommodation = None
+    if code:
+        book = get_object_or_404(Book, code=code)
+        accommodation = book.accommodation
+
+    context = {
+        'book': book,
+        'accommodation': accommodation
+    }
+    
+    return render(request, 'booking/booking_details.html', context)
