@@ -6,4 +6,5 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('api/togglefavorites/', views.togglefavorites, name='togglefavorites'),
     path('accommodation/<accommodation_id>/', views.accommodation_details, name='accommodation-detail'),
+    path('favoritos/', views.favoritos, name='favoritos')
 ]

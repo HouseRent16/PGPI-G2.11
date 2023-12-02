@@ -194,7 +194,8 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
-
+def favoritos(request):
+    return render(request, 'core/favoritos.html')
 
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
