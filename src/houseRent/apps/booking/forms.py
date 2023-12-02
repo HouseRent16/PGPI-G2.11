@@ -2,7 +2,7 @@ from django import forms
 from apps.core.models  import Book, CustomUser
 from utils.validators import Validators
 from django.db.models import Q
-from django.utils import timezone
+import datetime
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
@@ -59,7 +59,7 @@ class BookingRequest(forms.ModelForm):
     
     def clean_accommodation(self):
         accommodation = self.cleaned_data.get('accommodation')
-        start_date = self.cleaned_data.get('start_date')  # Usa get() para evitar KeyError
+        start_date = self.cleaned_data.get('start_date') 
         end_date = self.cleaned_data.get('end_date')
         amount_people = self.cleaned_data['amount_people']
         if accommodation and accommodation.capacity < amount_people:
@@ -68,7 +68,7 @@ class BookingRequest(forms.ModelForm):
             overlapping_booking = Book.objects.filter(
                   Q(accommodation=accommodation) &
                   (Q(end_date__gt=start_date, start_date__lt=end_date) | Q(end_date__lt=end_date, end_date__gt=start_date) | Q(start_date__gt=start_date, start_date__lt=end_date))
-            )
+            ).exclude(is_active=False)
             if overlapping_booking.exists():
                 self.add_error('end_date', 'No hay disponibilidad del alojamiento seleccionado en las fechas especificadas.')
         
@@ -108,6 +108,7 @@ class UserBookRequest(forms.ModelForm):
             'dni': 'DNI',
             'gender': 'Género',
         }
+       
     def clean_email(self):
         email = self.cleaned_data.get('email')
         id = self.instance.id if self.instance else None
@@ -131,3 +132,12 @@ class UserBookRequest(forms.ModelForm):
         if(exist_user):
             raise forms.ValidationError('Ya existe dicho dni. Si tiene una cuenta inicie sesión, en caso contrario ingrese uno válido.')
         return dni
+    
+    def clean_birth_date(self):
+        birth_date = self.cleaned_data.get('birth_date')
+        current_date = datetime.date.today()
+        years = (current_date - birth_date) 
+        years = years.days / 365
+        if years < 18:
+             raise forms.ValidationError('Debe ser mayor de edad')
+        return birth_date
