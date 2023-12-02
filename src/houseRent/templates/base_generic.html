@@ -65,6 +65,11 @@
                   <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
                 </li>
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link text-center" href="/booking/listUser">Mis reservas</a>
+                  </li>
+                {%endif%}
             </ul>
         </div>
         {% if user.is_authenticated %}

@@ -4,7 +4,10 @@ from datetime import datetime,timezone
 from .forms import BookingRequest, UserBookRequest
 from django.forms.models import model_to_dict
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
+@login_required
 def books(request):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -21,10 +24,11 @@ def books(request):
                 }
             return render(request,'booking/booksOwner.html',context)
         else:
-            return redirect('/')
+            return redirect('')
     else:
          return redirect('login')
-     
+
+@login_required    
 def detailsBooks(request,ID):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -62,7 +66,7 @@ def detailsBooks(request,ID):
             
             return render(request,'booking/detailsBooksOwner.html',context)
         else:
-            return redirect('/')
+            return redirect('')
     else: 
         return redirect('login')
 
@@ -128,3 +132,38 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+#----------listado de reservas de un usuario-------
+@login_required
+def listBooksUser(request):
+    if request.user.is_authenticated:
+        books=Book.objects.filter(user_id=request.user.id)
+        timeNow=datetime.now(timezone.utc)
+        activeBook=[]
+        pastBook=[]
+        cancelBook=[]
+        for book in books:
+            if book.end_date > timeNow and book.is_active==True:
+                    activeBook.append(book)
+            elif book.end_date > timeNow and book.is_active==False :
+                    cancelBook.append(book)
+            else:
+                    pastBook.append(book)
+        
+        context={
+            'activeBooks':activeBook,
+            'pastBooks':pastBook,
+            'cancelBooks':cancelBook
+        }
+        return render(request,'booking/booksUser.html',context)
+
+@login_required
+@require_POST
+def cancelBooksUser(request,book_id):
+    if request.user.is_authenticated:
+        book=Book.objects.get(id=book_id)
+        print(book.status)
+        book.is_active=False
+        book.save()
+        print(book.status)
+    return redirect('/booking/listUser')

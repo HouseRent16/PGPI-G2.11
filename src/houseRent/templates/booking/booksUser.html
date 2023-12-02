@@ -1,0 +1,78 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+{% load static %} 
+<div class="page-content">
+    <div class="row justify-content-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col col-md-4">
+                        <h1>Reservas activas</h1>
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header">
+                                    Mis reservas activas
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in activeBooks %}
+                                    <div class="row">
+                                        <div class="col col-md-8 ">
+                                            <li class="list-group-item">{{book.accommodation.name}}, de {{book.start_date}} a {{book.end_date}}</li>
+                                        </div>
+                                        <div class="col col-md-4 d-flex align-items-center justify-content-center">
+                                            <form action="{% url 'cancelBooksUser' book_id=book.id %}" method="post" >
+                                                {%csrf_token %}
+                                                <button type="submit" class="btn btn-primary btn-lg">Cancelar reserva</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {%endfor%}
+                                    
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col col-md-4">
+                        <h1>Reservas canceladas</h1>
+                        <!-- Contenido para reservas canceladas -->
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header ">
+                                    Mis reservas canceladas
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in cancelBooks %}
+                                    <li class="list-group-item">{{book.accommodation.name}},de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-4">
+                        <h1>Reservas pasadas</h1>
+                        <!-- Contenido para reservas pasadas -->
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header">
+                                    Mis reservas pasadas
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in pastBooks %}
+                                    <li class="list-group-item">{{book.accommodation.name}}, de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                </ul>
+                                </div>
+                        </div>
+                    
+                    </div>
+            </div>
+            
+        </div> 
+            
+        </div>
+
+
+        </div>
+
+{% endblock %}
