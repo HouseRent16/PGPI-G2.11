@@ -6,19 +6,16 @@ from .enums import Category
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render 
-from django.db.models import Avg
 from datetime import datetime
 from datetime import date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Q, Exists, OuterRef, Value, BooleanField
+from django.db.models import Exists, OuterRef, Value, BooleanField
 from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.utils.decorators import method_decorator
-from .enums import Gender
-from .forms import UserForm
-
-from django.views.decorators.csrf import csrf_exempt
+from .forms import CustomUserForm, AddressForm
+from django.shortcuts import get_object_or_404
 
 
 @staff_member_required
@@ -203,30 +200,26 @@ class ProfileView(View):
         return 'core/profile.html'
     
     def get(self, request, *args, **kwargs):
-        user = CustomUser.objects.get(id=request.user.id)
-        favorites = Favorite.objects.filter(user_id=user.id)
-        accommodations = Accommodation.objects.filter(owner_id=user.id)
+        user = get_object_or_404(CustomUser, pk=request.user.id)
 
-        userForm = UserForm(request.POST, instance=user)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
 
         context = {
-            'user': user,
-            'gender_choices': Gender.choices(),
-            'favorites': favorites,
-            'accommodations': accommodations,
-            'userForm': userForm,
+            'user_form': customUserForm,
+            'address_form': addressForm,
         }
         return render(self.request, self.get_template(), context)
     
+    #Por hacer
     def post(self, request, *args, **kwargs):
         user = CustomUser.objects.get(id=request.user.id)
-        favorites = Favorite.objects.filter(user_id=user.id)
-        accommodations = Accommodation.objects.filter(owner_id=user.id)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
 
         context = {
-            'user': user,
-            'favorites': favorites,
-            'accommodations': accommodations,
+            'user_form': customUserForm,
+            'address_form': addressForm,
         }
 
         return render(self.request, self.get_template(), context)
