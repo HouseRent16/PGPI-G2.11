@@ -16,6 +16,7 @@ from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.utils.decorators import method_decorator
 from .enums import Gender
+from .forms import UserForm
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -206,11 +207,14 @@ class ProfileView(View):
         favorites = Favorite.objects.filter(user_id=user.id)
         accommodations = Accommodation.objects.filter(owner_id=user.id)
 
+        userForm = UserForm(request.POST, instance=user)
+
         context = {
             'user': user,
             'gender_choices': Gender.choices(),
             'favorites': favorites,
             'accommodations': accommodations,
+            'userForm': userForm,
         }
         return render(self.request, self.get_template(), context)
     
