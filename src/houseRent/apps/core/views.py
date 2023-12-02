@@ -205,6 +205,7 @@ def accommodation_details(request, accommodation_id):
 
     context = {
         "accommodation": accommodation,
+        'id': accommodation_id,
         'images': images[1:len(images)],
         'imagenInicial': imagenInicial,
         'numFavoritos': conteoFavoritos(request, accommodation_id),
