@@ -7,6 +7,7 @@ from .enums import Gender, Request, Category, PaymentMethod, ClaimStatus, Bookin
 from phonenumber_field.modelfields import PhoneNumberField
 from utils.validators import Validators
 from utils.encoder import encoder_sha256
+import datetime
 
 class Address(models.Model):
     # Es el número asignado a un edificio a lo largo de una calle o una vía
@@ -201,7 +202,7 @@ class Book(models.Model):
     start_date=models.DateTimeField(blank=False, null=False, validators=[Validators.validate_future_datetime])
     end_date=models.DateTimeField(blank=False, null=False, validators=[Validators.validate_future_datetime])
     payment_method=models.CharField(max_length=16, choices=PaymentMethod.choices(), blank=False, null=False)
-    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE,  blank=False, null=False)
+    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     amount_people=models.PositiveIntegerField(blank=False, null=False)
     is_active=models.BooleanField()
     accommodation=models.ForeignKey(Accommodation,on_delete=models.CASCADE, blank=False, null=False)
@@ -230,6 +231,6 @@ class Book(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.pk:
-            self.code = encoder_sha256("{}{}{}".format(self.accommodation.pk,self.user.pk,str(self.start_date), str(self.end_date)))
+            self.code = encoder_sha256("{}{}{}{}".format(self.accommodation.pk, datetime.datetime.now, str(self.start_date), str(self.end_date)))
 
         super().save(*args, **kwargs)
