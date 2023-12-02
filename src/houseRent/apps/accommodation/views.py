@@ -1,7 +1,7 @@
 from .forms import RegisterAccommodation
 from django.shortcuts import render, redirect
 from apps.authentication.forms import RegisterAddress
-from apps.core.models import Accommodation, Address, CustomUser
+from apps.core.models import Accommodation, Address, CustomUser, Claim
 
 from django.contrib import messages
 
@@ -24,3 +24,8 @@ def register_acommodation(request):
         formAddress = RegisterAddress()
    
     return render(request, 'accommodation/add.html', {'formAccommodation': formAccommodation,'formAddress': formAddress})
+
+def claim_list(request):
+    claims = Claim.objects.all()
+    return render(request, 'accommodation/claim_list.html', {'claims': claims})
+
