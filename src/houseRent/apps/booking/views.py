@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from .forms import BookingRequest, UserBookRequest
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from apps.core.models import Book
+from apps.core.models import Book, Image
 from apps.core.enums import BookingStatus
 
 # Create your views here.
@@ -49,10 +49,18 @@ def request_booking(request, accommodation_id):
 @login_required
 def booking_history(request):
     current_user = request.user
-    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & Q(status__ne=BookingStatus.CANCELLED)).order_by('start_date')
-    pass_booking = Book.objects.filter(user=current_user, is_active=False, status=BookingStatus.CONFIRMED).order_by('start_date')
-    cancel_booking = Book.objects.filter(user=current_user, is_active=False, status=BookingStatus.CANCELLED).order_by('start_date')
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    
+    for booking in pendding_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in confirm_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in cancel_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+
     print(pendding_booking)
-    print(pass_booking)
+    print(confirm_booking)
     print(cancel_booking)
-    return render(request, 'core/home.html')
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking})
