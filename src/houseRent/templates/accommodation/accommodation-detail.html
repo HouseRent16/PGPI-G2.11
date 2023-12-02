@@ -4,11 +4,45 @@
 {% block content %}
 <body>
     <div class="page-header">
-        <div class="row">
+        <div class="col col-md-12 ">
+                       <div class="row h-100" >
+                            <div class="col col-md-7  " >
+                                <div class="row">
         <h1 style="margin-left: 10px;">{{ accommodation.name }}</h1>
         <h3 style="margin-left: 10px;">{{ accommodation.address.city }}, {{ accommodation.address.country }}</h3>
         <!-- Puedes añadir más información aquí si es necesario -->
         </div>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center " >
+                                <p> {{reservas}}</p>
+                                <span class="material-symbols-outlined ">
+                                    done
+                                    </span>
+
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="#"> {{claim}}
+                                <span class="material-symbols-outlined ">
+                                    close
+                                    </span>
+                                </a>
+                            </div>
+
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="#"> {{rating}}
+                                <span class="material-symbols-outlined star-symbol">
+                                    star
+                                </span>
+                                </a>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                {{numFavoritos}}
+                                <span class="material-symbols-outlined favorite-symbol">
+                                        favorite
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
     </div>
         <!-- Arreglar rating
         <div class="rating">
@@ -47,28 +81,37 @@
 <div class="page-content" style="margin-top: 20px;">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <h4 class="title-card">Servicios</h4>
-                        {% if accommodation.service.all %}
+            <div class="col col-md-3  " >
+                        <!-- Sidebar de Servicios -->
+                        <div class="row justify-content-center" >
+                        <div class="card" style="width: 95%;">
+                            <h4 class="title-card text-center">
+                                Servicios
+                            </h4>
+                            {% if accommodation.service.all %}
                             <div class="services">
                                 {% for service in accommodation.service.all %}
-                                    <p class="infomation-card-service">{{ service.name }} :</p>
-                                    <p class="infomation-card-service-info"> {{ service.description }} </p>
+                                    <p class="infomation-card-service">{{ service.name }}</p>
                                 {% endfor %}
                             </div>
                         {% endif %}
+                            </div>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <h4 class="title-card">Descripción</h4>
-                    <h7 class="infomation-card">{{ accommodation.description }}</h7>
-                </div>
-            </div>
-            <div class="col-md-4 mb-4">
-                <div class="card">
-                    <h4 class="title-card">Detalles</h4>
+                    <div class="col col-md-6 " >
+                        <div class="row justify-content-center" >
+                            <div class="card" style="width: 95%; max-width: 950 px;">
+                                <h4 class="title-card text-center">Descripción</h4>
+                                <h7 class="infomation-card">{{ accommodation.description }}</h7>
+
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 " >
+                        <div class="row " >
+                            <div class="card" style="width: 95%;">
+                                <h4 class="title-card text-center">Detalles</h4>
+                                <p class="infomation-card-detalles"><b class="price"> Propietario: </b> {{ accommodation.owner }}</p>
                     <p class="infomation-card-detalles"><b class="price"> Fecha de creación: </b> {{ accommodation.creation_date }}</p>
                     <p class="infomation-card-detalles"><b class="price"> Última modificación: </b> {{ accommodation.modification_date }}</p>
                     <p class="infomation-card-detalles"><b class="price"> Precio: </b> {{ accommodation.price }}€ Noche</p>
@@ -80,8 +123,9 @@
                     <p class="infomation-card-detalles"><b class="price"> Calle: </b> {{ accommodation.address.address_line }}</p>
                     <p class="infomation-card-detalles"><b class="price"> Número: </b> {{ accommodation.address.street_number }}</p>
 
-                </div>
-            </div>
+                                </div>
+                        </div>
+                    </div>
          </div>
     </div>
 </div>

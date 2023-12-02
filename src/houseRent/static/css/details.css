@@ -1,7 +1,7 @@
 @import url('var.css');
 
 .carousel-item img {
-  width: 800px;
+  width: 400px;
   height: auto;
   border-radius: 10px; /* Agrega un borde redondeado a las imágenes */
 }
@@ -53,8 +53,8 @@
   font-size: 24px !important;
   top: 50%; /* Ajusta la posición vertical */
   transform: translateY(500%); /* Centra verticalmente */
-  margin-left: 70px;
-  margin-right: 70px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {
@@ -68,7 +68,6 @@
 
 
 .title-card{
-  margin-left: 30px;
   margin-top: 20px;
   font-weight: bold;
 }
@@ -103,3 +102,4 @@
   margin-bottom: 0 !important;
   font-size: smaller;
 }
+
