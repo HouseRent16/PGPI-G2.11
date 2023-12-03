@@ -1,10 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base_generic.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block content %}
+<div class="row page-container">
+    <div class="col accommodation-container">
+        <div class="row" id="accommodation-row">
+            {% for accommodation in accommodations %}
+                <div class="col card-container">
+                    <div class="card">
+                        <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                            <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                        </a>
+                        {% if accommodation.first_image %}
+                            <div class="card-img-container">
+                                <span class="material-symbols-outlined heart-button heart-button-selected" data-value="{{accommodation.id}}">favorite</span>
+                                <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                            <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                            <div class="rating">
+                                <span class="material-symbols-outlined rating-star">
+                                    star
+                                </span>
+                                <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p>No se encontraron alojamientos en favoritos.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

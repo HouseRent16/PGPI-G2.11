@@ -195,6 +195,19 @@ def togglefavorites(request):
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 def favoritos(request):
+    user_id = CustomUser.objects.get(id=request.user.id).id
+    favoritos = Favorite.objects.filter(user_id=user_id)
+    accommodations = []
+    for favorito in favoritos:
+        accommodation = favorito.accommodation
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+        accommodations.append(accommodation)
+
+    context = {
+        'favoritos': favoritos,
+        'accommodations': accommodations,
+    }
+
     return render(request, 'core/favoritos.html')
 
 def accommodation_details(request, accommodation_id):
