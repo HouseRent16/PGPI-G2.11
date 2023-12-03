@@ -1,15 +1,17 @@
 import json
-from unittest import case
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
 from .enums import Category, BookingStatus
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
-from datetime import datetime, date
+from django.shortcuts import render, get_object_or_404
+from django.db.models import Avg
+from datetime import datetime
+from datetime import date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
+from django.db.models import Q, Exists, OuterRef, Value, BooleanField
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -33,18 +35,8 @@ def change_password(request, user_id):
 def home(request):
     accommodations = Accommodation.objects.all().annotate(
         average_rating=Avg('comment__rating'),
-        is_booked=Value(False, output_field=BooleanField()),
-        is_favorite=Value(False, output_field=BooleanField())
+        is_booked=Value(False, output_field=BooleanField())
     )
-
-    # Obtén los los alojamientos favoritos del usuario actual
-    favorite = Favorite.objects.filter(accommodation=OuterRef('pk'), user=request.user)
-    
-    # Actualiza el campo is_favorite a True para los alojamientos favoritos
-    accommodations = accommodations.annotate(
-        is_favorite=Exists(favorite)
-    )
-
 
     # Filtros
     name_query = request.GET.get('name')
