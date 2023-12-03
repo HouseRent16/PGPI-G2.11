@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from apps.core.models import Book, Image
 from apps.core.enums import BookingStatus
+from django.urls import reverse
 
 # Create your views here.
 
@@ -60,7 +61,10 @@ def booking_history(request):
     for booking in cancel_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
 
-    print(pendding_booking)
-    print(confirm_booking)
-    print(cancel_booking)
-    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking})
+    """
+    judge_url = request.get_host() + reverse('judge')
+    claim_url = request.get_host() + reverse('claim')
+    cancel_url = request.get_host() + reverse('cancel')
+    """
+
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})

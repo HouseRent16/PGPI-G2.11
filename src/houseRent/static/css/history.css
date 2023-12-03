@@ -36,7 +36,7 @@
 
 .card-image {
     max-width: 200px !important; /* Hace que la imagen se ajuste al 100% del ancho del contenedor */
-    height: 200px !important;   /* Mantiene la relación de aspecto original de la imagen */
+    height: 225px !important;   /* Mantiene la relación de aspecto original de la imagen */
     display: block !important;  /* Elimina el espacio adicional debajo de la imagen */
     margin: 0 !important;  /* Centra la imagen dentro del contenedor */
     border-top-left-radius: 15px !important;
@@ -48,7 +48,7 @@
 
 .card-header {
     height: 200px !important;
-    width: 200px !important;
+    width: 225px !important;
     border-top-left-radius: 15px !important;
     border-bottom-left-radius: 15px !important;
     /* Dejar el eje vertical derecho sin radio de borde */
@@ -57,7 +57,7 @@
 
 .card-history {
     width: 800px !important;
-    height: 200px !important;
+    height: 225px !important;
     margin: 10px !important;
     display: flex !important;
     flex-direction: row !important;
@@ -68,4 +68,13 @@
 
 .title {
     font-weight: bold !important;
+}
+
+.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: var(--c5) !important;
+    color: #fff;
+    border-radius: 5px;
 }

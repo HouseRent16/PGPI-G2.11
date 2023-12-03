@@ -12,10 +12,23 @@
         <div class="tab-button" onclick="openTab(event, 'pass')">Reservas canceladas</div>
     </div>
 
-    <div id="pendding" class="tab">
-        <h3>Contenido de la Tab 1</h3>
-        <p>Este es el contenido de la primera tab.</p>
-    </div>
+    <div id="pass" class="tab">
+        {% for booking in pendding_booking %}
+        <div class="card-history">
+            <div class="card-header">
+                <img src="{{ booking.accommodation.first_image.image.url }}" alt="{{ booking.accommodation.first_image.alt }}" class="card-image">
+            </div>
+
+            <div class="card-body">
+                <p class="title">{{booking.accommodation.name}}</p>
+                <p>Comienzo: {{booking.start_date.date}}</p>
+                <p>Fin: {{booking.end_date.date}}</p>
+                <p>Precio: {{booking.end_date.date}}</p>
+                <a href="{{judge_url}}/{{booking.id}}" class="button-link">Opinar</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div> 
 
     <div id="confirm" class="tab">
         {% for booking in confirm_booking %}
@@ -29,14 +42,27 @@
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.end_date.date}}</p>
+                <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
             </div>
         </div>
         {% endfor %}
     </div>
 
-    <div id="pass" class="tab">
-        <h3>Contenido de la Tab 3</h3>
-        <p>Este es el contenido de la tercera tab.</p>
+    <div id="canceled" class="tab">
+        {% for booking in cancel_booking %}
+        <div class="card-history">
+            <div class="card-header">
+                <img src="{{ booking.accommodation.first_image.image.url }}" alt="{{ booking.accommodation.first_image.alt }}" class="card-image">
+            </div>
+
+            <div class="card-body">
+                <p class="title">{{booking.accommodation.name}}</p>
+                <p>Comienzo: {{booking.start_date.date}}</p>
+                <p>Fin: {{booking.end_date.date}}</p>
+                <p>Precio: {{booking.end_date.date}}</p>
+            </div>
+        </div>
+        {% endfor %}
     </div>
 </div>
 
