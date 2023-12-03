@@ -13,8 +13,13 @@
                         </a>
                         {% if accommodation.first_image %}
                             <div class="card-img-container">
+                                
                                 {% if user.is_authenticated %}
-                                    <span class="material-symbols-outlined heart-button" data-value="{{accommodation.id}}">favorite</span>
+                                    {% if accommodation.is_favorite %}
+                                        <span class="material-symbols-outlined heart-button heart-button-selected" data-value="{{accommodation.id}}" >favorite</span>
+                                    {% else %}
+                                        <span class="material-symbols-outlined heart-button" data-value="{{accommodation.id}}" >favorite</span>
+                                    {% endif %}
                                 {% endif %}
                                 {% if accommodation.is_booked %}
                                     <div class="booked-indicator">
@@ -140,18 +145,18 @@
          // Obtener el ID del alojamiento
         const {value} = event.currentTarget.dataset;
         const classSelected = event.currentTarget.classList.contains('heart-button-selected');
-
+        
+        // Deshabilitar el botón durante la operación para evitar clics múltiples
         event.currentTarget.setAttribute('disabled', true);
 
         // Aquí puedes realizar una petición al servidor para agregar el alojamiento a favoritos
         await toggleFavorites(value, classSelected);
 
+        // Habilitar el botón después de completar la operación
         event.currentTarget.removeAttribute('disabled');
 
-        // Cambiar la apariencia del botón
         this.classList.toggle('heart-button-selected');
-
-        
+  
     });
 });
 
