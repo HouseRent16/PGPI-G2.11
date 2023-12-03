@@ -4,10 +4,14 @@ from datetime import datetime,timezone
 from .forms import BookingRequest, UserBookRequest
 from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
 from utils.mailer import send_mail
 from datetime import datetime
 
 from django.db.models import Q
+from apps.core.models import Book, Image
+from apps.core.enums import BookingStatus
+from django.urls import reverse
 
 from ..core.enums import BookingStatus
 
@@ -140,6 +144,28 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+@login_required
+def booking_history(request):
+    current_user = request.user
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    
+    for booking in pendding_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in confirm_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in cancel_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+
+    """
+    judge_url = request.get_host() + reverse('judge')
+    claim_url = request.get_host() + reverse('claim')
+    cancel_url = request.get_host() + reverse('cancel')
+    """
+
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
 
 
 def conteoReservasTotales(request, id_accommodation):

@@ -44,6 +44,11 @@
                     <a class="nav-link text-center" href="/booking/owner">Gestión</a>
                     </li>
                     {%endif%}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="#">Favoritos</a>
                 </li>

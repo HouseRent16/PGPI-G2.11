@@ -11,3 +11,5 @@ django-countries
 django-phonenumbers
 django-phonenumber-field
 babel
+celery
+django_celery_beat
