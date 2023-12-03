@@ -394,7 +394,7 @@
 .return {
   align-items: center;
   display: inline-flex;
-  color: rgb(0, 166, 255);
+  color: var(--c5);
   text-decoration: none;
   padding: 20px 0;
 }

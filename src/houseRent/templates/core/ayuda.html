@@ -1,0 +1,49 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <a class="return" href="javascript:history.back()"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sc-oZIhv lbZsgk"><polyline points="15 18 9 12 15 6"></polyline></svg>Volver atrás</a>
+
+    <title>Ayuda - HousRent</title>
+    <style>
+        body {
+            margin: 0 20px;
+            text-align: justify;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--c5); /* Código de color morado */
+            font-weight: bold;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: smaller;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ayuda - HouseRent</h1>
+
+    <h3>Preguntas Frecuentes (FAQ):</h3>
+    <p>Encuentra respuestas a preguntas comunes sobre el proceso de alquiler, pagos, cancelaciones y más.</p>
+
+    <h3>Guía de Uso:</h3>
+    <p>Aprende cómo utilizar HouseRent con nuestra guía paso a paso. Desde la búsqueda de alojamientos hasta completar una reserva.</p>
+
+    <h3>Políticas y Términos:</h3>
+    <p>Consulta nuestras <a href="/privatePolicy">políticas y terminos</a> para asegurarte de entender nuestras condiciones y requisitos de uso.</p>
+
+    <h3>Contacto de Soporte:</h3>
+    <p>¿Necesitas ayuda adicional? Contacta a nuestro equipo de soporte en support@houserent.com o llama al +123-456-7890.</p>
+
+    <h3>Actualizaciones y Novedades:</h3>
+    <p>Mantente al día con las últimas actualizaciones, nuevas características y noticias importantes de HouseRent.</p>
+
+</body>
+</html>
+{% endblock %}

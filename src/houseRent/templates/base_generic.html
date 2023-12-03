@@ -10,8 +10,10 @@
   <link rel="stylesheet" type="text/css" href="/static/css/var.css">
   <link rel="stylesheet" type="text/css" href="/static/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="/static/css/form.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/details.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/book_search.css">
   <link rel="stylesheet" type="text/css" href="/static/css/profile.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/details.css">
+  
 
   <!-- Agrega la referencia a Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -33,8 +35,8 @@
 <body> 
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-logo" href="#">H</a>
-        <a class="navbar-brand" href="#">HouseRent</a>
+        <a class="navbar-logo" href="/">H</a>
+        <a class="navbar-brand" href="/">HouseRent</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -45,17 +47,13 @@
                     <a class="nav-link text-center" href="/booking/owner">Gestión</a>
                     </li>
                     {%endif%}
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
+                </li>
+                {% endif %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="#">Favoritos</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Política</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Ayuda</a>
                 </li>
                 {% if user.groups.all.0.name == 'Administradores' %}
                 <li class="nav-item">
@@ -67,6 +65,15 @@
                   <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/sobre-nosotros">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/privatePolicy">Política</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/ayuda">Ayuda</a>
+                </li>
             </ul>
         </div>
         {% if user.is_authenticated %}

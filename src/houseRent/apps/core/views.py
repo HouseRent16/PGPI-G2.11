@@ -1,8 +1,8 @@
 import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Favorite, Service, Image, Book
-from .enums import Category
+from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
+from .enums import Category, BookingStatus
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404
@@ -39,6 +39,15 @@ def home(request):
     accommodations = Accommodation.objects.all().annotate(
         is_booked=Value(False, output_field=BooleanField())
     )
+
+    if request.user.is_authenticated:
+        # Obtén los los alojamientos favoritos del usuario actual
+        favorite = Favorite.objects.filter(accommodation=OuterRef('pk'), user=request.user)
+        # Actualiza el campo is_favorite a True para los alojamientos favoritos
+        accommodations = accommodations.annotate(
+            is_favorite=Exists(favorite)
+        )
+
 
     # Filtros
     name_query = request.GET.get('name')
@@ -156,7 +165,7 @@ def home(request):
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
     es_propietario=request.user.groups.filter(name="Propietarios").exists()
-        
+
     tipos = Category.choices()
     servicios = Service.objects.all()
 
@@ -196,6 +205,11 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
+def sobreNosotros(request):
+    return render(request, 'core/sobre_nosotros.html')
+
+def private_policy(request):
+    return render(request, 'authentication/privatePolicy.html')
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     
@@ -227,16 +241,47 @@ class ProfileView(View):
 
         return render(self.request, self.get_template(), context)
 
+def ayuda(request):
+    return render(request,'core/ayuda.html')
 
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
     images = accommodation.image_set.all()
+    imagenInicial=images[0]
 
     # accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
 
     context = {
         "accommodation": accommodation,
-        'images': images
+        'id': accommodation_id,
+        'images': images[1:len(images)],
+        'imagenInicial': imagenInicial,
+        'numFavoritos': conteoFavoritos(request, accommodation_id),
+        'rating': ratingAccommodation(request, accommodation_id),
+        'claim': conteoReclamaciones(request, accommodation_id),
+        'reservas': conteoReservasTotales(request, accommodation_id),
     }
 
-    return render(request, 'accommodation/accommodation-detail.html', context)
+    return render(request, 'accommodation/accommodation_detail.html', context)
+
+def conteoFavoritos(request,id_accommodation):
+    favoritos=Favorite.objects.filter(accommodation_id=id_accommodation)
+    return len(favoritos)
+
+def ratingAccommodation(request,id_accommodation):
+    comments=Comment.objects.filter(accommodation_id=id_accommodation)
+    sumaRating=0
+    mediaRating=0
+    for comment in comments:
+        sumaRating+=comment.rating
+    if len(comments)!=0:
+        mediaRating=sumaRating/len(comments)
+    return mediaRating
+
+def conteoReclamaciones(request,id_accommodation):
+    reclamaciones=Claim.objects.filter(accommodation_id=id_accommodation)
+    return len(reclamaciones)
+
+def conteoReservasTotales(request, id_accommodation):
+    reservas=Book.objects.filter(accommodation_id=id_accommodation)
+    return reservas.filter(status=BookingStatus.CONFIRMED).count()

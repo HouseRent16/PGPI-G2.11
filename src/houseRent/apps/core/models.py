@@ -224,7 +224,6 @@ class Book(models.Model):
     payment_bool=models.BooleanField(default=False)
     stripe_checkout_id=models.CharField(max_length=500)
     price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)])
-    paid=models.BooleanField(default=False)
     class Meta:
         verbose_name = "Reserva"
         verbose_name_plural = "Reservas"
@@ -241,8 +240,9 @@ class Book(models.Model):
             raise ValidationError('El número de personas no puede ser menor que 1')
     
     def __str__(self):
-        return f"{self.user.username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
-    
+        username = self.user.username if self.user else None
+        return f"{username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
+
     def save(self, *args, **kwargs):
 
         if not self.pk:
