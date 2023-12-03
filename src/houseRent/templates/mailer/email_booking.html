@@ -75,7 +75,7 @@
     <br>
 </div>
 <div class="container">
-    <p>El código de seguimiento es: {{code}}</p>
+    <p>El código de seguimiento es: <a href="{{ request.scheme }}://{{request.get_host}}/booking/?code={{code}}">{{code}}</a></p>
     <br>
 </div>
 <div class="container">
