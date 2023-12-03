@@ -230,7 +230,7 @@ def accommodation_details(request, accommodation_id):
         'reservas': conteoReservasTotales(request, accommodation_id),
     }
 
-    return render(request, 'accommodation/accommodation-detail.html', context)
+    return render(request, 'accommodation/accommodation_detail.html', context)
 
 def conteoFavoritos(request,id_accommodation):
     favoritos=Favorite.objects.filter(accommodation_id=id_accommodation)
