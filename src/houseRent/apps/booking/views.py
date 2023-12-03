@@ -133,29 +133,7 @@ def request_booking(request, accommodation_id):
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
         
-#----------listado de reservas de un usuario-------
-@login_required
-def listBooksUser(request):
-    if request.user.is_authenticated:
-        books=Book.objects.filter(user_id=request.user.id)
-        timeNow=datetime.now(timezone.utc)
-        activeBook=[]
-        pastBook=[]
-        cancelBook=[]
-        for book in books:
-            if book.end_date > timeNow and book.is_active==True:
-                    activeBook.append(book)
-            elif book.end_date > timeNow and book.is_active==False :
-                    cancelBook.append(book)
-            else:
-                    pastBook.append(book)
-        
-        context={
-            'activeBooks':activeBook,
-            'pastBooks':pastBook,
-            'cancelBooks':cancelBook
-        }
-        return render(request,'booking/booksUser.html',context)
+#----------cancelar reservas de un usuario-------
 
 @login_required
 @require_POST
