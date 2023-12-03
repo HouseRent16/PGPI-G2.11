@@ -37,13 +37,13 @@ def home(request):
         is_favorite=Value(False, output_field=BooleanField())
     )
 
-    # Obtén los los alojamientos favoritos del usuario actual
-    favorite = Favorite.objects.filter(accommodation=OuterRef('pk'), user=request.user)
-    
-    # Actualiza el campo is_favorite a True para los alojamientos favoritos
-    accommodations = accommodations.annotate(
-        is_favorite=Exists(favorite)
-    )
+    if request.user.is_authenticated:
+        # Obtén los los alojamientos favoritos del usuario actual
+        favorite = Favorite.objects.filter(accommodation=OuterRef('pk'), user=request.user)
+        # Actualiza el campo is_favorite a True para los alojamientos favoritos
+        accommodations = accommodations.annotate(
+            is_favorite=Exists(favorite)
+        )
 
 
     # Filtros
