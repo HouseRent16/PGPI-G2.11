@@ -42,7 +42,10 @@
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.end_date.date}}</p>
-                <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
+                <div>
+                    <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
+                    <a href="{{claim_url}}/{{booking.id}}" class="button-link">Reclamar</a>
+                </div>
             </div>
         </div>
         {% endfor %}
