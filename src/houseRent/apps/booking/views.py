@@ -14,6 +14,7 @@ from apps.core.enums import BookingStatus
 from django.urls import reverse
 
 from ..core.enums import BookingStatus
+from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
 
 
 def books(request):
@@ -144,18 +145,26 @@ def booking_details(request):
 
     code = request.GET.get('code')
 
-    book = None
-    accommodation = None
+    context = {}
+
     if code:
         book = get_object_or_404(Book, code=code)
         accommodation = book.accommodation
+        images = accommodation.image_set.all()
+        imagenInicial = images[0]
 
-    context = {
-        'book': book,
-        'accommodation': accommodation
-    }
+        context = {
+            'book': book,
+            'accommodation': accommodation,
+            'images': images[1:len(images)],
+            'imagenInicial': imagenInicial,
+            'numFavoritos': conteoFavoritos(request, accommodation.id),
+            'rating': ratingAccommodation(request, accommodation.id),
+            'claim': conteoReclamaciones(request, accommodation.id),
+            'reservas': conteoReservasTotales(request, accommodation.id),
+        }
     
-    return render(request, 'booking/booking_details.html', context)
+    return render(request, 'booking/bookingDetails.html', context)
 
 @login_required
 def booking_history(request):
