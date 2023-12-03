@@ -203,20 +203,22 @@ def togglefavorites(request):
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 def favoritos(request):
+
     user_id = CustomUser.objects.get(id=request.user.id).id
     favoritos = Favorite.objects.filter(user_id=user_id)
-    accommodations = []
-    for favorito in favoritos:
-        accommodation = favorito.accommodation
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos).annotate(
+        average_rating=Avg('comment__rating'),
+    )
+    for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
-        accommodations.append(accommodation)
+
 
     context = {
         'favoritos': favoritos,
         'accommodations': accommodations,
     }
 
-    return render(request, 'core/favoritos.html')
+    return render(request, 'core/favoritos.html', context)
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
@@ -269,3 +271,4 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
