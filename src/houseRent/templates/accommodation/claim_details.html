@@ -5,9 +5,16 @@
 <div class="row page-container">
   <div class="col accommodation-container">
     <div class="row" id="accommodation-row">
-      {% for claim in claims %}
-        <h1>DETALLES DE CLAIMS</h1>
-      {% endfor %}
+      <h1>Detalles de la reclamación</h1>
+        <div>
+          <strong>Título:</strong> {{ claim.title }}<br>
+          <strong>Descripción:</strong> {{ claim.description }}<br>
+          <strong>Fecha de Publicación:</strong> {{ claim.publication_date }}<br>
+          <strong>Usuario:</strong> {{ claim.user }}<br>
+          <strong>Alojamiento:</strong> {{ claim.accommodation }}<br>
+          <strong>Estado:</strong> {{ claim.status }}<br>
+          <strong>Respuesta:</strong> {{ claim.response }}<br>
+        </div>
     </div>
   </div>
 </div>
