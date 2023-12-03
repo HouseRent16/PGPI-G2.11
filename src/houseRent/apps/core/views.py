@@ -1,8 +1,8 @@
 import json
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Favorite, Service, Image, Book
-from .enums import Category
+from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
+from .enums import Category, BookingStatus
 from .forms import AdminPasswordChangeForm
 from django.contrib.admin.views.decorators import staff_member_required
 from django.shortcuts import render, get_object_or_404
@@ -206,12 +206,41 @@ def ayuda(request):
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
     images = accommodation.image_set.all()
+    imagenInicial=images[0]
 
     # accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
 
     context = {
         "accommodation": accommodation,
-        'images': images
+        'id': accommodation_id,
+        'images': images[1:len(images)],
+        'imagenInicial': imagenInicial,
+        'numFavoritos': conteoFavoritos(request, accommodation_id),
+        'rating': ratingAccommodation(request, accommodation_id),
+        'claim': conteoReclamaciones(request, accommodation_id),
+        'reservas': conteoReservasTotales(request, accommodation_id),
     }
 
     return render(request, 'accommodation/accommodation-detail.html', context)
+
+def conteoFavoritos(request,id_accommodation):
+    favoritos=Favorite.objects.filter(accommodation_id=id_accommodation)
+    return len(favoritos)
+
+def ratingAccommodation(request,id_accommodation):
+    comments=Comment.objects.filter(accommodation_id=id_accommodation)
+    sumaRating=0
+    mediaRating=0
+    for comment in comments:
+        sumaRating+=comment.rating
+    if len(comments)!=0:
+        mediaRating=sumaRating/len(comments)
+    return mediaRating
+
+def conteoReclamaciones(request,id_accommodation):
+    reclamaciones=Claim.objects.filter(accommodation_id=id_accommodation)
+    return len(reclamaciones)
+
+def conteoReservasTotales(request, id_accommodation):
+    reservas=Book.objects.filter(accommodation_id=id_accommodation)
+    return reservas.filter(status=BookingStatus.CONFIRMED).count()

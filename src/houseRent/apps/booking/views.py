@@ -6,6 +6,9 @@ from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
 from django.db.models import Q
 
+from ..core.enums import BookingStatus
+
+
 def books(request):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -57,7 +60,8 @@ def detailsBooks(request,ID):
                 'claim': conteoReclamaciones(request,ID),
                 'imagenInicial': imagenInicial,
                 'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))],
-                'propietario': es_propietario
+                'propietario': es_propietario,
+                'reservas': conteoReservasTotales(request, ID),
 
             }
             
@@ -127,3 +131,8 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+
+
+def conteoReservasTotales(request, id_accommodation):
+    reservas=Book.objects.filter(accommodation_id=id_accommodation)
+    return reservas.filter(status=BookingStatus.CONFIRMED).count()
