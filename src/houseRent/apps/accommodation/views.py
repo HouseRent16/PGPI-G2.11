@@ -1,9 +1,9 @@
 from .forms import RegisterAccommodation
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from apps.authentication.forms import RegisterAddress
 from apps.core.models import Accommodation, Address, CustomUser, Claim
 
-from django.contrib import messages
 
 def register_acommodation(request):
     if request.method == 'POST':
@@ -26,6 +26,12 @@ def register_acommodation(request):
     return render(request, 'accommodation/add.html', {'formAccommodation': formAccommodation,'formAddress': formAddress})
 
 def claim_list(request):
-    claims = Claim.objects.all()
+    user_accommodations = Accommodation.objects.filter(owner=request.user.id)
+    claims = Claim.objects.filter(accommodation__in=user_accommodations)
     return render(request, 'accommodation/claim_list.html', {'claims': claims})
+
+def claim_details(request, claim_id):
+    # Obtener la reclamación específica o devolver un error 404 si no existe
+    claim = get_object_or_404(Claim, id=claim_id)
+    return render(request, 'accommodation/claim_details.html', {'claim': claim})
 

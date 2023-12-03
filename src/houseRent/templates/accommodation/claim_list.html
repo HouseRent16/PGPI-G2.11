@@ -5,8 +5,7 @@
 <div class="row page-container">
   <div class="col accommodation-container">
     <div class="row" id="accommodation-row">
-      {% for claim in claims %}
-    <div class="table-responsive">
+      <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
               <tr>
@@ -18,7 +17,7 @@
           </thead>
           <tbody>
               {% for claim in claims %}
-                  <tr onclick="redirigir()">
+                  <tr onclick="redirigir({{ claim.id }})">
                       <td>{{ claim.title }}</td>
                       <td>{{ claim.publication_date }}</td>
                       <td>{{ claim.accommodation }}</td>
@@ -28,13 +27,12 @@
           </tbody>
         </table>
       </div>
-      {% endfor %}
     </div>
   </div>
 </div>
 <script>
-  function redirigir() {
-       window.location.href = '{% url "claimDetails" %}';
+  function redirigir(url) {
+       window.location.href = url
    }
 </script>
 {% endblock %}
