@@ -4,13 +4,10 @@ from datetime import datetime,timezone
 from .forms import BookingRequest, UserBookRequest
 from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
-<<<<<<< HEAD
 from django.contrib.auth.decorators import login_required
-=======
 from utils.mailer import send_mail
 from datetime import datetime
 
->>>>>>> develop
 from django.db.models import Q
 from apps.core.models import Book, Image
 from apps.core.enums import BookingStatus
@@ -147,7 +144,6 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
-<<<<<<< HEAD
         
 @login_required
 def booking_history(request):
@@ -170,10 +166,8 @@ def booking_history(request):
     """
 
     return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
-=======
 
 
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
->>>>>>> develop
