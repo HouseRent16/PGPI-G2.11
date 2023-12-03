@@ -192,5 +192,5 @@ echo ""
 
 echo "========== RUN SERVER =========="
 echo "Starting the server..."
-./manage.py runserver
+./manage.py runserver 0.0.0.0:8000
 echo ""
