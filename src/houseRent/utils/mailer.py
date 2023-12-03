@@ -15,8 +15,6 @@ def send_mail(subject, body, receivers, template="mailer/email.html", context=No
     )
     mail.content_subtype = "html"
 
-   # mail.attach("Logo_S_T.png", open('static/assets/Logo_S_T.png', 'rb').read(), "image/png")
-
     with open("static/assets/Logo_S_T.png", 'rb') as f:
         attached_image = MIMEImage(f.read())
         attached_image.add_header('Content-ID', '<attached_image>')
