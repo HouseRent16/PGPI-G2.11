@@ -8,8 +8,8 @@
       <form method="post" class="formulario">
         {% csrf_token %}
         <div class="entrada">
-          <label for="username">Nombre de Usuario:</label>
-          <input type="text" id="username" name="username" required>
+          <label for="email">Correo electrónico:</label>
+          {{ form.email }}
         </div>
         <div class="entrada">
             <label for="password">Contraseña:</label>

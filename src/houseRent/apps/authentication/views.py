@@ -8,23 +8,34 @@ from .forms import LoginForm, GuestLoginForm
 from apps.core.models import Accommodation, CustomUser, Address
 from django.contrib import messages
 
+from django.contrib.auth.hashers import check_password
 
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                login(request, user)
+
+            try:
+                user = CustomUser.objects.get(email=email)
+            except CustomUser.DoesNotExist:
+                # Manejar la situación en la que no se encuentra el usuario
+                form.add_error(None, 'Usuario con este correo electrónico no encontrado.')
+                return render(request, 'authentication/login.html', {'form': form})
+            
+            user2 = authenticate(request, username=user.username, password=password)
+            print("Segundo:",type(user))
+
+            if user2 is not None:
+                login(request, user2)
                 # Redirigir a la página principal o a la página que desees
                 return redirect('home')
             else:
                 # Usuario no válido
                 # Puedes agregar un mensaje de error en el formulario
-                form.add_error(None, 'Usuario o contraseña incorrectos.')
+                form.add_error(None, 'Correo electrónico o contraseña incorrectos.')
     else:
         form = LoginForm()
 
