@@ -52,7 +52,7 @@ class BookingRequest(forms.ModelForm):
         start_date = self.cleaned_data.get('start_date')  # Usa get() para evitar KeyError
         end_date = self.cleaned_data.get('end_date')
 
-        if start_date and end_date and start_date > end_date:
+        if start_date and end_date and start_date >= end_date:
                 raise forms.ValidationError('La fecha de fin debe ser posterior a la de inicio')
         Validators.validate_future_datetime(end_date)
         return end_date
