@@ -14,6 +14,7 @@ from apps.core.enums import BookingStatus
 from django.urls import reverse
 
 from ..core.enums import BookingStatus
+from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
 
 
 def books(request):
@@ -100,11 +101,6 @@ def accomodationImages(request,id_accommodation):
     images=Image.objects.filter(accommodation_id=id_accommodation)
     return images
 
-
-
-# Create your views here.
-
-
 def request_booking(request, accommodation_id):
     accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
     current_user = request.user
@@ -145,6 +141,31 @@ def request_booking(request, accommodation_id):
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
         
+def booking_details(request):
+
+    code = request.GET.get('code')
+
+    context = {}
+
+    if code:
+        book = get_object_or_404(Book, code=code)
+        accommodation = book.accommodation
+        images = accommodation.image_set.all()
+        imagenInicial = images[0]
+
+        context = {
+            'book': book,
+            'accommodation': accommodation,
+            'images': images[1:len(images)],
+            'imagenInicial': imagenInicial,
+            'numFavoritos': conteoFavoritos(request, accommodation.id),
+            'rating': ratingAccommodation(request, accommodation.id),
+            'claim': conteoReclamaciones(request, accommodation.id),
+            'reservas': conteoReservasTotales(request, accommodation.id),
+        }
+    
+    return render(request, 'booking/bookingDetails.html', context)
+
 @login_required
 def booking_history(request):
     current_user = request.user

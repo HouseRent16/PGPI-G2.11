@@ -226,8 +226,9 @@ class Book(models.Model):
             raise ValidationError('El número de personas no puede ser menor que 1')
     
     def __str__(self):
-        return f"{self.user.username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
-    
+        username = self.user.username if self.user else None
+        return f"{username} : {self.accommodation.name} - {self.start_date} - {self.end_date}"
+
     def save(self, *args, **kwargs):
 
         if not self.pk:
