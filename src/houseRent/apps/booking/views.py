@@ -5,6 +5,11 @@ from .forms import BookingRequest, UserBookRequest
 from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+import stripe
+from django.conf import settings
+from django.views import View
+from django.http import HttpResponse
 
 def books(request):
     if request.user.is_authenticated:
@@ -127,3 +132,75 @@ def request_booking(request, accommodation_id):
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+##pasarela de pago del cliente
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class CreateCheckoutSessionView(View):
+    @login_required(login_url='login')
+    def get(self, request, *args, **kwargs):
+        book_id = self.kwargs.get('book_id')
+        book = get_object_or_404(Book, id=book_id)
+
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price_data': {
+                        'currency': 'eur',
+                        'unit_amount': int(book.price * 100),  # Precio en centavos
+                        'product_data': {
+                            'name': book.amount_people,
+                        },
+                    },
+                    'quantity': 1,
+                }],
+                mode='payment',
+                success_url=request.build_absolute_uri('/success/'),  # URL de redirección después del pago exitoso
+                cancel_url=request.build_absolute_uri('/cancel/'),  # URL de redirección si el usuario cancela
+            )
+
+            # Redirige al usuario a la página de pago de Stripe
+            return redirect(session.url, code=303)
+
+        except Exception as e:
+            # Manejar excepciones o errores aquí
+            return HttpResponse(str(e))
+def paymentSuccessView(request):
+    return render(request,'booking/paymentSuccess.html')
+
+def paymentCancelView(request):
+    return render(request,'booking/paymentCancel.html')
+
+#gestion pasarela de pago para el propietario
+@login_required(login_url='login')
+def create_stripe_account_for_owner(request):
+    user=CustomUser.objects.get(request.user.id)
+    account = stripe.Account.create(
+        type="express",  # o "standard", dependiendo de tus necesidades
+        country="ES",  # Asegúrate de usar el país adecuado
+        email=user.email
+    )
+    user.stripe_id=account.id
+    user.save()
+    return account
+    
+    
+def generate_onboarding_link(stripe_account_id):
+    link = stripe.AccountLink.create(
+        account=stripe_account_id,
+        refresh_url="https://createStripeAccount",
+        return_url="https://your-site.com/return",
+        type="account_onboarding",
+    )
+    return link.url
+    
+def transfer_funds_to_owner(stripe_account_id, amount):
+    transfer = stripe.Transfer.create(
+        amount=amount,
+        currency="eur",
+        destination=stripe_account_id,
+    )
+    return transfer

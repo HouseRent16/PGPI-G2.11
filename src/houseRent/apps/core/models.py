@@ -60,7 +60,7 @@ class CustomUser(AbstractUser):
             ])
     gender = models.CharField(max_length=16, choices=Gender.choices(), blank=False, null=False)
     request = models.CharField(max_length=16, choices=Request.choices(), default=Request.NOT_REQUESTED)
-
+    stripe_id=models.PositiveIntegerField(blank=True,unique=True, null=True)
     class Meta:
         verbose_name = "Usuario"
         verbose_name_plural = "Usuarios"
@@ -209,6 +209,9 @@ class Book(models.Model):
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
     code = models.CharField(max_length=200, blank=False, null=False)
+    payment_bool=models.BooleanField(default=False)
+    stripe_checkout_id=models.CharField(max_length=500)
+    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)])
 
     class Meta:
         verbose_name = "Reserva"

@@ -150,3 +150,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'houserent2324@gmail.com'
 EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'
+
+#Stripe API
+STRIPE_PUBLIC_KEY='pk_test_51OIz2ID34zl4uf1hhEKKVxPk4GByxoznQcHcIe4mFsjnwLDcZqPlOJ9STH6Sw2aCkKnMHtbnG17VxsVLIMUI1vzb00ORgPH8QK'
+STRIPE_SECRET_KEY='sk_test_51OIz2ID34zl4uf1hMvUNFJKd2PMwLHkq08DxryUBxcriz0w5MxLloEgD98anVnBw73vb7Kb1crmkLHX3YHqKL0en00ExmsBg5G'

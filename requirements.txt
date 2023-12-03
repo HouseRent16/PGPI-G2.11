@@ -11,3 +11,4 @@ django-countries
 django-phonenumbers
 django-phonenumber-field
 babel
+stripe==7.7.0
