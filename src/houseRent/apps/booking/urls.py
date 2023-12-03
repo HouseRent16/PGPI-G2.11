@@ -7,4 +7,4 @@ urlpatterns = [
     path('owner',views.books,name='booking'),
     path('owner/<int:ID>',views.detailsBooks, name='detailsBooking'),
     path('history', booking_history, name='history'),
-
+]
