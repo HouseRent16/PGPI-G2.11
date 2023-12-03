@@ -2,20 +2,39 @@
 {% load static %}
 
 {% block content %}
-<div class="row page-container">
-  <div class="col accommodation-container">
-    <div class="row" id="accommodation-row">
-      <h1>Detalles de la reclamación</h1>
-        <div>
-          <strong>Título:</strong> {{ claim.title }}<br>
-          <strong>Descripción:</strong> {{ claim.description }}<br>
-          <strong>Fecha de Publicación:</strong> {{ claim.publication_date }}<br>
-          <strong>Usuario:</strong> {{ claim.user }}<br>
-          <strong>Alojamiento:</strong> {{ claim.accommodation }}<br>
-          <strong>Estado:</strong> {{ claim.status }}<br>
-          <strong>Respuesta:</strong> {{ claim.response }}<br>
-        </div>
-    </div>
-  </div>
+<div class="container mt-5">
+  <h1 class="mb-4">Detalles de la reclamación</h1>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Título</th>
+        <td>{{ claim.title }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Descripción</th>
+        <td>{{ claim.description }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Fecha de Publicación</th>
+        <td>{{ claim.publication_date }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Usuario</th>
+        <td>{{ claim.user }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Alojamiento</th>
+        <td>{{ claim.accommodation }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Estado</th>
+        <td>{{ claim.status }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Respuesta</th>
+        <td>{{ claim.response }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 {% endblock %}

@@ -8,7 +8,7 @@
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
-              <tr>
+              <tr class="table-secondary">
                   <th scope="col">Título</th>
                   <th scope="col">Fecha de Publicación</th>
                   <th scope="col">Alojamiento</th>
@@ -21,7 +21,7 @@
                       <td>{{ claim.title }}</td>
                       <td>{{ claim.publication_date }}</td>
                       <td>{{ claim.accommodation }}</td>
-                      <td>{{ claim.get_status_display }}</td>
+                      <td>{{ claim.status }}</td>
                   </tr>
               {% endfor %}
           </tbody>
