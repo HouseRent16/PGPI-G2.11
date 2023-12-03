@@ -13,6 +13,9 @@ from apps.core.models import Book, Image
 from apps.core.enums import BookingStatus
 from django.urls import reverse
 
+from ..core.enums import BookingStatus
+
+
 def books(request):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -64,7 +67,8 @@ def detailsBooks(request,ID):
                 'claim': conteoReclamaciones(request,ID),
                 'imagenInicial': imagenInicial,
                 'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))],
-                'propietario': es_propietario
+                'propietario': es_propietario,
+                'reservas': conteoReservasTotales(request, ID),
 
             }
             
@@ -162,3 +166,8 @@ def booking_history(request):
     """
 
     return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+
+
+def conteoReservasTotales(request, id_accommodation):
+    reservas=Book.objects.filter(accommodation_id=id_accommodation)
+    return reservas.filter(status=BookingStatus.CONFIRMED).count()

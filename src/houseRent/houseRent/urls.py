@@ -24,7 +24,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("booking/", include("apps.booking.urls")),
     path("", include("apps.authentication.urls")),
-    path("booking/", include("apps.booking.urls"))
+    path("booking/{", include("apps.booking.urls"))
 ]
 
 if settings.DEBUG:
