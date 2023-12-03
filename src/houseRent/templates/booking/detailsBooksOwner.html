@@ -9,9 +9,14 @@
                     <div class="col col-md-12 ">
                        <div class="row h-100" >
                             <div class="col col-md-7  " >
-                                <h1>{{accommodation.owner}}</h1>
+                                <div class="row">
+        <h1 style="margin-left: 10px;">{{ accommodation.name }}</h1>
+        <h3 style="margin-left: 10px;">{{ accommodation.address.city }}, {{ accommodation.address.country }}</h3>
+        <!-- Puedes añadir más información aquí si es necesario -->
+        </div>
                             </div>
                             <div class="col col-md-1 d-flex justify-content-center align-items-center " >
+                                <p> {{reservas}}</p>
                                 <span class="material-symbols-outlined ">
                                     done
                                     </span>
@@ -74,47 +79,44 @@
                     <div class="col col-md-3  " >
                         <!-- Sidebar de Servicios -->
                         <div class="row justify-content-center" >   
-                        <div class="card text-center" style="width: 95%;">
-                            <div class="card-header">
+                        <div class="card" style="width: 95%;">
+                            <h4 class="title-card text-center">
                                 Servicios
+                            </h4>
+                            {% if accommodation.service.all %}
+                            <div class="services">
+                                {% for service in accommodation.service.all %}
+                                    <p class="infomation-card-service">{{ service.name }}</p>
+                                {% endfor %}
                             </div>
-                            <ul class="list-group list-group-flush">
-                                {% for service in services %}
-                                    <h5> {{service.name}}</h5>
-                                    {%endfor%}
-                            </ul>
+                        {% endif %}
                             </div>
                     </div>
                 </div> 
                     <div class="col col-md-6 " >
                         <div class="row justify-content-center" >   
-                            <div class="card text-center" style="width: 95%; max-width: 950 px;">
-                                <div class="card-header">
-                                    Descripcion
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    {% for accommodation in accommodations %}
-                                    <h5> {{accommodation.description}}</h5>
-                                    {%endfor%}
-                                </ul>
+                            <div class="card" style="width: 95%; max-width: 950 px;">
+                                <h4 class="title-card text-center">Descripción</h4>
+                                <h7 class="infomation-card">{{ accommodation.description }}</h7>
+
                                 </div>
                         </div>
                     </div>
                     <div class="col col-md-3 " >
                         <div class="row " >   
                             <div class="card" style="width: 95%;">
-                                <div class="card-header text-center">
-                                    Detalles
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <h5><strong>Fecha de Creación:</strong> {{accommodation.creation_date}}</h5> 
-                                    <h5><strong>Última modificacón:</strong> {{accommodation.modification_date}}</h5>
-                                    <h5><strong>Activo:</strong> {{accommodation.is_active}}</h5>
-                                    <h5><strong>Precio:</strong> {{accommodation.price}}</h5>
-                                    <h5><strong>Capacidad:</strong> {{accommodation.capacity}}</h5>
-                                    <h5><strong>Categoria:</strong> {{accommodation.category}}</h5>
-                                    <h5><strong>Dirección:</strong> {{accommodation.address}}</h5>
-                                </ul>
+                                <h4 class="title-card text-center">Detalles</h4>
+                    <p class="infomation-card-detalles"><b class="price"> Fecha de creación: </b> {{ accommodation.creation_date }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Última modificación: </b> {{ accommodation.modification_date }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Precio: </b> {{ accommodation.price }}€ Noche</p>
+                    <p class="infomation-card-detalles"><b class="price"> Capacidad: </b> {{ accommodation.capacity }} personas</p>
+                    <p class="infomation-card-detalles"><b class="price"> País: </b> {{ accommodation.address.country }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Región: </b> {{ accommodation.address.region }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Ciudad: </b> {{ accommodation.address.city }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Código postal: </b> {{ accommodation.address.postal_code }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Calle: </b> {{ accommodation.address.address_line }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Número: </b> {{ accommodation.address.street_number }}</p>
+
                                 </div>
                         </div>
                     </div>

@@ -2,8 +2,20 @@ from django.shortcuts import render,redirect,get_object_or_404
 from apps.core.models import Accommodation,Book,Image, Service, Favorite, Comment,Claim,Image,CustomUser
 from datetime import datetime,timezone
 from .forms import BookingRequest, UserBookRequest
+from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
+from django.contrib.auth.decorators import login_required
+from utils.mailer import send_mail
+from datetime import datetime
+
 from django.db.models import Q
+from apps.core.models import Book, Image
+from apps.core.enums import BookingStatus
+from django.urls import reverse
+
+from ..core.enums import BookingStatus
+from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
+
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
@@ -60,7 +72,8 @@ def detailsBooks(request,ID):
                 'claim': conteoReclamaciones(request,ID),
                 'imagenInicial': imagenInicial,
                 'images': accomodationImages(request,ID)[1:len(accomodationImages(request,ID))],
-                'propietario': es_propietario
+                'propietario': es_propietario,
+                'reservas': conteoReservasTotales(request, ID),
 
             }
             
@@ -92,11 +105,6 @@ def accomodationImages(request,id_accommodation):
     images=Image.objects.filter(accommodation_id=id_accommodation)
     return images
 
-
-
-# Create your views here.
-
-
 def request_booking(request, accommodation_id):
     accommodation = get_object_or_404(Accommodation, pk=accommodation_id)
     current_user = request.user
@@ -113,25 +121,82 @@ def request_booking(request, accommodation_id):
     else:
         form = BookingRequest(request.POST, initial={'accommodation': accommodation})
         form.accommodation = accommodation
-        if not current_user.is_authenticated:
-            user_form = UserBookRequest(request.POST)
-            if CustomUser.objects.filter(email=user_form.data.get('email')).exists():
-                current_user = CustomUser.objects.filter(Q(email=user_form.data.get('email'))).first()
-                user_form = UserBookRequest(request.POST, instance=current_user)
-        else:
+        if current_user.is_authenticated:
             user_form = UserBookRequest(request.POST, instance=current_user)
+        else:
+            user_form = UserBookRequest(request.POST)
 
         if form.is_valid() and user_form.is_valid():
 
             booking_request = form.save(commit=False)
-            user_loaded = user_form.save()
-            booking_request.user = user_loaded
+            if current_user.is_authenticated:
+                booking_request.user = current_user
             booking_request.is_active = True
             booking_request.accommodation = accommodation
+            booking_request.status = BookingStatus.PENDING
             booking_request.save()
+            str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
+            str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
+            nights = (booking_request.end_date - booking_request.start_date)
+            price = (nights.days - 1 )* accommodation.price
+            body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por cun coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
+            send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
             return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
+        
+def booking_details(request):
+
+    code = request.GET.get('code')
+
+    context = {}
+
+    if code:
+        book = get_object_or_404(Book, code=code)
+        accommodation = book.accommodation
+        images = accommodation.image_set.all()
+        imagenInicial = images[0]
+
+        context = {
+            'book': book,
+            'accommodation': accommodation,
+            'images': images[1:len(images)],
+            'imagenInicial': imagenInicial,
+            'numFavoritos': conteoFavoritos(request, accommodation.id),
+            'rating': ratingAccommodation(request, accommodation.id),
+            'claim': conteoReclamaciones(request, accommodation.id),
+            'reservas': conteoReservasTotales(request, accommodation.id),
+        }
+    
+    return render(request, 'booking/bookingDetails.html', context)
+
+@login_required
+def booking_history(request):
+    current_user = request.user
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    
+    for booking in pendding_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in confirm_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    for booking in cancel_booking:
+        booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+
+    """
+    judge_url = request.get_host() + reverse('judge')
+    claim_url = request.get_host() + reverse('claim')
+    cancel_url = request.get_host() + reverse('cancel')
+    """
+
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+
+
+def conteoReservasTotales(request, id_accommodation):
+    reservas=Book.objects.filter(accommodation_id=id_accommodation)
+    return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
         
 #----------cancelar reservas de un usuario-------
 
@@ -140,8 +205,7 @@ def request_booking(request, accommodation_id):
 def cancelBooksUser(request,book_id):
     if request.user.is_authenticated:
         book=Book.objects.get(id=book_id)
-        print(book.status)
         book.is_active=False
+        book.status=BookingStatus.CANCELLED
         book.save()
-        print(book.status)
-    return redirect('/booking/listUser')
+    return redirect('/booking/history')

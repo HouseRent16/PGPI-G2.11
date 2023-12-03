@@ -48,7 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "apps.core",
     "apps.authentication",
-    "apps.booking"
+    "apps.accommodation",
+    "apps.booking",
+    "django_celery_beat",
 ]
 
 MIDDLEWARE = [
@@ -149,3 +151,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'houserent2324@gmail.com'
 EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'
+
+CELERY_TIMEZONE = "UTC"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULE = {
+    "scheduled_task": {
+        "task": "apps.booking.tasks.test",
+        "schedule": 5.0,
+    },
+}
