@@ -36,18 +36,18 @@ class CustomUserForm(forms.ModelForm):
             field.widget.attrs.update({'class': 'input'})
         
 
-    def save(self, commit=True):
-        user = super(CustomUserForm, self).save(commit=False)
+    # def save(self, commit=True):
+    #     user = super(CustomUserForm, self).save(commit=False)
 
-        #Habría que comprobar que la contraseña sea la misma
-        if self.cleaned_data['password']:
-            user.set_password(self.cleaned_data.get['password'])
+    #     #Habría que comprobar que la contraseña sea la misma
+    #     if self.cleaned_data['password']:
+    #         user.set_password(self.cleaned_data.get['password'])
         
-        user.phone = self.cleaned_data['phone']
+    #     user.phone = self.cleaned_data['phone']
 
-        if commit:
-            user.save()
-        return user
+    #     if commit:
+    #         user.save()
+    #     return user
 
 class AddressForm(forms.ModelForm):
     country = CountryField().formfield(widget=forms.Select(attrs={'class': 'input'}))
