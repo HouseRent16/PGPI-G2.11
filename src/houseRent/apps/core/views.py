@@ -11,9 +11,12 @@ from datetime import datetime
 from datetime import date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Q, Exists, OuterRef, Value, BooleanField
-
-from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Exists, OuterRef, Value, BooleanField
+from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.utils.decorators import method_decorator
+from .forms import CustomUserForm, AddressForm
+from django.shortcuts import get_object_or_404
 
 
 @staff_member_required
@@ -34,7 +37,6 @@ def change_password(request, user_id):
 
 def home(request):
     accommodations = Accommodation.objects.all().annotate(
-        average_rating=Avg('comment__rating'),
         is_booked=Value(False, output_field=BooleanField())
     )
 
@@ -168,7 +170,7 @@ def home(request):
 
     return render(request, 'core/home.html', context)
 
-@csrf_exempt
+@login_required
 def togglefavorites(request):
     if request.method == 'POST':
         # Obtener el ID del alojamiento desde la solicitud POST
@@ -194,6 +196,36 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
+@method_decorator(login_required, name='dispatch')
+class ProfileView(View):
+    
+    def get_template(self):
+        return 'core/profile.html'
+    
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
+
+        context = {
+            'user_form': customUserForm,
+            'address_form': addressForm,
+            
+        }
+        return render(self.request, self.get_template(), context)
+    
+    #Por hacer
+    def post(self, request, *args, **kwargs):
+        user = CustomUser.objects.get(id=request.user.id)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
+
+        context = {
+            'user_form': customUserForm,
+            'address_form': addressForm,
+        }
+
+        return render(self.request, self.get_template(), context)
 
 
 def accommodation_details(request, accommodation_id):

@@ -177,15 +177,51 @@ def paymentCancelView(request):
 #gestion pasarela de pago para el propietario
 @login_required(login_url='login')
 def create_stripe_account_for_owner(request):
-    user=CustomUser.objects.get(request.user.id)
+    user=CustomUser.objects.get(id=request.user.id)
+    print("creando cuenta")
     account = stripe.Account.create(
-        type="express",  # o "standard", dependiendo de tus necesidades
-        country="ES",  # Asegúrate de usar el país adecuado
-        email=user.email
+        country="ES",
+        type="custom",
+        capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+        tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+        email=user.email,
+        business_type="individual",  # o "company" si es aplicable
+        company={
+            'name': user.username,  # Nombre de la empresa ficticia
+            'phone': 1234,  # Número de teléfono de la empresa
+                },
+        individual={
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'address': {
+            'line1': "hola",
+            'city': 'hola',
+            'state': 'hola',
+            'postal_code': 1234,
+            'country': 'ES',
+            },
+        },
+        business_profile={
+            'mcc': '5734',  # Código de categoría de comerciante (MCC) para software
+                },
+        external_account={
+            'object': 'bank_account',
+            'country': 'ES',
+            'currency': 'eur',
+            'account_holder_name': 'Nombre del titular',
+            'account_holder_type': 'individual',
+            'account_number': 'ES0700120345030000067890',  # Número de cuenta (utiliza un número de prueba)
+                },
+       
+           
     )
     user.stripe_id=account.id
     user.save()
-    return account
+    if user.stripe_id!=None:
+        return redirect('/booking/success')
+    else:
+        return redirect('/booking/cancel')
     
     
 def generate_onboarding_link(stripe_account_id):
@@ -203,4 +239,4 @@ def transfer_funds_to_owner(stripe_account_id, amount):
         currency="eur",
         destination=stripe_account_id,
     )
-    return transfer
+    return transfer 

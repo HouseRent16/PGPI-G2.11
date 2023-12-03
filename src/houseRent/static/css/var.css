@@ -11,8 +11,10 @@
     --f3: 1rem;
     --f4: 0.8rem;
     --f5: 0.6rem;
-    --f6: 2rem;
-;
+
+    --w1: 800;
+    --w2: 600;
+    --w3: 400;
   
     --navbar-altura: 80px;
     --content-padding: 50px;
