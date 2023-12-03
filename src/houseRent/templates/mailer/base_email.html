@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{% block title %}HouseRent{% endblock %}</title>
+
+  <!-- Estilos CSS base -->
+  <link rel="icon" type="image/png" href="/static/imagenes/favicon.png">
+
+ 
+  <!-- Otros estilos o scripts necesarios para tu proyecto -->
+  {% block extrahead %}{% endblock %}
+</head>
+<body class="cuerpo">
+
+        
+
+  <div>
+    <!-- Contenido específico de cada página -->
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- Otros scripts necesarios para tu proyecto -->
+  {% block extrabody %}{% endblock %}
+</body>
+</html>
