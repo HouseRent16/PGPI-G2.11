@@ -57,6 +57,9 @@ class ClaimStatus(Enum):
     RESOLVED = 'Resuelta'
     REJECTED = 'Rechazada'
 
+    def __str__(self):
+        return self.value
+
     @classmethod
     def choices(cls):
         return tuple((i.name, i.value) for i in cls)

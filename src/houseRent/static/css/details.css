@@ -103,3 +103,32 @@
   font-size: smaller;
 }
 
+.comments-section {
+  background-color: rgba(248, 247, 247, 0.763) !important;
+  
+  padding: 30px !important;
+  border-radius: 25px !important;
+  border: 1px solid #ddd !important;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.235) !important;
+  margin-top: 20px !important;
+  width: 100% !important;
+
+}
+
+.comments-card {
+  margin: 15px 0px 0px 0px;
+  background-color: var(--c1) !important;
+  border-radius: 15px !important;
+  padding: 10px 25px 5px 10px;
+}
+
+.subtitle {
+  color: rgb(148, 148, 148);
+}
+
+.row-comments {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: space-between;
+}
+

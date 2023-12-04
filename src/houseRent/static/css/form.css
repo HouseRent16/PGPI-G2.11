@@ -411,4 +411,6 @@
   padding: 20px 0;
 }
 
-
+.custom-title-input {
+    height: 10px !important; /* Ajusta la altura según tus preferencias */
+}

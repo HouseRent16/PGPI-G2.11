@@ -1,17 +1,16 @@
 import json
+from unittest import case
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
 from .enums import Category, BookingStatus
-from .forms import AdminPasswordChangeForm
+from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm
 from django.contrib.admin.views.decorators import staff_member_required
-from django.shortcuts import render, get_object_or_404
-from django.db.models import Avg
-from datetime import datetime
-from datetime import date
+from datetime import datetime, date
 from urllib.parse import urlencode
-from django.http import HttpResponseRedirect, JsonResponse
-from django.db.models import Q, Exists, OuterRef, Value, BooleanField
+from django.http import HttpResponseRedirect, JsonResponse, Http404
+from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
+from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -35,7 +34,8 @@ def change_password(request, user_id):
 def home(request):
     accommodations = Accommodation.objects.all().annotate(
         average_rating=Avg('comment__rating'),
-        is_booked=Value(False, output_field=BooleanField())
+        is_booked=Value(False, output_field=BooleanField()),
+        is_favorite=Value(False, output_field=BooleanField())
     )
 
     if request.user.is_authenticated:
@@ -203,14 +203,33 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
-def sobreNosotros(request):
-    return render(request, 'core/sobre_nosotros.html')
+def favoritos(request):
+
+    user_id = CustomUser.objects.get(id=request.user.id).id
+    favoritos = Favorite.objects.filter(user_id=user_id)
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos).annotate(
+        average_rating=Avg('comment__rating'),
+    )
+    for accommodation in accommodations:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+
+
+    context = {
+        'favoritos': favoritos,
+        'accommodations': accommodations,
+    }
+
+    return render(request, 'core/favoritos.html', context)
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
 
 def ayuda(request):
     return render(request,'core/ayuda.html')
+
+def sobreNosotros(request):
+    return render(request, 'core/sobre_nosotros.html')
+
 
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
@@ -228,6 +247,7 @@ def accommodation_details(request, accommodation_id):
         'rating': ratingAccommodation(request, accommodation_id),
         'claim': conteoReclamaciones(request, accommodation_id),
         'reservas': conteoReservasTotales(request, accommodation_id),
+        'comments': Comment.objects.filter(accommodation_id=accommodation_id),
     }
 
     return render(request, 'accommodation/accommodation_detail.html', context)
@@ -253,3 +273,48 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+@login_required
+def add_comment(request, accommodation_id):
+    accommodation = Accommodation.objects.get(pk=accommodation_id)
+
+    user_has_booking = Book.objects.filter(user=request.user, accommodation=accommodation).exists()
+
+    if not user_has_booking:
+        raise Http404("No puedes dejar un comentario para este apartamento sin haberlo alquilado.")
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.accommodation = accommodation
+            comment.save()
+            return redirect('home')
+    else:
+        form = CommentForm()
+
+
+    return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
+
+@login_required
+def add_claim(request, booking_id):
+    booking = Book.objects.get(pk=booking_id)
+
+    user_has_booking = Book.objects.filter(user=request.user, pk=booking_id).exists()
+    if not user_has_booking:
+        raise Http404("No puedes dejar una reclamación para este apartamento sin haberlo alquilado.")
+
+
+    if request.method == 'POST':
+        form = ClaimForm(request.POST)
+        if form.is_valid():
+            claim = form.save(commit=False)
+            claim.user = request.user
+            claim.accommodation = booking.accommodation
+            claim.save()
+            return redirect('home')
+    else:
+        form = ClaimForm()
+
+    return render(request, 'comments-claim/add_claim.html', {'form': form, 'booking': booking})
+
