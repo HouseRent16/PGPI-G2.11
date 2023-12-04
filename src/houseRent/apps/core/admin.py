@@ -2,7 +2,7 @@ from django.contrib import admin
 from unfold.admin import ModelAdmin
 from django.utils.html import format_html
 from django.contrib.auth.models import Group
-from .models import Address, CustomUser, Accommodation, Image,Comment,Claim,Favorite,Book
+from .models import Address, CustomUser, Accommodation, Image,Comment,Claim,Favorite,Book, Service
 from .enums import Request
 
 def add_to_owners(modeladmin, request, queryset):
@@ -52,6 +52,11 @@ class CustomUserAdmin(ModelAdmin):
         )
         return super(CustomUserAdmin, self).render_change_form(request, context, *args, **kwargs)
 
+@admin.register(Service)
+class ServiceAdmin(ModelAdmin):
+    list_display = ['name']
+    list_filter = ['name']
+    search_fields = ['name']
 
 @admin.register(Comment)
 class CommentAdmin(ModelAdmin):
