@@ -121,7 +121,26 @@
                             </div>
                         </div>
             </div>
+
+            {% if comments %}
+        <div class="comments-section">
+            <h2> Comentarios </h2>
+            {%for comment in comments%}
+            
+                <div class="contenedor comments-card">
+                    <div class="row-comments">
+                        <h4>{{comment.title}}</h4>
+                        <p> {{comment.rating}} ★</p>
+                    </div>
+                    <p>{{comment.description}}</p>
+                    <p class="subtitle"> {{comment.publication_date}}</p>
+                </div>
+            {%endfor%}
         </div>
+       {% endif%}
+        </div>
+
+       
     {% if not book %}
         </div>
             <div class="page-content text-center" style="margin-top: 20px;">

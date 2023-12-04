@@ -246,6 +246,7 @@ def accommodation_details(request, accommodation_id):
         'rating': ratingAccommodation(request, accommodation_id),
         'claim': conteoReclamaciones(request, accommodation_id),
         'reservas': conteoReservasTotales(request, accommodation_id),
+        'comments': Comment.objects.filter(accommodation_id=accommodation_id),
     }
 
     return render(request, 'accommodation/accommodation_detail.html', context)
