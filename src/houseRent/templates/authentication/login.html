@@ -17,7 +17,9 @@
               <input type="password" id="password" name="password" required>
           </div>
           <button type="submit" class="mt-3">Iniciar Sesión</button>
+          <button type="button" class="mt-3" onclick="register()">Registrate como Usuario</button>
         </form>
+        
         <button type="button" class="outlined-button mt-3" onclick="redirigir()">Acceso como invitado</button>
         <p class="m-0 mt-3 text-muted">Al acceder como invitado, aceptas nuestra <a href="{% url 'privatePolicy' %}">política de privacidad</a></p>
     </section>
@@ -26,6 +28,9 @@
 <script>
    function redirigir() {
         window.location.href = '{% url "home" %}';
+    }
+    function register() {
+        window.location.href = '{% url "register" %}';
     }
 </script>
 {% endblock %}
