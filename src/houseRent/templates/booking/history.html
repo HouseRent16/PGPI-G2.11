@@ -25,8 +25,8 @@
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.end_date.date}}</p>
                 <div>
-                    <a href="add_comment/{{booking.accommodation.id}}" class="button-link">Opinar</a>
-                    <a href="add_claim/{{booking.id}}" class="button-link">Reclamar</a>
+                    <a href="/add_comment/{{booking.accommodation.id}}" class="button-link">Opinar</a>
+                    <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
                 </div>
             </div>
         </div>
@@ -47,7 +47,7 @@
                 <p>Precio: {{booking.end_date.date}}</p>
                 <div>
                     <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
-                    <a href="add_claim/{{booking.id}}" class="button-link">Reclamar</a>
+                    <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
                 </div>
             </div>
         </div>

@@ -8,8 +8,9 @@ from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime, date
 from urllib.parse import urlencode
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
+from django.contrib.auth.decorators import login_required
 
 from django.views.decorators.csrf import csrf_exempt
 
@@ -271,9 +272,14 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
-
+@login_required
 def add_comment(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
+
+    user_has_booking = Book.objects.filter(user=request.user, accommodation=accommodation).exists()
+
+    if not user_has_booking:
+        raise Http404("No puedes dejar un comentario para este apartamento sin haberlo alquilado.")
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -289,9 +295,14 @@ def add_comment(request, accommodation_id):
 
     return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
 
-
+@login_required
 def add_claim(request, booking_id):
     booking = Book.objects.get(pk=booking_id)
+
+    user_has_booking = Book.objects.filter(user=request.user, pk=booking_id).exists()
+    if not user_has_booking:
+        raise Http404("No puedes dejar una reclamación para este apartamento sin haberlo alquilado.")
+
 
     if request.method == 'POST':
         form = ClaimForm(request.POST)

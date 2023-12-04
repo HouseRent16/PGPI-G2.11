@@ -9,7 +9,7 @@ urlpatterns = [
     path('sobre-nosotros/', views.sobreNosotros, name="sobreNosotros"),
     path('privatePolicy/', views.private_policy, name="privatePolicy"),
     path('ayuda/', views.ayuda, name="ayuda"),
-    path('favoritos/', views.favoritos, name='favoritos')
+    path('favoritos/', views.favoritos, name='favoritos'),
     path('add_comment/<int:accommodation_id>/', views.add_comment, name='add_comment'),
     path('add_claim/<int:booking_id>/', views.add_claim, name='add_claim'),
 
