@@ -130,6 +130,11 @@ def request_booking(request, accommodation_id):
             booking_request.is_active = True
             booking_request.accommodation = accommodation
             booking_request.status = BookingStatus.PENDING
+
+            nights = (booking_request.end_date - booking_request.start_date).days
+            total_price = nights * accommodation.price
+            booking_request.total_price = total_price
+
             booking_request.save()
             str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
             str_end_date = booking_request.end_date.strftime("%d/%m/%Y")

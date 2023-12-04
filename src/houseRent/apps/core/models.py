@@ -209,6 +209,8 @@ class Book(models.Model):
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
     code = models.CharField(max_length=200, blank=False, null=False)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
 
     class Meta:
         verbose_name = "Reserva"
