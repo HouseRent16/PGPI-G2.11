@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
 from .enums import Category, BookingStatus
-from .forms import AdminPasswordChangeForm, CommentForm
+from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime, date
 from urllib.parse import urlencode
@@ -269,4 +269,21 @@ def add_comment(request, accommodation_id):
 
 
     return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
+
+
+def add_claim(request, booking_id):
+    booking = Book.objects.get(pk=booking_id)
+
+    if request.method == 'POST':
+        form = ClaimForm(request.POST)
+        if form.is_valid():
+            claim = form.save(commit=False)
+            claim.user = request.user
+            claim.accommodation = booking.accommodation
+            claim.save()
+            return redirect('home')
+    else:
+        form = ClaimForm()
+
+    return render(request, 'comments-claim/add_claim.html', {'form': form, 'booking': booking})
 
