@@ -10,6 +10,8 @@
   <link rel="stylesheet" type="text/css" href="/static/css/var.css">
   <link rel="stylesheet" type="text/css" href="/static/css/navbar.css">
   <link rel="stylesheet" type="text/css" href="/static/css/form.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/details.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/book_search.css">
 
   <!-- Agrega la referencia a Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -22,6 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
   <!-- Otros estilos o scripts necesarios para tu proyecto -->
+
   
   {% block extrahead %}{% endblock %}
 
@@ -30,27 +33,28 @@
 <body> 
   <nav class="navbar navbar-expand-lg">
     <div class="container-fluid">
-        <a class="navbar-logo" href="#">H</a>
-        <a class="navbar-brand" href="#">HouseRent</a>
+        <a class="navbar-logo" href="/">H</a>
+        <a class="navbar-brand" href="/">HouseRent</a>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/">Catálogo</a>
                 </li>
+                {% if request.user.is_authenticated and propietario%}
+                    <li class="nav-item">
+                    <a class="nav-link text-center" href="/booking/owner">Gestión</a>
+                    </li>
+                    {%endif%}
+                {% if user.is_authenticated %}
                 <li class="nav-item">
-                <a class="nav-link text-center" href="#">Reservas</a>
+                <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
                 </li>
+                {% endif %}
+                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                <a class="nav-link text-center" href="#">Favoritos</a>
+                <a class="nav-link text-center" href="/favoritos">Favoritos</a>
                 </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Sobre Nosotros</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Política</a>
-                </li>
-                <li class="nav-item">
-                <a class="nav-link text-center" href="#">Ayuda</a>
+                {% endif %}
                 </li>
                 {% if user.groups.all.0.name == 'Administradores' %}
                 <li class="nav-item">
@@ -65,6 +69,15 @@
                   <a class="nav-link text-center" href="/claims/">Reclamaciones</a>
                 </li>
                 {% endif %}
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/sobre-nosotros">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/privatePolicy">Política</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link text-center" href="/ayuda">Ayuda</a>
+                </li>
             </ul>
         </div>
         {% if user.is_authenticated %}

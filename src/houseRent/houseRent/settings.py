@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-j%65w%46luzu0hcnb2^!l&-fc5j0zx_byf1zqmz!@g)=49ezjl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sergiosantiago02.pythonanywhere.com', 'houserent.pythonanywhere.com']
 
 # User model
 AUTH_USER_MODEL = "core.CustomUser"
@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "apps.core",
     "apps.authentication",
     "apps.accommodation",
+    "apps.booking",
+    "django_celery_beat",
+    "celery",
 ]
 
 MIDDLEWARE = [
@@ -149,3 +152,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'houserent2324@gmail.com'
 EMAIL_HOST_PASSWORD = 'immu reaa unjv rrkv'
+
+CELERY_TIMEZONE = "UTC"
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULE = {
+    "scheduled_task": {
+        "task": "apps.booking.tasks.test",
+        "schedule": 5.0,
+    },
+}

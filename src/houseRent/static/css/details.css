@@ -1,0 +1,105 @@
+@import url('var.css');
+
+.carousel-item img {
+  width: 400px;
+  height: auto;
+  border-radius: 10px; /* Agrega un borde redondeado a las imágenes */
+}
+
+.categories:empty, .services:empty {
+        display: none;
+    }
+
+.category-title, .service-title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.categories, .services {
+  margin-left: 10px;
+  list-style-type: none;
+}
+
+.reservar-button-container{
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.btn-reserve {
+  background-color: var(--c5) !important;
+  border-color: var(--c5) !important;
+  border-radius: 20px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  font-size: var(--f6) !important;
+  color: aliceblue !important;
+  padding: 10px 50px !important;
+}
+
+.fixed-size-image {
+     width: 800px;
+    height: auto;
+    object-fit: cover;
+}
+
+.carousel-control-prev, .carousel-control-next {
+  color: white !important;
+  background-color: var(--c5) !important;
+  border-radius: 50% !important;
+  width: 50px !important;
+  height: 50px !important;
+  font-size: 24px !important;
+  top: 50%; /* Ajusta la posición vertical */
+  transform: translateY(500%); /* Centra verticalmente */
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+  color: white !important;
+}
+
+
+.title-card{
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.infomation-card{
+  margin-left: 20px;
+  margin-right: 30px;
+  margin-top: 10px;
+  text-align: justify;
+}
+
+.infomation-card-service{
+  margin-left: 10px;
+  margin-right: 30px;
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+  font-weight: bold;
+}
+
+.infomation-card-service-info{
+  margin-left: 15px;
+  margin-right: 30px;
+  text-align: justify;
+  font-size: smaller;
+
+}
+
+.infomation-card-detalles{
+  margin-left: 20px;
+  margin-right: 30px;
+  text-align: justify;
+  margin-bottom: 0 !important;
+  font-size: smaller;
+}
+

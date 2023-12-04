@@ -1,0 +1,27 @@
+{% extends 'accommodation/accommodation_detail.html' %}
+{% load static %}
+
+{% block accommodation_header %}
+<form method="get">
+    <div class="book-search">
+        <label for="code" class="book-form-label">Código</label>
+        <input type="text" id="code" name="code" class="input book-input" placeholder="Buscar">
+    </div>
+</form>
+{% endblock %}
+
+{% block accommodation_details %}
+<div class="book-details">
+    <div class="card">
+        <h4 class="title-card text-center">Detalles de la reserva</h4>
+        <p class="infomation-card-detalles"><b class="price"> Fecha de inicio: </b> {{ book.start_date }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Fecha de fin: </b> {{ book.end_date }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Método de pago: </b> {{ book.payment_method }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Número de personas: </b> {{ book.amount_people }} personas</p>
+        <p class="infomation-card-detalles"><b class="price"> Activo: </b> {{ book.is_active }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Estado: </b> {{ book.status.name }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Peticiones: </b> {{ book.special_request }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Código: </b> {{ book.code }}</p>
+    </div>
+</div>
+{% endblock %}
