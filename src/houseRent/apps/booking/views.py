@@ -183,7 +183,7 @@ def booking_history(request):
     pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
-    
+    es_propietario=request.user.groups.filter(name="Propietarios").exists()
     for booking in pendding_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
     for booking in confirm_booking:
@@ -197,7 +197,7 @@ def booking_history(request):
     cancel_url = request.get_host() + reverse('cancel')
     """
 
-    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
 
 
 def conteoReservasTotales(request, id_accommodation):
@@ -270,9 +270,6 @@ def create_stripe_account_for_owner(request):
             'first_name': user.first_name,
             'last_name': user.last_name,
             'address': {
-            'line1': "hola",
-            'city': 'hola',
-            'state': 'hola',
             'postal_code': 1234,
             'country': 'ES',
             },
@@ -294,24 +291,8 @@ def create_stripe_account_for_owner(request):
     user.stripe_id=account.id
     user.save()
     if user.stripe_id!=None:
-        return redirect('/booking/success')
+        return redirect('/')
     else:
         return redirect('/booking/cancel')
     
     
-def generate_onboarding_link(stripe_account_id):
-    link = stripe.AccountLink.create(
-        account=stripe_account_id,
-        refresh_url="https://createStripeAccount",
-        return_url="https://your-site.com/return",
-        type="account_onboarding",
-    )
-    return link.url
-    
-def transfer_funds_to_owner(stripe_account_id, amount):
-    transfer = stripe.Transfer.create(
-        amount=amount,
-        currency="eur",
-        destination=stripe_account_id,
-    )
-    return transfer 

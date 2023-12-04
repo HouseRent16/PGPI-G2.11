@@ -79,7 +79,9 @@
         {% if user.is_authenticated %}
           {% if propietario and user.stripe_id == None %}
           <a class="btn btn-primary" href="/booking/createStripeAccount">Enlazar cuenta bancaria</a>
-          {% endif %}  
+          {% else %}
+          <h5>Cuenta bancaria enlazada</h5>
+          {% endif %}
           <a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
           <a class="account-btn" href="/profile">
             <span class="material-symbols-outlined account">
