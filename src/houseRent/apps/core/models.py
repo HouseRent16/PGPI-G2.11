@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator, FileExtensionValidator
@@ -209,7 +210,10 @@ class Book(models.Model):
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
     code = models.CharField(max_length=200, blank=False, null=False)
-    total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    
+    def calculate_total_price(self):
+        days_difference = (self.end_date.date() - self.start_date.date()).days
+        return Decimal(days_difference) * self.accommodation.price
 
 
     class Meta:
