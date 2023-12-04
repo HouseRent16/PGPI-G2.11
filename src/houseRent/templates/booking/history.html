@@ -23,7 +23,7 @@
                 <p class="title">{{booking.accommodation.name}}</p>
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
-                <p>Precio: {{booking.end_date.date}}</p>
+                <p>Precio: {{booking.calculate_total_price}} €</p>
                 <div>
                     <a href="/add_comment/{{booking.accommodation.id}}" class="button-link">Opinar</a>
                     <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
@@ -44,7 +44,7 @@
                 <p class="title">{{booking.accommodation.name}}</p>
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
-                <p>Precio: {{booking.end_date.date}}</p>
+                <p>Precio: {{booking.calculate_total_price}} €</p>
                 <div>
                     <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
                     <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
@@ -73,7 +73,7 @@
                 <p class="title">{{booking.accommodation.name}}</p>
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
-                <p>Precio: {{booking.end_date.date}}</p>
+                <p>Precio: {{booking.calculate_total_price}} €</p>
             </div>
         </div>
         {% endfor %}
