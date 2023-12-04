@@ -12,5 +12,5 @@ django-phonenumbers
 django-phonenumber-field
 babel
 celery
-django_celery_beat
+django-celery-beat
 stripe==7.7.0
