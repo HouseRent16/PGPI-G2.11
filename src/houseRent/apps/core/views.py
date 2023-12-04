@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
 from .enums import Category, BookingStatus
-from .forms import AdminPasswordChangeForm
+from .forms import AdminPasswordChangeForm, CommentForm
 from django.contrib.admin.views.decorators import staff_member_required
 from datetime import datetime, date
 from urllib.parse import urlencode
@@ -252,3 +252,21 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
+def add_comment(request, accommodation_id):
+    accommodation = Accommodation.objects.get(pk=accommodation_id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.accommodation = accommodation
+            comment.save()
+            return redirect('home')
+    else:
+        form = CommentForm()
+
+
+    return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
+
