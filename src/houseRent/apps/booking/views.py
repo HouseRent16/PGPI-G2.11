@@ -130,11 +130,6 @@ def request_booking(request, accommodation_id):
             booking_request.is_active = True
             booking_request.accommodation = accommodation
             booking_request.status = BookingStatus.PENDING
-
-            nights = (booking_request.end_date - booking_request.start_date).days
-            total_price = nights * accommodation.price
-            booking_request.total_price = total_price
-
             booking_request.save()
             str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
             str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
@@ -174,10 +169,11 @@ def booking_details(request):
 @login_required
 def booking_history(request):
     current_user = request.user
+
     pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
-    
+
     for booking in pendding_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
     for booking in confirm_booking:
