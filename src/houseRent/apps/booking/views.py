@@ -16,7 +16,10 @@ from django.urls import reverse
 from ..core.enums import BookingStatus
 from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
 
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 
+@login_required
 def books(request):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -33,10 +36,11 @@ def books(request):
                 }
             return render(request,'booking/booksOwner.html',context)
         else:
-            return redirect('/')
+            return redirect('')
     else:
          return redirect('login')
-     
+
+@login_required    
 def detailsBooks(request,ID):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -75,7 +79,7 @@ def detailsBooks(request,ID):
             
             return render(request,'booking/detailsBooksOwner.html',context)
         else:
-            return redirect('/')
+            return redirect('')
     else: 
         return redirect('login')
 
@@ -192,3 +196,16 @@ def booking_history(request):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
+        
+#----------cancelar reservas de un usuario-------
+
+@login_required
+@require_POST
+def cancelBooksUser(request,book_id):
+    if request.user.is_authenticated:
+        book=Book.objects.get(id=book_id)
+        book.is_active=False
+        book.status=BookingStatus.CANCELLED
+        book.save()
+    return redirect('/booking/history')

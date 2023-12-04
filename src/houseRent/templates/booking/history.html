@@ -48,6 +48,14 @@
                 <div>
                     <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
                     <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
+                    <a  class="button-link">
+                        <form action="{% url 'cancelBooksUser' book_id=booking.id %}" method="post" >
+                            {%csrf_token %}
+                          <button type="submit" style="background-color:  transparent;">Cancelar reserva</button>
+                      </form>
+                    </a>
+                    
+                  
                 </div>
             </div>
         </div>
