@@ -202,14 +202,33 @@ def togglefavorites(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
-def sobreNosotros(request):
-    return render(request, 'core/sobre_nosotros.html')
+def favoritos(request):
+
+    user_id = CustomUser.objects.get(id=request.user.id).id
+    favoritos = Favorite.objects.filter(user_id=user_id)
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos).annotate(
+        average_rating=Avg('comment__rating'),
+    )
+    for accommodation in accommodations:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+
+
+    context = {
+        'favoritos': favoritos,
+        'accommodations': accommodations,
+    }
+
+    return render(request, 'core/favoritos.html', context)
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
 
 def ayuda(request):
     return render(request,'core/ayuda.html')
+
+def sobreNosotros(request):
+    return render(request, 'core/sobre_nosotros.html')
+
 
 def accommodation_details(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)

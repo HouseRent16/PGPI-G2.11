@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-j%65w%46luzu0hcnb2^!l&-fc5j0zx_byf1zqmz!@g)=49ezjl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['sergiosantiago02.pythonanywhere.com', 'houserent.pythonanywhere.com']
 
 # User model
 AUTH_USER_MODEL = "core.CustomUser"
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "apps.accommodation",
     "apps.booking",
     "django_celery_beat",
+    "celery",
 ]
 
 MIDDLEWARE = [

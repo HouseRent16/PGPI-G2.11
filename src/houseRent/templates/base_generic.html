@@ -50,8 +50,11 @@
                 <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
                 </li>
                 {% endif %}
+                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                <a class="nav-link text-center" href="#">Favoritos</a>
+                <a class="nav-link text-center" href="/favoritos">Favoritos</a>
+                </li>
+                {% endif %}
                 </li>
                 {% if user.groups.all.0.name == 'Administradores' %}
                 <li class="nav-item">
