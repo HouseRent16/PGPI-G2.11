@@ -1,0 +1,40 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+  <h1 class="mb-4">Detalles de la reclamación</h1>
+  <table class="table">
+    <tbody>
+      <tr>
+        <th scope="row">Título</th>
+        <td>{{ claim.title }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Descripción</th>
+        <td>{{ claim.description }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Fecha de Publicación</th>
+        <td>{{ claim.publication_date }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Usuario</th>
+        <td>{{ claim.user }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Alojamiento</th>
+        <td>{{ claim.accommodation }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Estado</th>
+        <td>{{ claim.status }}</td>
+      </tr>
+      <tr>
+        <th scope="row">Respuesta</th>
+        <td>{{ claim.response }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="row page-container">
+  <div class="col accommodation-container">
+    <div class="row" id="accommodation-row">
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+              <tr class="table-secondary">
+                  <th scope="col">Título</th>
+                  <th scope="col">Fecha de Publicación</th>
+                  <th scope="col">Alojamiento</th>
+                  <th scope="col">Estado</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for claim in claims %}
+                  <tr onclick="redirigir({{ claim.id }})">
+                      <td>{{ claim.title }}</td>
+                      <td>{{ claim.publication_date }}</td>
+                      <td>{{ claim.accommodation }}</td>
+                      <td>{{ claim.status }}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function redirigir(url) {
+       window.location.href = url
+   }
+</script>
+{% endblock %}
