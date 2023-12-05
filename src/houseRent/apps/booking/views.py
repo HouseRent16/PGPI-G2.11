@@ -17,6 +17,11 @@ from ..core.enums import BookingStatus
 from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
 
 from django.contrib.auth.decorators import login_required
+import stripe
+from django.conf import settings
+from django.views import View
+from django.http import HttpResponse
+
 from django.views.decorators.http import require_POST
 
 @login_required
@@ -134,6 +139,9 @@ def request_booking(request, accommodation_id):
             booking_request.is_active = True
             booking_request.accommodation = accommodation
             booking_request.status = BookingStatus.PENDING
+            dias=booking_request.end_date-booking_request.start_date
+            price=dias.days*accommodation.price
+            booking_request.price=price
             booking_request.save()
             str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
             str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
@@ -141,7 +149,10 @@ def request_booking(request, accommodation_id):
             price = (nights.days - 1 )* accommodation.price
             body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por cun coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
             send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
-            return redirect('/')
+            if(booking_request.payment_method== 'ONLINE'):
+                return redirect('/booking/create-checkout-session/'+str(booking_request.id))
+            else:
+                return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
         
@@ -177,7 +188,7 @@ def booking_history(request):
     pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
-
+    es_propietario=request.user.groups.filter(name="Propietarios").exists()
     for booking in pendding_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
     for booking in confirm_booking:
@@ -191,12 +202,198 @@ def booking_history(request):
     cancel_url = request.get_host() + reverse('cancel')
     """
 
-    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
 
 
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
+        
+##pasarela de pago del cliente
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class CreateCheckoutSessionView(View):
+   
+    def get(self, request, *args, **kwargs):
+        book_id = self.kwargs.get('book_id')
+        book = get_object_or_404(Book, id=book_id)
+
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price_data': {
+                        'currency': 'eur',
+                        'unit_amount': int(book.price * 100),  # Precio en centavos
+                        'product_data': {
+                            'name': book.amount_people,
+                        },
+                    },
+                    'quantity': 1,
+                }],
+                mode='payment',
+                success_url=request.build_absolute_uri('/booking/success/'+str(book_id)),  # URL de redirección después del pago exitoso
+                cancel_url=request.build_absolute_uri('/boking/cancel/'),  # URL de redirección si el usuario cancela
+            )
+
+            # Redirige al usuario a la página de pago de Stripe
+            return redirect(session.url, code=303)
+
+        except Exception as e:
+            # Manejar excepciones o errores aquí
+            return HttpResponse(str(e))
+def paymentSuccessView(request,book_id):
+    book=Book.objects.get(id=book_id)
+    book.payment_bool=True
+    book.save()
+    return render(request,'booking/paymentSuccess.html')
+
+def paymentCancelView(request):
+    return render(request,'booking/paymentCancel.html')
+
+#gestion pasarela de pago para el propietario
+@login_required(login_url='login')
+def create_stripe_account_for_owner(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    print("creando cuenta")
+    account = stripe.Account.create(
+        country="ES",
+        type="custom",
+        capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+        tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+        email=user.email,
+        business_type="individual",  # o "company" si es aplicable
+        company={
+            'name': user.username,  # Nombre de la empresa ficticia
+            'phone': 1234,  # Número de teléfono de la empresa
+                },
+        individual={
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'address': {
+            'postal_code': 1234,
+            'country': 'ES',
+            },
+        },
+        business_profile={
+            'mcc': '5734',  # Código de categoría de comerciante (MCC) para software
+                },
+        external_account={
+            'object': 'bank_account',
+            'country': 'ES',
+            'currency': 'eur',
+            'account_holder_name': 'Nombre del titular',
+            'account_holder_type': 'individual',
+            'account_number': 'ES0700120345030000067890',  # Número de cuenta (utiliza un número de prueba)
+                },
+       
+           
+    )
+    user.stripe_id=account.id
+    user.save()
+    if user.stripe_id!=None:
+        return redirect('/')
+    else:
+        return redirect('/booking/cancel')
+    
+    
+
+        
+##pasarela de pago del cliente
+
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+class CreateCheckoutSessionView(View):
+   
+    def get(self, request, *args, **kwargs):
+        book_id = self.kwargs.get('book_id')
+        book = get_object_or_404(Book, id=book_id)
+
+        try:
+            session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+                line_items=[{
+                    'price_data': {
+                        'currency': 'eur',
+                        'unit_amount': int(book.price * 100),  # Precio en centavos
+                        'product_data': {
+                            'name': book.amount_people,
+                        },
+                    },
+                    'quantity': 1,
+                }],
+                mode='payment',
+                success_url=request.build_absolute_uri('/booking/success/'+str(book_id)),  # URL de redirección después del pago exitoso
+                cancel_url=request.build_absolute_uri('/boking/cancel/'),  # URL de redirección si el usuario cancela
+            )
+
+            # Redirige al usuario a la página de pago de Stripe
+            return redirect(session.url, code=303)
+
+        except Exception as e:
+            # Manejar excepciones o errores aquí
+            return HttpResponse(str(e))
+def paymentSuccessView(request,book_id):
+    book=Book.objects.get(id=book_id)
+    book.payment_bool=True
+    book.save()
+    return render(request,'booking/paymentSuccess.html')
+
+def paymentCancelView(request):
+    return render(request,'booking/paymentCancel.html')
+
+#gestion pasarela de pago para el propietario
+@login_required(login_url='login')
+def create_stripe_account_for_owner(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    print("creando cuenta")
+    account = stripe.Account.create(
+        country="ES",
+        type="custom",
+        capabilities={"card_payments": {"requested": True}, "transfers": {"requested": True}},
+        tos_acceptance={"date": 1609798905, "ip": "8.8.8.8"},
+        email=user.email,
+        business_type="individual",  # o "company" si es aplicable
+        company={
+            'name': user.username,  # Nombre de la empresa ficticia
+            'phone': 1234,  # Número de teléfono de la empresa
+                },
+        individual={
+            'email': user.email,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'address': {
+            'postal_code': 1234,
+            'country': 'ES',
+            },
+        },
+        business_profile={
+            'mcc': '5734',  # Código de categoría de comerciante (MCC) para software
+                },
+        external_account={
+            'object': 'bank_account',
+            'country': 'ES',
+            'currency': 'eur',
+            'account_holder_name': 'Nombre del titular',
+            'account_holder_type': 'individual',
+            'account_number': 'ES0700120345030000067890',  # Número de cuenta (utiliza un número de prueba)
+                },
+       
+           
+    )
+    user.stripe_id=account.id
+    user.save()
+    if user.stripe_id!=None:
+        return redirect('/')
+    else:
+        return redirect('/booking/cancel')
+    
+    
 
         
 #----------cancelar reservas de un usuario-------

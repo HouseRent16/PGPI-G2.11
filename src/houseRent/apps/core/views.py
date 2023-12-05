@@ -10,9 +10,12 @@ from datetime import datetime, date
 from urllib.parse import urlencode
 from django.http import HttpResponseRedirect, JsonResponse, Http404
 from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
-from django.contrib.auth.decorators import login_required
-
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from django.views import View
+from django.utils.decorators import method_decorator
+from .forms import CustomUserForm, AddressForm
+from django.shortcuts import get_object_or_404
 
 
 @staff_member_required
@@ -177,7 +180,7 @@ def home(request):
 
     return render(request, 'core/home.html', context)
 
-@csrf_exempt
+@login_required
 def togglefavorites(request):
     if request.method == 'POST':
         # Obtener el ID del alojamiento desde la solicitud POST
@@ -223,6 +226,36 @@ def favoritos(request):
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
+@method_decorator(login_required, name='dispatch')
+class ProfileView(View):
+    
+    def get_template(self):
+        return 'core/profile.html'
+    
+    def get(self, request, *args, **kwargs):
+        user = get_object_or_404(CustomUser, pk=request.user.id)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
+
+        context = {
+            'user_form': customUserForm,
+            'address_form': addressForm,
+            
+        }
+        return render(self.request, self.get_template(), context)
+    
+    #Por hacer
+    def post(self, request, *args, **kwargs):
+        user = CustomUser.objects.get(id=request.user.id)
+        customUserForm = CustomUserForm(instance=user)
+        addressForm = AddressForm(instance=user.address)
+
+        context = {
+            'user_form': customUserForm,
+            'address_form': addressForm,
+        }
+
+        return render(self.request, self.get_template(), context)
 
 def ayuda(request):
     return render(request,'core/ayuda.html')

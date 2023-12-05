@@ -7,46 +7,110 @@
     font-family: 'Open Sans', sans-serif !important;
   }
   
-  /* Estilo general de la barra de desplazamiento */
-  ::-webkit-scrollbar {
-    width: 10px; /* o el ancho que prefieras */
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: var(--c1); /* Color de fondo */
-  }
-  
-  /* Estilo del thumb de la barra de desplazamiento */
-  ::-webkit-scrollbar-thumb {
-    background: var(--c2); /* Color del thumb */
-    border-radius: 10px; /* Bordes redondeados */
-  }
-  
-  /* Cambia el color al pasar el cursor o al arrastrar */
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--c3); /* Color al pasar el cursor */
-  }
-  
-  .material-symbols-outlined {
-    font-family: 'Material Symbols Outlined' !important;
-    font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 24;
-  }
-  
-  body {
-    background-color: var(--c1) !important;
-  }
-  
-  .btn-primary {
-    background-color: var(--c5) !important;
-    border-color: var(--c5) !important;
-    border-radius: 30px !important;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
-    font-size: var(--f3) !important;
-  }
+/* Estilo general de la barra de desplazamiento */
+::-webkit-scrollbar {
+  width: 10px; /* o el ancho que prefieras */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--c1); /* Color de fondo */
+}
+
+/* Estilo del thumb de la barra de desplazamiento */
+::-webkit-scrollbar-thumb {
+  background: var(--c2); /* Color del thumb */
+  border-radius: 10px; /* Bordes redondeados */
+}
+
+/* Cambia el color al pasar el cursor o al arrastrar */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c3); /* Color al pasar el cursor */
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}
+
+body {
+  background-color: var(--c1) !important;
+}
+
+.btn-primary {
+  background-color: var(--c5) !important;
+  border-color: var(--c5) !important;
+  border-radius: 30px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  font-size: var(--f3) !important;
+  font-weight: var(--w3) !important;
+  width: fit-content !important;
+  min-width: 150px !important;
+}
+
+.btn-secondary {
+  background-color: var(--c1) !important;
+  border-color: var(--c4) !important;
+  color: var(--c4) !important;
+  border-radius: 30px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  font-size: var(--f3) !important;
+  font-weight: var(--w3) !important;
+  width: fit-content !important;
+  min-width: 150px !important;
+  height: 50px !important;
+}
+
+.btn-primary:hover {
+  font-weight: var(--w1) !important;
+}
+
+.btn-secondary:hover {
+  font-weight: var(--w1) !important;
+}
+
+.input {
+  border-radius: 30px !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  min-height: 50px;
+  height: 50px;
+  padding: 0 15px  !important;
+  color: var(--c3) !important;
+  margin: 0 0 10px 0 !important;
+  width: 100%;
+  border: 1px solid var(--c2) !important;
+}
+
+select {
+  display: block;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+
+.contenedor {
+  position: relative;
+  max-width: 700px;
+  width: 100%;
+  background: var(--c5);
+  padding: 25px 100px 25px 100px;
+  border-radius: 30px;
+  color: var(--c1) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.entrada label {
+  font-size: var(--f2);
+  font-weight: var(--w2);
+  width: 100% !important;
+  margin-bottom: 3px;
+}
   
   .container-fluid {
     padding: 0 !important;

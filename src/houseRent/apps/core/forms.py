@@ -1,7 +1,11 @@
 from django import forms
 from django.contrib.auth.forms import SetPasswordForm
-from apps.core.models import Comment, Claim
-
+from django.core.validators import RegexValidator
+from phonenumber_field.formfields import PhoneNumberField
+from phonenumber_field.phonenumber import PhoneNumber
+from phonenumber_field.widgets import PhoneNumberPrefixWidget
+from .models import CustomUser, Address,Comment, Claim
+from django_countries.fields import CountryField
 
 class AdminPasswordChangeForm(SetPasswordForm):
     def clean_new_password2(self):
