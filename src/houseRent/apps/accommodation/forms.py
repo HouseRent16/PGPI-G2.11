@@ -1,5 +1,5 @@
 from django import forms
-from apps.core.models import Accommodation
+from apps.core.models import Accommodation, Image
 from django.core.validators import RegexValidator
 
 class RegisterAccommodation(forms.ModelForm):
@@ -31,4 +31,17 @@ class RegisterAccommodation(forms.ModelForm):
                     code='invalid_price'
                 )
             ]
+        }
+
+class RegisterImage(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = ['title', 'description', 'order', 'image', 'alt']
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control'}),
+            'image': forms.FileInput(attrs={'class': 'form-control'}),
+            'alt': forms.TextInput(attrs={'class': 'form-control'}),
         }

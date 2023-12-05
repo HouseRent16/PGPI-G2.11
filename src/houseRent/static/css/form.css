@@ -80,6 +80,7 @@
   object-fit: cover;
   display: flex;
   margin: 15px;
+  margin-bottom: 20px !important;
 
 }
 .book {
@@ -183,6 +184,17 @@
   position: relative !important;
   width: 300px ;
   height: 400px !important;
+}
+
+.card-button {
+  border-radius: 30px !important;
+  border-color: var(--c2) !important;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25) !important;
+  background-color: var(--c1) !important;
+  overflow: hidden !important;
+  position: relative !important;
+  width: 100px ;
+  height: 100px !important;
 }
 
 .card-overlay {
@@ -305,14 +317,21 @@
   'opsz' 20;
 }
 
+.contenedor {
+ margin: 40px auto 0;
+ max-width: 800px;
+ width: 80%;
+ padding: 50px;
+ border-radius: 8px;
+ box-shadow: 0 0 15px rgb(0,0,0,0.235);
+}
+
 .contenedor header {
   font-size: var(--f1);
   font-weight: 800;
   text-align: center;
 }
-.contenedor .formulario {
-  margin-top: 30px;
-}
+
 .formulario .entrada {
   width: 100%;
   margin-top: 20px;

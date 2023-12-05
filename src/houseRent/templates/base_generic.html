@@ -42,11 +42,11 @@
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/">Catálogo</a>
                 </li>
-                {% if request.user.is_authenticated and propietario%}
-                    <li class="nav-item">
+                  {% if user.is_authenticated and user.groups.all.0.name == 'Propietarios'%}
+                  <li class="nav-item">
                     <a class="nav-link text-center" href="/booking/owner">Gestión</a>
-                    </li>
-                    {%endif%}
+                  </li>
+                  {%endif%}
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
