@@ -171,7 +171,6 @@ def home(request):
 
     context = {
         'accommodations': accommodations,
-        'propietario': es_propietario,
         'types': tipos,
         'services': servicios,
         'today': date.today(),

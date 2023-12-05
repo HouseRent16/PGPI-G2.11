@@ -353,7 +353,6 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "service":[1,7],
             "owner": 3,
             "capacity": 5,
             "is_active": true,
@@ -370,7 +369,6 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "service":[1,7],
             "owner": 3,
             "capacity": 6,
             "is_active": true,
@@ -387,7 +385,6 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "service":[1,7],
             "owner": 3,
             "capacity": 7,
             "is_active": true,
@@ -497,7 +494,7 @@
             "title": "Sunset View",
             "description": "Beautiful sunset view from the balcony.",
             "order": 1,
-            "image": "uploads/images/habitacion1.png",
+            "image": "uploads/images/sunset.jpg",
             "alt": "Sunset view",
             "publication_date": "2023-11-17",
             "accommodation": 1
@@ -510,7 +507,7 @@
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
             "order": 1,
-            "image": "uploads/images/habitacion2.png",
+            "image": "uploads/images/accommodation2.jpg",
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 2
@@ -540,19 +537,6 @@
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 5
-        }
-    },
-    {
-        "model": "core.image",
-        "pk": 6,
-        "fields": {
-            "title": "Sunset View",
-            "description": "Beautiful sunset view from the balcony.",
-            "order": 2,
-            "image": "uploads/images/habitacion2.png",
-            "alt": "Sunset view",
-            "publication_date": "2023-11-17",
-            "accommodation": 1
         }
     },
     {
