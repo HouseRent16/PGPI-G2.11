@@ -11,3 +11,6 @@ django-countries
 django-phonenumbers
 django-phonenumber-field
 babel
+celery
+django-celery-beat
+stripe==7.7.0

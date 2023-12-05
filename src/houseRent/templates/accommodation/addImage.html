@@ -1,0 +1,33 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<section class="contenedor">
+<header>Añadir Imagen al alojamiento</header>
+  <form method="post" enctype="multipart/form-data" class="formulario">
+    {% csrf_token %}
+    <div class="entrada">
+        <label for="title">Título: </label>
+        {{ formImage.title }}
+    </div>
+    <div class="entrada">
+        <label for="description">Descripción: </label>
+        {{ formImage.description }}
+    </div>
+    <div class="entrada">
+        <label for="image">Imagen</label>
+            {{ formImage.image }}
+    </div>
+    <div class="entrada">
+        <label for="order">Orden de la imagen: </label>
+        {{ formImage.order }}
+    </div>
+    <div class="entrada">
+        <label for="alt">Texto alternativo: </label>
+        {{ formImage.alt }}
+    </div>
+    
+    <button type="submit">Guardar Imagen</button>
+  </form>
+</section>
+{% endblock %}

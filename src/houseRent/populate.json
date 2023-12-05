@@ -190,7 +190,13 @@
         "model": "core.CustomUser",
         "pk": 3,
         "fields": {
-            "email": "jamesowens@franklin-green.org",
+            "dni": "784437896y",
+            "address": 1,
+            "birth_date": "1963-02-24",
+            "gender": "OTHER",
+            "phone": "+1-606-406-9746x5270",
+            "email": "jameowner@gmail.com",
+            "username":"jame1",
             "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
             "first_name": "James",
             "last_name": "Owens",
@@ -202,6 +208,22 @@
             "gender": "OTHER",
             "request": "ACCEPTED",
             "groups": [72]
+        }   
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 4,
+        "fields": {
+            "dni": "784431296s",
+            "address": 1,
+            "birth_date": "1998-03-29",
+            "gender": "MALE",
+            "phone": "+1-603-403-9746x5270",
+            "email": "jame2@gmail.com",
+            "username":"jame2",
+            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
+            "groups": [72],
+            "request": "ACCEPTED"
         }   
     },
     {
@@ -337,6 +359,7 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
+            "service":[1,7],
             "owner": 3,
             "capacity": 5,
             "is_active": true,
@@ -353,6 +376,7 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
+            "service":[1,7],
             "owner": 3,
             "capacity": 6,
             "is_active": true,
@@ -369,6 +393,7 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
+            "service":[1,7],
             "owner": 3,
             "capacity": 7,
             "is_active": true,
@@ -385,7 +410,7 @@
             "address":3,
             "price": 789,
             "category": "Casa",
-            "owner": 3,
+            "owner": 4,
             "capacity": 4,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -409,6 +434,22 @@
         }
     },
     {
+        "model": "core.accommodation",
+        "pk": 6,
+        "fields": {
+            "name": "Prueba 3",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 498,
+            "category": "Apartamento",
+            "owner": 4,
+            "capacity": 5,
+            "is_active": true,
+            "creation_date": "2023-06-17",
+            "modification_date": "2023-09-02"
+        }
+    },
+    {
         "model": "core.book",
         "pk": 1,
         "fields": {
@@ -416,20 +457,22 @@
             "end_date": "2023-12-15T00:00:00Z",
             "payment_method": "EFECTIVO",
             "amount_people": 7,
-            "user": 2,
+            "user": 3,
+            "price":50,
             "is_active": false,
-            "accommodation": 1 
+            "accommodation": 1
         }
     },
     {
         "model": "core.book",
         "pk": 2,
         "fields": {
-            "start_date": "2023-11-18T01:20:30Z",
-            "end_date": "2023-11-30T20:48:00Z",
-            "payment_method": "EFECTIVO",
+            "start_date": "2024-11-18T01:20:30Z",
+            "end_date": "2024-11-30T20:48:00Z",
+            "payment_method": "ONLINE",
+            "price":50,
             "amount_people": 8,
-            "user": 1,
+            "user": 3,
             "is_active": true,
             "accommodation": 2
         }
@@ -443,6 +486,28 @@
             "publication_date": "2023-04-09",
             "user": 2,
             "accommodation": 3
+        }
+    },
+    {
+        "model": "core.claim",
+        "pk": 2,
+        "fields": {
+            "title": "Se equivocaron con el número de habitación.",
+            "description": "Esto es solo una prueba esta reclamación es del propietario Jame1, hacía otro de sus alojamientos",
+            "publication_date": "2023-11-21",
+            "user": 1,
+            "accommodation": 1
+        }
+    },
+    {
+        "model": "core.claim",
+        "pk": 3,
+        "fields": {
+            "title": "Uno de los servicios contratado no estuvo.",
+            "description": "Esto es solo otra prueba para ver que esta reclamación no es del propietario Jame1.",
+            "publication_date": "2023-12-01",
+            "user": 2,
+            "accommodation": 6
         }
     },
     {
@@ -470,7 +535,7 @@
             "title": "Sunset View",
             "description": "Beautiful sunset view from the balcony.",
             "order": 1,
-            "image": "uploads/images/sunset.jpg",
+            "image": "uploads/images/habitacion1.png",
             "alt": "Sunset view",
             "publication_date": "2023-11-17",
             "accommodation": 1
@@ -483,7 +548,7 @@
         "title": "Spacious Living Room",
             "description": "Spacious living room with modern amenities.",
             "order": 1,
-            "image": "uploads/images/accommodation2.jpg",
+            "image": "uploads/images/habitacion2.png",
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 2
@@ -526,6 +591,19 @@
             "alt": "Living room",
             "publication_date": "2023-11-17",
             "accommodation": 5
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 6,
+        "fields": {
+            "title": "Sunset View",
+            "description": "Beautiful sunset view from the balcony.",
+            "order": 2,
+            "image": "uploads/images/habitacion2.png",
+            "alt": "Sunset view",
+            "publication_date": "2023-11-17",
+            "accommodation": 1
         }
     },
     {

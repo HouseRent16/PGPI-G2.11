@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.validators import RegexValidator
-from apps.core.models import Accommodation, CustomUser, Address, Service
+from apps.core.models import CustomUser, Address
 from django.contrib.auth.forms import AuthenticationForm
 from phonenumber_field.formfields import PhoneNumberField
 from phonenumber_field.widgets import PhoneNumberPrefixWidget
@@ -9,7 +9,7 @@ from phonenumber_field.widgets import PhoneNumberPrefixWidget
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    email = forms.EmailField()
     password = forms.CharField(widget=forms.PasswordInput)
 
 class RegisterUser(forms.ModelForm):
@@ -85,36 +85,7 @@ class GuestLoginForm(AuthenticationForm):
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}),
     )
 
-class RegisterAccommodation(forms.ModelForm):
-    class Meta:
-        model = Accommodation
-        fields = ['name', 'description', 'capacity', 'price', 'category', 'service']
 
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-            'capacity': forms.NumberInput(attrs={'class': 'form-control'}),
-            'price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'category': forms.Select(attrs={'class': 'form-control'}),
-        }
-
-        help_texts = {
-            'name': None,
-            'description': None,
-            'capacity': None,
-            'price': True,
-            'category': None,
-        }
-
-        validators={
-            'price': [
-                RegexValidator(
-                    regex='^[1-9]\d*(\.\d{1,2})?$',
-                    message='El precio debe ser un número decimal estrictamente positivo',
-                    code='invalid_price'
-                )
-            ]
-        },
 
         
 
