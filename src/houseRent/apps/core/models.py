@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator, FileExtensionValidator
@@ -37,6 +38,8 @@ class Address(models.Model):
 
 
 class CustomUser(AbstractUser):
+    first_name = models.CharField(max_length=150, blank=False, null=False)
+    last_name = models.CharField(max_length=150, blank=False, null=False)
     username = models.CharField(
         max_length=150,
         unique=True,
@@ -60,6 +63,11 @@ class CustomUser(AbstractUser):
             ])
     gender = models.CharField(max_length=16, choices=Gender.choices(), blank=False, null=False)
     request = models.CharField(max_length=16, choices=Request.choices(), default=Request.NOT_REQUESTED)
+    stripe_id=models.CharField(max_length=40, blank=True,unique=True, null=True)
+
+    @property
+    def formated_birth_date(self):
+        return self.birth_date.strftime("%Y-%m-%d") if self.birth_date else ''
 
     class Meta:
         verbose_name = "Usuario"
@@ -97,6 +105,11 @@ class Accommodation(models.Model):
     creation_date = models.DateField(auto_now_add=True, blank=False, null=False)
     modification_date = models.DateField(auto_now=True, blank=False, null=False)
     is_active = models.BooleanField(default=True, blank=False, null=False)
+
+
+    @property
+    def average_rating(self):
+        return self.comments.aggregate(models.Avg('rating'))['rating__avg']
 
     class Meta:
         verbose_name = "Alojamiento"
@@ -146,7 +159,7 @@ class Comment(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, blank=False, null=False)
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)], blank=False, null=False)
     response = models.TextField(max_length=1024)
-    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False)
+    accommodation = models.ForeignKey(Accommodation, on_delete=models.CASCADE, blank=False, null=False, related_name='comments')
 
     class Meta:
         verbose_name = "Comentario"
@@ -209,6 +222,14 @@ class Book(models.Model):
     status = models.CharField(max_length=16, choices=BookingStatus.choices(), default=BookingStatus.PENDING, blank=False, null=False)
     special_requests = models.TextField()
     code = models.CharField(max_length=200, blank=False, null=False)
+    payment_bool=models.BooleanField(default=False)
+    stripe_checkout_id=models.CharField(max_length=500)
+    price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)])
+    
+    def calculate_total_price(self):
+        days_difference = (self.end_date.date() - self.start_date.date()).days
+        return Decimal(days_difference) * self.accommodation.price
+
 
     class Meta:
         verbose_name = "Reserva"

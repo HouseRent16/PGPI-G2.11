@@ -1,0 +1,107 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="profile">
+    <section class="contenedor">
+        <header>Perfil de {{ user.username }}</header>
+        <form method="post" action="{% url 'profile' %}" class="formulario">
+            {% csrf_token %}
+
+            <!-- Campo de nombre de usuario -->
+            <div class="entrada">
+                <label for="username">Nombre de Usuario:</label>
+                {{ user_form.username }}
+            </div>
+        
+            <div class="entrada">
+                <label for="first_name">Nombre:</label>
+                {{ user_form.first_name }}
+            </div>
+            
+            <div class="entrada">
+                <label for="last_name">Apellidos:</label>
+                {{ user_form.last_name }}
+            </div>
+            
+            <div class="entrada">
+                <label for="email">Correo electrónico:</label>
+                {{ user_form.email }}
+            </div>
+            
+
+             <!-- Campo de contraseña -->
+            <div class="entrada">
+                <label for="password">Contraseña:</label>
+                {{ user_form.password }}
+            </div>
+            
+            <!-- Otros campos de CustomUser -->
+            <div class="entrada">
+                <label for="birth_date">Fecha de Nacimiento:</label>
+                {{ user_form.birth_date }}
+            </div>
+                
+            <div class="entrada">
+                <label for="phone">Teléfono:</label>
+                {{ user_form.phone }}
+            </div>
+   
+            <div class="entrada">
+                <label for="dni">DNI:</label>
+                {{ user_form.dni }}
+            </div>
+            
+
+            <!-- Campos de la clase dirección -->
+            <div class="columna">
+                <div class="entrada">
+                    <label for="address_line">Calle:</label>
+                    {{ address_form.address_line }}
+                </div>
+                <div class="entrada">
+                    <label for="street_number">Número:</label>
+                    {{ address_form.street_number }}
+                </div>
+            </div>
+
+            <div class="entrada">
+                <label for="country">País:</label>
+                {{ address_form.country }}
+            </div>
+
+            <div class="entrada">
+                <label for="city">Ciudad:</label>
+                {{ address_form.city }}
+            </div>            
+            
+            <div class="columna">
+                <div class="entrada"> 
+                    <label for="region">Provincia:</label>
+                    {{ address_form.region }}
+                </div>
+                
+                <div class="entrada">
+                    <label for="postal_code">Código Postal:</label>
+                    {{ address_form.postal_code }}
+                </div>    
+            </div>
+
+            <!-- Otros campos de CustomUser -->
+            <div class="columna">
+                <div class="entrada">
+                <label for="gender">Género:</label>
+                {{user_form.gender}}            
+                </div>
+            </div>
+
+            <!-- Botón de envío del formulario -->
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-secondary">Guardar</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+{% endblock %}

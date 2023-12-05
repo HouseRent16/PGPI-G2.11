@@ -326,11 +326,9 @@
  box-shadow: 0 0 15px rgb(0,0,0,0.235);
 }
 
-
 .contenedor header {
-  font-size: 1.5rem;
-  color: #9D4EDD;
-  font-weight: 500;
+  font-size: var(--f1);
+  font-weight: 800;
   text-align: center;
 }
 
@@ -338,9 +336,7 @@
   width: 100%;
   margin-top: 20px;
 }
-.entrada label {
-  color: #9D4EDD !important;
-}
+
 .formulario :where(.entrada input, .caja-select) {
   position: relative;
   height: 50px;

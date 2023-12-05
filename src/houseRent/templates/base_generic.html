@@ -12,6 +12,8 @@
   <link rel="stylesheet" type="text/css" href="/static/css/form.css">
   <link rel="stylesheet" type="text/css" href="/static/css/details.css">
   <link rel="stylesheet" type="text/css" href="/static/css/book_search.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/profile.css">
+  
 
   <!-- Agrega la referencia a Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -81,7 +83,18 @@
             </ul>
         </div>
         {% if user.is_authenticated %}
-          <a class="btn btn-primary" href="/logout">Cerrar Sesión</a> 
+          {% if propietario and user.stripe_id == None %}
+          <a class="btn btn-primary" href="/booking/createStripeAccount">Enlazar cuenta bancaria</a>
+          {% else %}
+          <h5>Cuenta bancaria enlazada</h5>
+          {% endif %}
+          <a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
+          <a class="account-btn" href="/profile">
+            <span class="material-symbols-outlined account">
+              account_circle
+            </span>
+            <span class="account-name">{{ user.username }}</span>
+          </a>
         {% else %}
           <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
         {% endif %}
