@@ -58,3 +58,35 @@ class ClaimForm(forms.ModelForm):
             'title': 'Título',
             'description': "Reclamación",
         }
+
+class CustomUserForm(forms.ModelForm):
+    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(attrs={'class': 'input'}, initial='ES'))
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input'}),
+        required=True, 
+        label='Password'
+    )
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'first_name', 'last_name', 'birth_date', 'phone', 'dni', 'gender']
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserForm, self).__init__(*args, **kwargs)
+
+        for fieldname, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
+        
+
+class AddressForm(forms.ModelForm):
+    country = CountryField().formfield(widget=forms.Select(attrs={'class': 'input'}))
+
+    class Meta:
+        model = Address
+        fields = ['street_number', 'address_line', 'country', 'region', 'city', 'postal_code']
+
+    def __init__(self, *args, **kwargs):
+        super(AddressForm, self).__init__(*args, **kwargs)
+
+        for fieldname, field in self.fields.items():
+            field.widget.attrs.update({'class': 'input'})
