@@ -2,7 +2,7 @@ import json
 from unittest import case
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
+from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim, Address
 from .enums import Category, BookingStatus
 from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm
 from django.contrib.admin.views.decorators import staff_member_required
@@ -246,9 +246,24 @@ class ProfileView(View):
     
     #Por hacer
     def post(self, request, *args, **kwargs):
-        user = CustomUser.objects.get(id=request.user.id)
-        customUserForm = CustomUserForm(instance=user)
-        addressForm = AddressForm(instance=user.address)
+        if request.method == 'POST':
+            user = CustomUser.objects.get(id=request.user.id)
+            address = user.address
+            customUserForm = CustomUserForm(request.POST, instance=user)
+            addressForm = AddressForm(request.POST, instance=address)
+          
+
+            if customUserForm.is_valid() and addressForm.is_valid():
+                customUserForm.save()
+                addressForm.save()
+                
+                messages.success(request, 'Usuario actualizado correctamente')
+                return redirect('home')
+            else:
+                print("Form validation errors:")
+                print(customUserForm.errors)
+                print(addressForm.errors) 
+                
 
         context = {
             'user_form': customUserForm,

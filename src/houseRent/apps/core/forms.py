@@ -21,6 +21,7 @@ class CommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
     class Meta:
         model = Comment
         fields = ['title', 'description', 'rating']
@@ -35,6 +36,7 @@ class CommentForm(forms.ModelForm):
             'title': 'Título',
             'description': "Descripción",
             'rating': "Valoración (1-5)"
+
 
         }
 
