@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MinValueValidator, MaxValueValidator, FileExtensionValidator
@@ -224,6 +225,12 @@ class Book(models.Model):
     payment_bool=models.BooleanField(default=False)
     stripe_checkout_id=models.CharField(max_length=500)
     price = models.DecimalField(decimal_places=2, max_digits=8, blank=False, null=False, validators=[MinValueValidator(0)])
+    
+    def calculate_total_price(self):
+        days_difference = (self.end_date.date() - self.start_date.date()).days
+        return Decimal(days_difference) * self.accommodation.price
+
+
     class Meta:
         verbose_name = "Reserva"
         verbose_name_plural = "Reservas"
