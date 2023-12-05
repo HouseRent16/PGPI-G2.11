@@ -36,7 +36,6 @@ def change_password(request, user_id):
 
 def home(request):
     accommodations = Accommodation.objects.all().annotate(
-        average_rating=Avg('comment__rating'),
         is_booked=Value(False, output_field=BooleanField()),
         is_favorite=Value(False, output_field=BooleanField())
     )
@@ -210,9 +209,7 @@ def favoritos(request):
 
     user_id = CustomUser.objects.get(id=request.user.id).id
     favoritos = Favorite.objects.filter(user_id=user_id)
-    accommodations = Accommodation.objects.filter(favorite__in=favoritos).annotate(
-        average_rating=Avg('comment__rating'),
-    )
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos)
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
 
