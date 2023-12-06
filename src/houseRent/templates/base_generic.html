@@ -119,18 +119,14 @@
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       var inputBusqueda = document.getElementById('search');
-    console.log(inputBusqueda);
-    console.log(window.location.protocol ,window.location.port, window.location.hostname);
       if (inputBusqueda) {
-        console.log('Input encontrado');
           inputBusqueda.addEventListener('keydown', function(event) {
               if (event.key === 'Enter') {
                   let valorBusqueda = inputBusqueda.value;
                   console.log('Búsqueda:', valorBusqueda);
                   let serverUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port  ;
-                 
+                
                   let navegationUrl = serverUrl + '/?name=' + valorBusqueda;
-                  console.log('Búsqueda:', navegationUrl);
                   window.location.href = navegationUrl;
                   event.preventDefault();
               }

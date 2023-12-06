@@ -34,7 +34,7 @@ def change_password(request, user_id):
     })
 
 def home(request):
-    accommodations = Accommodation.objects.all().annotate(
+    accommodations = Accommodation.objects.all().filter(is_active=True).annotate(
         is_booked=Value(False, output_field=BooleanField()),
         is_favorite=Value(False, output_field=BooleanField())
     )
@@ -97,6 +97,7 @@ def home(request):
     if min_price and max_price and min_price > max_price:
         max_price = None
 
+    
     valid_query_params = {
         'name': name_query or '',
         'owner': owner_query or '',
@@ -169,6 +170,7 @@ def home(request):
     tipos = Category.choices()
     servicios = Service.objects.all()
 
+
     context = {
         'accommodations': accommodations,
         'propietario': es_propietario,
@@ -210,7 +212,7 @@ def favoritos(request):
 
     user_id = CustomUser.objects.get(id=request.user.id).id
     favoritos = Favorite.objects.filter(user_id=user_id)
-    accommodations = Accommodation.objects.filter(favorite__in=favoritos)
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos, is_active=True)
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
 
