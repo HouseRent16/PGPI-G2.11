@@ -160,10 +160,11 @@ def home(request):
     if services_query:
         accommodations = accommodations.filter(service__id__in=services_query).distinct()
     if min_rating:
-        accommodations = accommodations.filter(average_rating__gte=min_rating)
+        accommodations = [accommodation for accommodation in accommodations if (accommodation.average_rating or 0) >= float(min_rating)]
 
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+        
     es_propietario=request.user.groups.filter(name="Propietarios").exists()
 
     tipos = Category.choices()
