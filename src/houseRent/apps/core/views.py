@@ -175,6 +175,7 @@ def home(request):
         'types': tipos,
         'services': servicios,
         'today': date.today(),
+        'propietario':es_propietario,
     }
 
     return render(request, 'core/home.html', context)
