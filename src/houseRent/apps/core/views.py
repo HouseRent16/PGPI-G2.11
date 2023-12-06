@@ -242,7 +242,6 @@ class ProfileView(View):
         }
         return render(self.request, self.get_template(), context)
     
-    #Por hacer
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             user = CustomUser.objects.get(id=request.user.id)

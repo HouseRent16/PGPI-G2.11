@@ -1,7 +1,11 @@
 from .forms import RegisterAccommodation, RegisterImage, ClaimForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views import View
+
 from apps.authentication.forms import RegisterAddress
 from apps.core.models import Accommodation, Address, CustomUser, Claim, Image
 
@@ -71,4 +75,49 @@ def claimRespond(request,claim_id):
         form=ClaimForm(instance=claim)
     return render(request,'accommodation/claimResponseForm.html',{'form':form})
         
+@method_decorator(login_required, name='dispatch')
+class EditAccommodation(View):
+
+     def get_template(self):
+        return 'accommodation/edit.html'
+     
+     def get(self, request, *args, **kwargs):
+         accommodation = Accommodation.objects.get(id=kwargs['accommodation_id'])
+         address = accommodation.address
+         formAccommodation = RegisterAccommodation(instance=accommodation)
+         formAddress = RegisterAddress(instance=address)
+
+         context = {
+             'accommodation_id': kwargs['accommodation_id'],
+             'formAccommodation': formAccommodation,
+             'formAddress': formAddress,
+         }
+
+         return render(self.request, self.get_template(), context)
+    
+     def post(self, request, accommodation_id, *args, **kwargs):
+        if request.method == 'POST':
+            accommodation = Accommodation.objects.get(id=accommodation_id)
+            address = accommodation.address
+            formAccommodation = RegisterAccommodation(request.POST, instance=accommodation)
+            formAddress = RegisterAddress(request.POST, instance=address)
+           
+            if formAccommodation.is_valid() and formAddress.is_valid():
+                address.save()
+                accommodation.address = address
+                formAccommodation.save()
+                messages.success(request, 'Alojamiento editado correctamente')
+                return redirect('gestion')
+            else:
+                print("Form validation errors:")
+                print(formAccommodation.errors)
+                print(formAddress.errors)
+       
+        context = {
+           'accommodation_form': formAccommodation,
+            'address_form': formAddress
+        }
+
+
+        return render(self.request, self.get_template(), context)
 
