@@ -1,5 +1,5 @@
 from django import forms
-from apps.core.models import Accommodation, Image
+from apps.core.models import Accommodation, Image, Claim
 from django.core.validators import RegexValidator
 
 class RegisterAccommodation(forms.ModelForm):
@@ -45,3 +45,8 @@ class RegisterImage(forms.ModelForm):
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'alt': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+class ClaimForm(forms.ModelForm):
+    class Meta:
+        model= Claim
+        fields=['response']

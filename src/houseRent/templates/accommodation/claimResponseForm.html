@@ -1,0 +1,12 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+<div class="page-content">
+    <form method="post">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit"> Enviar respuesta reclamacion</button>
+    </form>
+</div>
+{% endblock %}

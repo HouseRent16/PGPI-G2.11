@@ -1,4 +1,4 @@
-from .forms import RegisterAccommodation, RegisterImage
+from .forms import RegisterAccommodation, RegisterImage, ClaimForm
 from django.contrib import messages
 from django.urls import reverse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -59,4 +59,16 @@ def claim_details(request, claim_id):
     # Obtener la reclamación específica o devolver un error 404 si no existe
     claim = get_object_or_404(Claim, id=claim_id)
     return render(request, 'accommodation/claim_details.html', {'claim': claim})
+
+def claimRespond(request,claim_id):
+    claim= get_object_or_404(Claim,id=claim_id)
+    if request.method=='POST':
+        form= ClaimForm(request.POST, instance=claim)
+        if form.is_valid():
+            form.save()
+            return redirect('/claims')
+    else:
+        form=ClaimForm(instance=claim)
+    return render(request,'accommodation/claimResponseForm.html',{'form':form})
+        
 
