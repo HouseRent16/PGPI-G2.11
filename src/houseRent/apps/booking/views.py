@@ -1,28 +1,27 @@
-from django.shortcuts import render, redirect
-from apps.core.models  import Accommodation, CustomUser
-from django.shortcuts import get_object_or_404
-from .forms import BookingRequest, UserBookRequest
-from apps.core.enums import BookingStatus
-from django.forms.models import model_to_dict
-from django.contrib.auth.decorators import login_required
-from utils.mailer import send_mail
-from datetime import datetime
+from datetime import datetime, timezone
 
-from django.db.models import Q
-from apps.core.models import Book, Image
-from apps.core.enums import BookingStatus
-from django.urls import reverse
-
-from ..core.enums import BookingStatus
-from apps.core.views import conteoReservasTotales, conteoFavoritos, ratingAccommodation, conteoReclamaciones
-
-from django.contrib.auth.decorators import login_required
-import stripe
 from django.conf import settings
-from django.views import View
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import HttpResponse
-
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.views import View
 from django.views.decorators.http import require_POST
+
+from apps.core.enums import BookingStatus
+from apps.core.models import Accommodation, CustomUser, Book, Image, Favorite, Comment, Claim
+from apps.core.views import (
+    conteoReservasTotales,
+    conteoFavoritos,
+    ratingAccommodation,
+    conteoReclamaciones,
+)
+from .forms import BookingRequest, UserBookRequest
+from utils.mailer import send_mail
+
+import stripe
+
 
 @login_required
 def books(request):

@@ -1,21 +1,20 @@
 import json
-from unittest import case
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim, Address
-from .enums import Category, BookingStatus
-from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm
-from django.contrib.admin.views.decorators import staff_member_required
+
 from datetime import datetime, date
 from urllib.parse import urlencode
-from django.http import HttpResponseRedirect, JsonResponse, Http404
-from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
-from django.views.decorators.csrf import csrf_exempt
+
+from django.contrib import messages
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
-from django.views import View
+from django.db.models import Q, Exists, OuterRef, Value, BooleanField, Avg, F
+from django.http import HttpResponseRedirect, JsonResponse, Http404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils.decorators import method_decorator
-from .forms import CustomUserForm, AddressForm
-from django.shortcuts import get_object_or_404
+from django.views import View
+
+from .enums import Category, BookingStatus
+from .forms import AdminPasswordChangeForm, CommentForm, ClaimForm, CustomUserForm, AddressForm
+from .models import CustomUser, Accommodation, Favorite, Service, Image, Book, Comment, Claim
 
 
 @staff_member_required
@@ -171,6 +170,7 @@ def home(request):
 
     context = {
         'accommodations': accommodations,
+        'propietario': es_propietario,
         'types': tipos,
         'services': servicios,
         'today': date.today(),
