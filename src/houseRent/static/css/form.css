@@ -14,6 +14,17 @@
   margin-left: 0 !important;
 }
 
+.nav-tab-size{
+
+  font-size:medium !important;
+  height: 20 px;
+}
+.navbar {
+  background-color: var(--c1) !important;
+  border-bottom: 1px solid var(--c2) !important;
+  padding: 0px 100px !important;
+}
+
 .filter-form-container {
   height: calc(100vh - var(--navbar-altura)) !important;
   position: sticky !important;
