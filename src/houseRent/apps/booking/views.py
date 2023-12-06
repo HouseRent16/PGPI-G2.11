@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
-from apps.core.models  import Accommodation, CustomUser
+from apps.core.models  import Accommodation, Book, Image, Service, Favorite, Comment, Claim, CustomUser
 from django.shortcuts import get_object_or_404
 from .forms import BookingRequest, UserBookRequest
 from apps.core.enums import BookingStatus
 from django.forms.models import model_to_dict
 from django.contrib.auth.decorators import login_required
 from utils.mailer import send_mail
-from datetime import datetime
+from datetime import datetime,timezone
 
 from django.db.models import Q
 from apps.core.models import Book, Image
