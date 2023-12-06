@@ -36,7 +36,10 @@
     <div class="container-fluid">
         <a class="navbar-logo" href="/">H</a>
         <a class="navbar-brand" href="/">HouseRent</a>
+        
+          
         <div class="collapse navbar-collapse" id="navbarNav">
+          <div class="column">
             <ul class="navbar-nav">
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/">Catálogo</a>
@@ -80,6 +83,12 @@
                 <a class="nav-link text-center" href="/ayuda">Ayuda</a>
                 </li>
             </ul>
+            <div> 
+        
+              <input type="text" class="form-control" placeholder="Buscar"  id="search">
+              
+          </div>
+        </div>
         </div>
         {% if user.is_authenticated %}
           {% if propietario and user.stripe_id == None %}
@@ -97,10 +106,37 @@
         {% endif %}
   </nav>
   <!-- Contenido específico de cada página -->
+
+
+
   {% block content %}
   {% endblock %}
 
   <!-- Otros scripts necesarios para tu proyecto -->
   {% block extrabody %}{% endblock %}
 </body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var inputBusqueda = document.getElementById('search');
+    console.log(inputBusqueda);
+    console.log(window.location.protocol ,window.location.port, window.location.hostname);
+      if (inputBusqueda) {
+        console.log('Input encontrado');
+          inputBusqueda.addEventListener('keydown', function(event) {
+              if (event.key === 'Enter') {
+                  let valorBusqueda = inputBusqueda.value;
+                  console.log('Búsqueda:', valorBusqueda);
+                  let serverUrl = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port  ;
+                 
+                  let navegationUrl = serverUrl + '/?name=' + valorBusqueda;
+                  console.log('Búsqueda:', navegationUrl);
+                  window.location.href = navegationUrl;
+                  event.preventDefault();
+              }
+          });
+      }
+  });
+</script>
 </html>
+

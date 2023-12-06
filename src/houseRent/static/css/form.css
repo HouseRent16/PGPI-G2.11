@@ -431,3 +431,7 @@
 .custom-title-input {
     height: 10px !important; /* Ajusta la altura según tus preferencias */
 }
+
+.column {
+  margin: 100px 0;
+}
