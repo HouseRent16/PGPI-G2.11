@@ -60,7 +60,7 @@ class ClaimForm(forms.ModelForm):
         }
 
 class CustomUserForm(forms.ModelForm):
-    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(attrs={'class': 'input'}, initial='ES'))
+    phone = PhoneNumberField(widget=PhoneNumberPrefixWidget(attrs={'class': 'input'}))
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'input'}),
         required=True, 
