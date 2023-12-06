@@ -46,7 +46,6 @@
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.calculate_total_price}} €</p>
                 <div>
-                    <a href="{{cancel_url}}/{{booking.id}}" class="button-link">Cancelar</a>
                     <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
                     <a  class="button-link">
                         <form action="{% url 'cancelBooksUser' book_id=booking.id %}" method="post" >
