@@ -8,7 +8,8 @@ urlpatterns = [
     path('accommodation/<int:accommodation_id>/image', views.register_image, name="registerImage"),
     path('claims/', views.claim_list, name='claim_list'),
     path('claims/<int:claim_id>/', views.claim_details, name="claim_details"),
-    path('claims/<int:claim_id>/claimResponse/',views.claimRespond,name='claimRespond')
+    path('claims/<int:claim_id>/claimResponse/',views.claimRespond,name='claimRespond'),
+    path('accommodation/<int:accommodation_id>/edit', views.EditAccommodation.as_view(), name="edit"),
 ]
 
 # Agregar configuración para servir archivos de medios en desarrollo
