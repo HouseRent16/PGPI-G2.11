@@ -1,0 +1,33 @@
+{% extends 'unfold/layouts/base_simple.html' %}
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block branding %}
+{% endblock %}
+
+{% block extrastyle %}
+{%load static %}
+
+
+  {{ block.super }}
+{% endblock %}
+
+{% block nav-global %}
+  <!-- Añade tu barra de navegación aquí -->
+  
+{% endblock %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block messages %}{% endblock %}
+
+{% block content %}
+  <!-- Tu contenido principal aquí -->
+  
+  {{ block.super }}
+{% endblock %}

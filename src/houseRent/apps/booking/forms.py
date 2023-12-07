@@ -32,7 +32,7 @@ class BookingRequest(forms.ModelForm):
             'end_date': 'Fecha de finalización',
             'payment_method': 'Método de pago',
             'amount_people': 'Número de personas',
-            'special_requests': 'Notas especiales'
+            'special_requests': 'Información de llegada'
         }
 
 
@@ -43,7 +43,7 @@ class BookingRequest(forms.ModelForm):
         return start_date
     
     def clean_amount_people(self):
-         amount_people = self.cleaned_data['amount_people']
+         amount_people = self.cleaned_data.get('amount_people', 0)
          if amount_people < 1:
               raise forms.ValidationError('El número de personas debe ser mayor a 0')
          return amount_people
@@ -61,7 +61,7 @@ class BookingRequest(forms.ModelForm):
         accommodation = self.cleaned_data.get('accommodation')
         start_date = self.cleaned_data.get('start_date') 
         end_date = self.cleaned_data.get('end_date')
-        amount_people = self.cleaned_data['amount_people']
+        amount_people = self.cleaned_data.get('amount_people', 0)
         if accommodation and accommodation.capacity < amount_people:
                     self.add_error('amount_people', 'Se ha superado la capacidad máxima')
         if start_date and end_date and accommodation:
@@ -72,16 +72,7 @@ class BookingRequest(forms.ModelForm):
             if overlapping_booking.exists():
                 self.add_error('end_date', 'No hay disponibilidad del alojamiento seleccionado en las fechas especificadas.')
         
-        
         return accommodation
-
-    def clean_amount_people(self):
-        cleaned_data = super().clean()
-        amount_people = self.cleaned_data['amount_people']
-        accommodation = cleaned_data.get('accommodation')
-        if accommodation and accommodation.capacity < amount_people:
-            raise forms.ValidationError('Se ha superado la capacidad máxima')
-        return amount_people
                                                                         
 class UserBookRequest(forms.ModelForm):
     phone = PhoneNumberField(

@@ -1,0 +1,91 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+    <section class="contenedor">
+        <header>Edicción de alojamiento</header>
+        <form method="post" action="{% url 'edit' accommodation_id %}" class="formulario">
+        {% csrf_token %}
+
+        <!-- Nombre del alojamiento -->
+        <div class="entrada">
+            <label for="name">Nombre: </label>
+            {{ formAccommodation.name }}
+        </div>
+
+        <!-- Descripcion del alojamiento -->
+        <div class="entrada">
+            <label for="description" style="display: block; margin-bottom: 8px;">Descripción: </label>
+            {{ formAccommodation.description }}
+        </div>
+
+         <!-- Campos de la clase dirección -->
+        <div class="columna">
+            <div class="entrada">
+                <label for="address_line">Calle:</label>
+                {{formAddress.address_line}}
+            </div>
+            <div class="entrada">
+                <label for="street_number">Número:</label>
+                {{formAddress.street_number}}
+            </div>
+        </div>
+
+        <div class="entrada">
+            <label for="country">País:</label>
+            {{ formAddress.country }}
+        </div>
+
+        <div class="entrada">
+            <label for="city">Ciudad:</label>
+            {{ formAddress.city }}
+        </div>            
+        
+        <div class="columna">
+            <div class="entrada"> 
+                <label for="region">Provincia:</label>
+                {{ formAddress.region }}
+            </div>
+            
+            <div class="entrada">
+                <label for="postal_code">Código Postal:</label>
+                {{ formAddress.postal_code }}
+            </div>    
+        </div>
+
+        <!-- Otros campos de la clase Accommodation -->
+        <div class="columna">
+            <div class="entrada">
+                <label for="capacity">Capacidad: </label>
+                {{ formAccommodation.capacity }}
+            </div>
+            <div class="entrada">
+                <label for="price">Precio por noche: </label>
+                {{ formAccommodation.price }}
+            </div>
+        </div>
+        
+        <div class="entrada">
+            <label for="category">Categoría: </label>
+            {{ formAccommodation.category }}
+        </div>  
+
+
+        <!-- Service es una relación ManyToMany -->
+        <div class="entrada">
+            <label for="service">Servicios: </label>
+            {{ formAccommodation.service }}
+            <label for="is_active">Activo: </label>
+            {{ formAccommodation.is_active }}
+        </div>
+
+        <div class="entrada">
+            
+        </div>
+
+
+         <!-- Botón de envío del formulario -->
+         <button type="submit">Registrar apartamento</button>
+        </form>
+    </section>
+{% endblock %}

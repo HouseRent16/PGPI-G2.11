@@ -134,6 +134,10 @@
                         </select>
                     </div>
                 </div>
+                <div class="page-content text-center" style="margin-top: 20px;">
+                <a href="/booking" class="btn btn-primary">Buscar reserva</a>
+                                   </div>
+
             </form>
         </div>
     </div>
@@ -160,27 +164,44 @@
     });
 });
 
-function toggleFavorites(accommodationId, classSelected) {
-    // Realizar una petición al servidor (puedes usar Fetch API o cualquier librería AJAX)
-    fetch('/api/togglefavorites/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            accommodationId: accommodationId,
-            classSelected: classSelected,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Alojamiento añadido a favoritos en el servidor:', data);
-    })
-    .catch(error => {
-        console.error('Error al agregar alojamiento a favoritos:', error);
-    });
-}
+    function getCsrfToken() {
+        let cookieValue = null;
+        const name = 'csrftoken';
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 
+    function toggleFavorites(accommodationId, classSelected) {
+        // Realizar una petición al servidor (puedes usar Fetch API o cualquier librería AJAX)
+        const csrftoken = getCsrfToken();
+        fetch('/api/togglefavorites/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                accommodationId: accommodationId,
+                classSelected: classSelected,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Alojamiento añadido a favoritos en el servidor:', data);
+        })
+        .catch(error => {
+            console.error('Error al agregar alojamiento a favoritos:', error);
+        });
+    }
 
     // Obtener los elementos de entrada de capacidad mínima y máxima
     var minCapacityInput = document.getElementById('min_capacity');

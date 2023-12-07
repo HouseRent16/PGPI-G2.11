@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from django.templatetags.static import static
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -166,3 +167,21 @@ CELERY_BEAT_SCHEDULE = {
 #Stripe API
 STRIPE_PUBLIC_KEY='pk_test_51OIz2ID34zl4uf1hhEKKVxPk4GByxoznQcHcIe4mFsjnwLDcZqPlOJ9STH6Sw2aCkKnMHtbnG17VxsVLIMUI1vzb00ORgPH8QK'
 STRIPE_SECRET_KEY='sk_test_51OIz2ID34zl4uf1hMvUNFJKd2PMwLHkq08DxryUBxcriz0w5MxLloEgD98anVnBw73vb7Kb1crmkLHX3YHqKL0en00ExmsBg5G'
+
+UNFOLD = {
+    "SITE_TITLE": "HouseRent",
+    "SITE_HEADER": "HouseRent", 
+    "SITE_ICON": {
+        "light": lambda request: static("imagenes/Logo.png"),  # light mode
+        "dark": lambda request: static("imagenes/Logo.png"),  # dark mode
+    },
+   "SHOW_VIEW_ON_SITE": True,
+    "STYLES": [
+        lambda request: static("css/navbar.css"),
+    ],
+    "SIDEBAR": {
+        "show_search": False,  # Search in applications and models names
+        "show_all_applications": False,  # Dropdown with all applications and models
+        
+    },
+}
