@@ -180,7 +180,7 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address": 4,
+            "address": 3,
             "groups": [71],
             "dni": "784437896z",
             "birth_date": "1963-02-24"            
@@ -209,7 +209,7 @@
         "pk": 4,
         "fields": {
             "dni": "78443129S",
-            "address": 1,
+            "address": 2,
             "birth_date": "1998-03-29",
             "gender": "MALE",
             "phone": "+14842918383",
