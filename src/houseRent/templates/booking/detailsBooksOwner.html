@@ -1,0 +1,235 @@
+{% extends 'base_generic.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="page-content">
+        <div class="row">
+            <div class="col col-md-9 book-container " >
+                <div class="row">
+                    <div class="col col-md-12 ">
+                       <div class="row h-100" >
+                            <div class="col col-md-7  " >
+                                <div class="row">
+        <h1 style="margin-left: 10px;">{{ accommodation.name }}</h1>
+        <h3 style="margin-left: 10px;">{{ accommodation.address.city }}, {{ accommodation.address.country }}</h3>
+        <!-- Puedes añadir más información aquí si es necesario -->
+        </div>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center " >
+                                {{reservas}}
+                                <span class="material-symbols-outlined ">
+                                    done
+                                    </span>
+                                
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                {{claim}}
+                                <span class="material-symbols-outlined ">
+                                    close
+                                    </span>
+                            </div>
+                            
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                {{rating}}
+                                <span class="material-symbols-outlined star-symbol">
+                                    star
+                                </span>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                {{numFavoritos}}
+                                <span class="material-symbols-outlined favorite-symbol">
+                                        favorite
+                                    </span>
+                            </div>
+                            <div class="col col-md-1 d-flex justify-content-center align-items-center" >
+                                <a href="/accommodation/{{accommodation.id}}/edit"> 
+                                    <span class="material-symbols-outlined manufacturing-symbol">
+                                        manufacturing
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-12 book-photos " >
+                        <div class="row" >
+                            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img src="/media/{{imagenInicial.image}}" class="d-block w-100 h-100" alt="...">
+                                    </div>
+                                    {% for imagen in images%}
+                                    <div class="carousel-item">
+                                        <img src="/media/{{imagen.image}}" class="d-block w-100 h-100" alt="...">
+                                    </div>
+                                    {%endfor%}
+                                </div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                        </div> 
+                                  
+                    </div>
+                    <div class="col col-md-12">
+                            <div class="row justify-content-center">
+                                <div class="card-button">
+                                <a href="/accommodation/{{accommodation.id}}/image" class="btn btn-image">Añadir Imagenes</a>
+                                </div>
+                            </div>  
+                        </div>
+                    <div class="col col-md-3  " >
+                        <!-- Sidebar de Servicios -->
+                        <div class="row justify-content-center" >   
+                        <div class="card" style="width: 95%;">
+                            <h4 class="title-card text-center">
+                                Servicios
+                            </h4>
+                            {% if accommodation.service.all %}
+                            <div class="services">
+                                {% for service in accommodation.service.all %}
+                                    <p class="infomation-card-service">{{ service.name }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                            </div>
+                    </div>
+                </div> 
+                    <div class="col col-md-6 " >
+                        <div class="row justify-content-center" >   
+                            <div class="card" style="width: 95%; max-width: 950 px;">
+                                <h4 class="title-card text-center">Descripción</h4>
+                                <h7 class="infomation-card">{{ accommodation.description }}</h7>
+
+                                </div>
+                        </div>
+                    </div>
+                    <div class="col col-md-3 " >
+                        <div class="row " >   
+                            <div class="card" style="width: 95%;">
+                                <h4 class="title-card text-center">Detalles</h4>
+                    <p class="infomation-card-detalles"><b class="price"> Fecha de creación: </b> {{ accommodation.creation_date }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Última modificación: </b> {{ accommodation.modification_date }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Precio: </b> {{ accommodation.price }}€ Noche</p>
+                    <p class="infomation-card-detalles"><b class="price"> Capacidad: </b> {{ accommodation.capacity }} personas</p>
+                    <p class="infomation-card-detalles"><b class="price"> País: </b> {{ accommodation.address.country }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Región: </b> {{ accommodation.address.region }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Ciudad: </b> {{ accommodation.address.city }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Código postal: </b> {{ accommodation.address.postal_code }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Calle: </b> {{ accommodation.address.address_line }}</p>
+                    <p class="infomation-card-detalles"><b class="price"> Número: </b> {{ accommodation.address.street_number }}</p>
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+        
+        <div class=" col col-md-3 book" >
+            
+            <div class="d-flex justify-content-center w-100 h-100">
+                <div class="container">
+                    <h1>Reservas</h1>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                        <a class="nav-link active tab-link" data-target="#activas" href="#">Activas</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link tab-link" data-target="#canceladas" href="#">Canceladas</a>
+                        </li>
+                        <li class="nav-item">
+                        <a class="nav-link tab-link" data-target="#pasadas" href="#">Pasadas</a>
+                        </li>
+                    </ul>
+                    
+                    <!-- Tab panes -->
+                    <div id="activas" class="tab-pane active ">
+                        <!-- Contenido para reservas activas -->
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header">
+                                    Servicios1
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in nextBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                    
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                    <div id="canceladas" class="tab-pane">
+                        <!-- Contenido para reservas canceladas -->
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header ">
+                                    Servicios2
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in cancelBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+                    <div id="pasadas" class="tab-pane">
+                        <!-- Contenido para reservas pasadas -->
+                        <div class="row justify-content-center w-100" >   
+                            <div class="card w-100 h-100">
+                                <div class="card-header">
+                                    Servicios3
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    {% for book in pastBooks %}
+                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    {%endfor%}
+                                </ul>
+                                </div>
+                        </div>
+                    </div>
+  
+            </div>
+            
+        </div> 
+            
+        </div>
+            
+        
+    </div>
+        
+        
+      </div>
+      
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+  var tabs = document.querySelectorAll('.tab-link');
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      // Desactivar todas las pestañas y ocultar todos los paneles
+      tabs.forEach(function (tab) {
+        tab.classList.remove('active');
+        var pane = document.querySelector(tab.getAttribute('data-target'));
+        pane.classList.remove('active');
+      });
+
+      // Activar la pestaña clicada y mostrar el panel correspondiente
+      tab.classList.add('active');
+      var activePane = document.querySelector(tab.getAttribute('data-target'));
+      activePane.classList.add('active');
+    });
+  });
+});
+
+</script>
+{% endblock %}

@@ -13,7 +13,11 @@
                         </a>
                         {% if accommodation.first_image %}
                             <div class="card-img-container">
-                                <span class="material-symbols-outlined heart-button heart-button-selected" data-value="{{accommodation.id}}">favorite</span>
+                                    {% if accommodation.id %}
+                                        <span class="material-symbols-outlined heart-button heart-button-selected" data-value="{{accommodation.id}}" >favorite</span>
+                                    {% else %}
+                                        <span class="material-symbols-outlined heart-button" data-value="{{accommodation.id}}" >favorite</span>
+                                    {% endif %}
                                 <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
                             </div>
                         {% endif %}
@@ -37,4 +41,69 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.heart-button').forEach(function(heartIcon) {
+    heartIcon.addEventListener('click', async function(event) {
+         // Obtener el ID del alojamiento
+        const {value} = event.currentTarget.dataset;
+        const classSelected = event.currentTarget.classList.contains('heart-button-selected');
+        
+        // Deshabilitar el botón durante la operación para evitar clics múltiples
+        event.currentTarget.setAttribute('disabled', true);
+
+        // Aquí puedes realizar una petición al servidor para agregar el alojamiento a favoritos
+        await toggleFavorites(value, classSelected);
+
+        // Habilitar el botón después de completar la operación
+        event.currentTarget.removeAttribute('disabled');
+
+        // Recargar la vista después de completar la operación
+        location.reload();
+
+        this.classList.toggle('heart-button-selected');
+  
+    });
+});
+
+function getCsrfToken() {
+        let cookieValue = null;
+        const name = 'csrftoken';
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+function toggleFavorites(accommodationId, classSelected) {
+        // Realizar una petición al servidor (puedes usar Fetch API o cualquier librería AJAX)
+        const csrftoken = getCsrfToken();
+        fetch('/api/togglefavorites/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                accommodationId: accommodationId,
+                classSelected: classSelected,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Alojamiento añadido a favoritos en el servidor:', data);
+        })
+        .catch(error => {
+            console.error('Error al agregar alojamiento a favoritos:', error);
+        });
+    }
+</script>
+
 {% endblock %}
