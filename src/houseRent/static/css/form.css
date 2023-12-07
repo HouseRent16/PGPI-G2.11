@@ -340,11 +340,13 @@
   font-size: var(--f1);
   font-weight: 800;
   text-align: center;
+  color: black;
 }
 
 .formulario .entrada {
   width: 100%;
   margin-top: 20px;
+  color: black;
 }
 
 .formulario :where(.entrada input, .caja-select) {
@@ -430,4 +432,8 @@
 
 .custom-title-input {
     height: 10px !important; /* Ajusta la altura según tus preferencias */
+}
+
+.column {
+  margin: 100px 0;
 }

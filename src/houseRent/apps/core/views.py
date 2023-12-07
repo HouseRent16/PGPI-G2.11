@@ -34,7 +34,7 @@ def change_password(request, user_id):
     })
 
 def home(request):
-    accommodations = Accommodation.objects.all().annotate(
+    accommodations = Accommodation.objects.all().filter(is_active=True).annotate(
         is_booked=Value(False, output_field=BooleanField()),
         is_favorite=Value(False, output_field=BooleanField())
     )
@@ -97,6 +97,7 @@ def home(request):
     if min_price and max_price and min_price > max_price:
         max_price = None
 
+    
     valid_query_params = {
         'name': name_query or '',
         'owner': owner_query or '',
@@ -159,14 +160,16 @@ def home(request):
     if services_query:
         accommodations = accommodations.filter(service__id__in=services_query).distinct()
     if min_rating:
-        accommodations = accommodations.filter(average_rating__gte=min_rating)
+        accommodations = [accommodation for accommodation in accommodations if (accommodation.average_rating or 0) >= float(min_rating)]
 
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+        
     es_propietario=request.user.groups.filter(name="Propietarios").exists()
 
     tipos = Category.choices()
     servicios = Service.objects.all()
+
 
     context = {
         'accommodations': accommodations,
@@ -174,6 +177,7 @@ def home(request):
         'types': tipos,
         'services': servicios,
         'today': date.today(),
+        'propietario':es_propietario,
     }
 
     return render(request, 'core/home.html', context)
@@ -208,7 +212,7 @@ def favoritos(request):
 
     user_id = CustomUser.objects.get(id=request.user.id).id
     favoritos = Favorite.objects.filter(user_id=user_id)
-    accommodations = Accommodation.objects.filter(favorite__in=favoritos)
+    accommodations = Accommodation.objects.filter(favorite__in=favoritos, is_active=True)
     for accommodation in accommodations:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
 
@@ -240,7 +244,6 @@ class ProfileView(View):
         }
         return render(self.request, self.get_template(), context)
     
-    #Por hacer
     def post(self, request, *args, **kwargs):
         if request.method == 'POST':
             user = CustomUser.objects.get(id=request.user.id)

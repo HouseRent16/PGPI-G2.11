@@ -41,7 +41,6 @@
     margin: 0 !important;  /* Centra la imagen dentro del contenedor */
     border-top-left-radius: 15px !important;
     border-bottom-left-radius: 15px !important;
-    /* Dejar el eje vertical derecho sin radio de borde */
     border-top-right-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
