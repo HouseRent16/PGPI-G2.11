@@ -180,7 +180,7 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
-            "address": 3,
+            "address": 4,
             "groups": [71],
             "dni": "784437896z",
             "birth_date": "1963-02-24"            
@@ -209,7 +209,7 @@
         "pk": 4,
         "fields": {
             "dni": "78443129S",
-            "address": 2,
+            "address": 1,
             "birth_date": "1998-03-29",
             "gender": "MALE",
             "phone": "+14842918383",
@@ -342,6 +342,225 @@
         "pk": 18,
         "fields": {
             "name": "Accesibilidad"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 1,
+        "fields": {
+            "name": "Hoffman LLC",
+            "description": "Policy room artist from blue hard number small. Own argue course itself enter just down. Kind goal stuff address painting century.",
+            "address": 1,
+            "price": 7041,
+            "category": "Apartamento",
+            "owner": 3,
+            "capacity": 5,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 2,
+        "fields": {
+            "name": "Keller-Gordon",
+            "description": "And finally view course western perform prevent. Describe daughter school loss point fly key. Guess ability enter first movement join.\nNation find visit shake why. Radio see idea late fight care.",
+            "address": 2,
+            "price": 26735,
+            "category": "Casa",
+            "owner": 3,
+            "capacity": 6,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 3,
+        "fields": {
+            "name": "Torres, Phillips and Sims",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 78839,
+            "category": "Dúplex",
+            "owner": 3,
+            "capacity": 7,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.accommodation",
+        "pk": 5,
+        "fields": {
+            "name": "Prueba 2",
+            "description": "Seek one bag pressure use how. Officer stay more cost tell.\nIf capital fear beautiful after election area. Model husband vote. Who world magazine report meeting.\nStage dinner several somebody staff.",
+            "address":3,
+            "price": 889,
+            "category": "Apartamento",
+            "owner": 3,
+            "capacity": 3,
+            "is_active": true,
+            "creation_date": "2023-11-17",
+            "modification_date": "2023-11-17"
+        }
+    },
+    {
+        "model": "core.book",
+        "pk": 1,
+        "fields": {
+            "start_date": "2023-11-30T00:00:00Z",
+            "end_date": "2023-12-15T00:00:00Z",
+            "payment_method": "EFECTIVO",
+            "amount_people": 7,
+            "user": 3,
+            "price":50,
+            "is_active": false,
+            "accommodation": 1
+        }
+    },
+    {
+        "model": "core.book",
+        "pk": 2,
+        "fields": {
+            "start_date": "2024-11-18T01:20:30Z",
+            "end_date": "2024-11-30T20:48:00Z",
+            "payment_method": "ONLINE",
+            "price":50,
+            "amount_people": 8,
+            "user": 3,
+            "is_active": true,
+            "accommodation": 2
+        }
+    },
+    {
+        "model": "core.claim",
+        "pk": 1,
+        "fields": {
+            "title": "Idea policy region example only our it performance.",
+            "description": "Certainly office method answer clearly physical business. Throw crime main different stock.\nIssue option girl later job necessary. Project do market morning whether less bag.",
+            "publication_date": "2023-04-09",
+            "user": 2,
+            "accommodation": 3
+        }
+    },
+    {
+        "model": "core.claim",
+        "pk": 2,
+        "fields": {
+            "title": "Se equivocaron con el número de habitación.",
+            "description": "Esto es solo una prueba esta reclamación es del propietario Jame1, hacía otro de sus alojamientos",
+            "publication_date": "2023-11-21",
+            "user": 1,
+            "accommodation": 1
+        }
+    },
+    {
+        "model": "core.claim",
+        "pk": 3,
+        "fields": {
+            "title": "Uno de los servicios contratado no estuvo.",
+            "description": "Esto es solo otra prueba para ver que esta reclamación no es del propietario Jame1.",
+            "publication_date": "2023-12-01",
+            "user": 2,
+            "accommodation": 5
+        }
+    },
+    {
+        "model": "core.favorite",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "accommodation": 1,
+            "date": "2023-04-28"
+        }
+    },
+    {
+        "model": "core.favorite",
+        "pk": 2,
+        "fields": {
+            "user": 1,
+            "accommodation": 3,
+            "date": "2023-02-06"
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 1,
+        "fields": {
+            "title": "Sunset View",
+            "description": "Beautiful sunset view from the balcony.",
+            "order": 1,
+            "image": "uploads/images/habitacion1.png",
+            "alt": "Sunset view",
+            "publication_date": "2023-11-17",
+            "accommodation": 1
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 2,
+        "fields": {
+        "title": "Spacious Living Room",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/habitacion2.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 2
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 3,
+        "fields": {
+        "title": "Spacious Living Room",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation1.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 3
+        }
+    },
+    {
+        "model": "core.image",
+        "pk": 5,
+        "fields": {
+        "title": "Spacious Living Room 3",
+            "description": "Spacious living room with modern amenities.",
+            "order": 1,
+            "image": "uploads/images/accommodation4.png",
+            "alt": "Living room",
+            "publication_date": "2023-11-17",
+            "accommodation": 5
+        }
+    },
+    {
+        "model": "core.comment",
+        "pk":1,
+        "fields": {
+            "title": "Great experience",
+            "description": "Had a great time staying at this place, would recommend!",
+            "publication_date": "2023-11-17",
+            "user": 2,
+            "rating": 5,
+            "accommodation": 1
+        }
+    },
+    {
+        "model": "core.comment",
+        "pk":2,
+        "fields": {
+            "title": "Not as expected",
+            "description": "The place was decent but had some maintenance issues.",
+            "publication_date": "2023-11-17",
+            "user": 1,
+            "rating": 3,
+            "accommodation": 2
         }
     }
 ]
