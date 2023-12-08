@@ -3,7 +3,8 @@ from apps.core import views
 
 urlpatterns = [
     path('admin/core/customuser/<int:user_id>/password/', views.change_password, name='admin_change_password'),
-    path('',views.home,name='home'),
+    path('',views.news,name='novedades'),
+    path('catalogo/',views.home,name='home'),
     path('accommodation/<accommodation_id>/', views.accommodation_details, name='accommodation_detail'),
     path('api/togglefavorites/', views.togglefavorites, name='togglefavorites'),
     path('profile/',views.ProfileView.as_view(),name='profile'),

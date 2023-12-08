@@ -2,7 +2,9 @@ import json
 
 from datetime import datetime, date
 from urllib.parse import urlencode
-
+from django.db.models import Avg, Count, Case, When, Value, F, Sum
+from django.db.models import FloatField
+from django.db.models.functions import Coalesce
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
@@ -32,6 +34,18 @@ def change_password(request, user_id):
     return render(request, 'core/change_password.html', {
         'form': form
     })
+
+def news(request):
+
+    news_accommodation = Accommodation.objects.filter(Q(is_active=True)).order_by('creation_date')[:3]
+    best_accommodation = sorted(Accommodation.objects.filter(Q(is_active=True)), key=lambda acc: acc.average_rating if acc.average_rating is not None else float('-inf'), reverse=True) [:3]
+    print(news_accommodation.count())
+    print(len(best_accommodation))
+    for accommodation in news_accommodation:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+    for accommodation in best_accommodation:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()  
+    return render(request, 'core/news.html', {'news_accommodation': news_accommodation, 'best_accommodation': best_accommodation})
 
 def home(request):
     accommodations = Accommodation.objects.all().filter(is_active=True).annotate(
@@ -226,6 +240,8 @@ def favoritos(request):
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
+
+
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     
@@ -320,6 +336,7 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
 @login_required
 def add_comment(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
