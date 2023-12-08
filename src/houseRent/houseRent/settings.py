@@ -176,9 +176,7 @@ UNFOLD = {
         "dark": lambda request: static("imagenes/Logo.png"),  # dark mode
     },
    "SHOW_VIEW_ON_SITE": True,
-    "STYLES": [
-        lambda request: static("css/navbar.css"),
-    ],
+
     "SIDEBAR": {
         "show_search": False,  # Search in applications and models names
         "show_all_applications": False,  # Dropdown with all applications and models
