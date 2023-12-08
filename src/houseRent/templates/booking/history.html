@@ -73,6 +73,7 @@
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.calculate_total_price}} €</p>
+                <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
             </div>
         </div>
         {% endfor %}
