@@ -39,8 +39,6 @@ def news(request):
 
     news_accommodation = Accommodation.objects.filter(Q(is_active=True)).order_by('creation_date')[:3]
     best_accommodation = sorted(Accommodation.objects.filter(Q(is_active=True)), key=lambda acc: acc.average_rating if acc.average_rating is not None else float('-inf'), reverse=True) [:3]
-    print(news_accommodation.count())
-    print(len(best_accommodation))
     for accommodation in news_accommodation:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
     for accommodation in best_accommodation:
@@ -252,10 +250,12 @@ class ProfileView(View):
         user = get_object_or_404(CustomUser, pk=request.user.id)
         customUserForm = CustomUserForm(instance=user)
         addressForm = AddressForm(instance=user.address)
+        es_propietario=request.user.groups.filter(name="Propietarios").exists()
 
         context = {
             'user_form': customUserForm,
             'address_form': addressForm,
+            'propietario':es_propietario,
             
         }
         return render(self.request, self.get_template(), context)

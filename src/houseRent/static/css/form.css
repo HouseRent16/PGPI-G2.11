@@ -370,6 +370,7 @@
 .formulario .columna {
   display: flex;
   column-gap: 15px;
+  
 }
 
 .caja-select select {

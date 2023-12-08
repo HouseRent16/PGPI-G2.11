@@ -96,6 +96,10 @@
                 </div>
             </div>
 
+            {% if propietario and user.stripe_id == None %}
+                <a class="btn btn-primary" href="/booking/createStripeAccount">Enlazar cuenta bancaria</a>
+            {% endif %}
+
             <!-- Botón de envío del formulario -->
             <div class="d-flex justify-content-center">
                 <button type="submit">Guardar</button>

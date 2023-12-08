@@ -29,6 +29,12 @@
   
   {% block extrahead %}{% endblock %}
 
+  <style>
+    .column {
+      margin-left: 20px !important;
+    }
+  </style>
+
 </head>
 
 <body> 
@@ -94,19 +100,20 @@
         </div>
         </div>
         {% if user.is_authenticated %}
-          {% if propietario and user.stripe_id == None %}
-          <a class="btn btn-primary" href="/booking/createStripeAccount">Enlazar cuenta bancaria</a>
-          {% endif %}
-          <a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
+          
+        <div class="column">
+          
           <a class="account-btn" href="/profile">
             <span class="material-symbols-outlined account">
               account_circle
             </span>
             <span class="account-name">{{ user.username }}</span>
           </a>
+          <a class="btn btn-primary" href="/logout">Cerrar Sesión</a>
         {% else %}
           <a class="btn btn-primary" href="/login">Iniciar Sesión</a>
         {% endif %}
+        </div>
   </nav>
   <!-- Contenido específico de cada página -->
 
