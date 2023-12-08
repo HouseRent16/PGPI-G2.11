@@ -171,17 +171,17 @@
         "model": "core.CustomUser",
         "pk": 2,
         "fields": {
-            "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
+            "password": "pbkdf2_sha256$390000$QmclgLiWzI9qMjpASERfBJ$krii5WDHsypynpWaz1vZcBpR/XRPwvKQ3VDt1TYAOok=",
             "last_login": "2022-12-05T16:54:46.872Z",
-            "username": "staff",
+            "username": "houserent2324",
             "first_name": "",
             "last_name": "",
-            "email": "staff@us.es",
+            "email": "houserent2324@gmail.com",
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
             "address": 4,
-            "groups": [71],
+            "groups": [72],
             "dni": "784437896z",
             "birth_date": "1963-02-24"            
         }
@@ -201,7 +201,7 @@
             "first_name": "ale",
             "last_name": "perez",
             "request": "ACCEPTED",
-            "groups": [72]
+            "groups": []
         }   
     },
     {
@@ -425,7 +425,7 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "owner": 3,
+            "owner": 2,
             "capacity": 5,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -441,7 +441,7 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "owner": 3,
+            "owner": 2,
             "capacity": 6,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -457,7 +457,7 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "owner": 3,
+            "owner": 2,
             "capacity": 7,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -473,7 +473,7 @@
             "address":3,
             "price": 889,
             "category": "Apartamento",
-            "owner": 3,
+            "owner": 2,
             "capacity": 3,
             "is_active": true,
             "creation_date": "2023-11-17",

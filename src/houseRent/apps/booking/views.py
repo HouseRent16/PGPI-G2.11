@@ -25,6 +25,7 @@ import stripe
 
 @login_required
 def books(request):
+    context={}
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
         if es_propietario: 
