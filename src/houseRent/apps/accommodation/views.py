@@ -1,6 +1,7 @@
 from .forms import RegisterAccommodation, RegisterImage, ClaimForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
@@ -43,11 +44,15 @@ def register_image(request, accommodation_id):
     if request.method == 'POST':
         formImage = RegisterImage(request.POST, request.FILES)
         if formImage.is_valid():
-            image = formImage.save(commit=False)
-            image.accommodation_id = accommodation_id
-            image.save()
-            messages.success(request, 'Alojamiento registrado correctamente')
-            return redirect('gestion')
+            #ToDo Gestionar que inserten un orden ya existente / Yo quitaba orden del modelo
+            try:
+                image = formImage.save(commit=False)
+                image.accommodation_id = accommodation_id
+                image.save()
+                messages.success(request, 'Alojamiento registrado correctamente')
+                return redirect('gestion')
+            except IntegrityError as e:
+                 messages.error(request, 'Error: Ya existe una imagen con el mismo orden para este alojamiento.')
     else:
         formImage = RegisterImage()
     

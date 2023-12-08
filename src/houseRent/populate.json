@@ -492,7 +492,6 @@
         "pk": 1,
         "fields": {
             "title": "Sunset View",
-            "description": "Beautiful sunset view from the balcony.",
             "order": 1,
             "image": "uploads/images/habitacion1.png",
             "alt": "Sunset view",
@@ -504,8 +503,7 @@
         "model": "core.image",
         "pk": 2,
         "fields": {
-        "title": "Spacious Living Room",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room",
             "order": 1,
             "image": "uploads/images/habitacion2.png",
             "alt": "Living room",
@@ -517,8 +515,7 @@
         "model": "core.image",
         "pk": 3,
         "fields": {
-        "title": "Spacious Living Room",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room",
             "order": 1,
             "image": "uploads/images/accommodation1.png",
             "alt": "Living room",
@@ -530,8 +527,7 @@
         "model": "core.image",
         "pk": 5,
         "fields": {
-        "title": "Spacious Living Room 3",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room 3",
             "order": 1,
             "image": "uploads/images/accommodation4.png",
             "alt": "Living room",
