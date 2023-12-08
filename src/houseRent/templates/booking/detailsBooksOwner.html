@@ -157,7 +157,14 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     {% for book in nextBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    <li class="list-group-item">{{book.user.username}}:{{book.start_date}} a {{book.end_date}}
+                                        <a  class="button-link">
+                                            <form action="{% url 'cancelBooksOwner' book_id=book.id %}" method="post" >
+                                                {%csrf_token %}
+                                              <button type="submit">Cancelar reserva</button>
+                                          </form>
+                                        </a>
+                                    </li>
                                     {%endfor%}
                                     
                                 </ul>
@@ -173,7 +180,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     {% for book in cancelBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    <li class="list-group-item">{{book.user.username}}:{{book.start_date}} a {{book.end_date}}</li>
                                     {%endfor%}
                                 </ul>
                                 </div>
@@ -188,7 +195,7 @@
                                 </div>
                                 <ul class="list-group list-group-flush">
                                     {% for book in pastBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
+                                    <li class="list-group-item">{{book.user.username}}:{{book.start_date}} a {{book.end_date}}</li>
                                     {%endfor%}
                                 </ul>
                                 </div>

@@ -13,5 +13,7 @@ urlpatterns = [
     path('createStripeAccount', views.create_stripe_account_for_owner,name='create_stripe_account'),
     path('history', booking_history, name='history'),
     path('cancelBooks/<int:book_id>',views.cancelBooksUser,name='cancelBooksUser'),
-    path('acceptPayment/<int:book_id>', views.paymentAccept, name='paymentAccept')
+    path('acceptPayment/<int:book_id>', views.paymentAccept, name='paymentAccept'),
+    path('cancelBooksOwner/<int:book_id>',views.cancelBooksOwner,name='cancelBooksOwner'),
+    
 ]
