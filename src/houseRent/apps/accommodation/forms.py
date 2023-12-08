@@ -5,7 +5,7 @@ from django.core.validators import RegexValidator
 class RegisterAccommodation(forms.ModelForm):
     class Meta:
         model = Accommodation
-        fields = ['name', 'description', 'capacity', 'price', 'category', 'service', 'is_active']
+        fields = ['name', 'description', 'capacity', 'price', 'category', 'service']
 
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -13,7 +13,7 @@ class RegisterAccommodation(forms.ModelForm):
             'capacity': forms.NumberInput(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
-            'is_active': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+
         }
 
         help_texts = {
@@ -22,7 +22,7 @@ class RegisterAccommodation(forms.ModelForm):
             'capacity': None,
             'price': True,
             'category': None,
-            'is_active': None,
+
         }
 
         validators={
