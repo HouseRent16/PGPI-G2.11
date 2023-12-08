@@ -312,9 +312,12 @@ def create_stripe_account_for_owner(request):
 @login_required
 @require_POST
 def cancelBooksUser(request,book_id):
+    book=Book.objects.get(id=book_id)
+    user=CustomUser.objects.get(id=request.user.id)
     if request.user.is_authenticated:
-        book=Book.objects.get(id=book_id)
         book.is_active=False
         book.status=BookingStatus.CANCELLED
         book.save()
+    body = "Su reserva para {} ha sido cancelada.".format(book.accommodation.name)
+    send_mail("Información de reserva", body, [user.email],"mailer/email_booking.html")
     return redirect('/booking/history')
