@@ -188,8 +188,8 @@ def booking_details(request):
 def booking_history(request):
     current_user = request.user
 
-    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
-    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(end_date__lt = datetime.now().date()) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(end_date__gte = datetime.now().date()) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     es_propietario=request.user.groups.filter(name="Propietarios").exists()
     for booking in pendding_booking:
