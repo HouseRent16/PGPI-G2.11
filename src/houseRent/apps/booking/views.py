@@ -180,6 +180,7 @@ def booking_details(request):
             'rating': ratingAccommodation(request, accommodation.id),
             'claim': conteoReclamaciones(request, accommodation.id),
             'reservas': conteoReservasTotales(request, accommodation.id),
+            'now': datetime.now().date(),
         }
     
     return render(request, 'booking/bookingDetails.html', context)

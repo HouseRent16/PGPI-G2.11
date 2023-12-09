@@ -12,16 +12,34 @@
 
 {% block accommodation_details %}
 <div class="book-details">
-    <div class="card">
+    <div class="card almost-screen">
         <h4 class="title-card text-center">Detalles de la reserva</h4>
         <p class="infomation-card-detalles"><b class="price"> Fecha de inicio: </b> {{ book.start_date }}</p>
         <p class="infomation-card-detalles"><b class="price"> Fecha de fin: </b> {{ book.end_date }}</p>
         <p class="infomation-card-detalles"><b class="price"> Método de pago: </b> {{ book.payment_method }}</p>
         <p class="infomation-card-detalles"><b class="price"> Número de personas: </b> {{ book.amount_people }} personas</p>
-        <p class="infomation-card-detalles"><b class="price"> Activo: </b> {{ book.is_active }}</p>
-        <p class="infomation-card-detalles"><b class="price"> Estado: </b> {{ book.status.name }}</p>
-        <p class="infomation-card-detalles"><b class="price"> Peticiones: </b> {{ book.special_request }}</p>
+        <p class="infomation-card-detalles">
+            <b class="price"> Estado: </b>
+            {% if book.is_active %}
+                {% if now < book.start_date %}
+                    Confirmada
+                {% elif now > book.end_date %}
+                    Finalizada
+                {% else %}
+                    En curso
+                {% endif %}
+            {% else %}
+                Cancelada
+            {% endif %}
+        </p>
         <p class="infomation-card-detalles"><b class="price"> Código: </b> {{ book.code }}</p>
+        <p class="infomation-card-detalles"><b class="price"> Indicaciones del usuario: </b> 
+            {% if book.special_request %}
+                {{ book.special_request }}
+            {% else %}
+                No realizó ninguna indicación
+            {% endif %}
+        </p>
     </div>
 </div>
 {% endblock %}
