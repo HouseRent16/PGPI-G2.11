@@ -322,5 +322,6 @@ def cancelBooksUser(request,book_id):
     str_end_date = book.end_date.strftime("%d/%m/%Y")
     body = "Su reserva para {} ha sido cancelada. Para los dias {} - {}".format(book.accommodation.name, str_start_date, str_end_date)
     send_mail("Confirmación de cancelación de reserva", body, [user.email],"mailer/email_cancel.html")
-
+    if request.user.groups.filter(name='Propietarios').exists():
+        return redirect('booking/owner')
     return redirect('/booking/history')

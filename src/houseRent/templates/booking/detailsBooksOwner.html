@@ -1,7 +1,10 @@
 {% extends 'base_generic.html' %}
-{% load static %}
+
 
 {% block content %}
+{% load static %} 
+<link rel="stylesheet" type="text/css" href="/static/css/history.css">
+
     <div class="page-content">
         <div class="row">
             <div class="col col-md-9 book-container " >
@@ -135,63 +138,64 @@
                 <div class="container">
                     <h1>Reservas</h1>
                     <!-- Nav tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                        <a class="nav-link active tab-link" data-target="#activas" href="#">Activas</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link tab-link" data-target="#canceladas" href="#">Canceladas</a>
-                        </li>
-                        <li class="nav-item">
-                        <a class="nav-link tab-link" data-target="#pasadas" href="#">Pasadas</a>
-                        </li>
-                    </ul>
+                    <div class="tab-selector">
+                        <label for="tab-select">Selecciona una el estado de la reserva:</label>
+                        <select id="tab-select" onchange="openTab(event, value)">
+                            <option value="pasadas">Expiradas</option>
+                            <option value="activas" selected>Activas</option>
+                            <option value="canceladas">Canceladas</option>
+                        </select>
+                    </div>
                     
                     <!-- Tab panes -->
                     <div id="activas" class="tab-pane active ">
                         <!-- Contenido para reservas activas -->
                         <div class="row justify-content-center w-100" >   
-                            <div class="card w-100 h-100">
-                                <div class="card-header">
-                                    Servicios1
+                            {% for book in nextBooks %}
+                            <div class="card-history">
+                                <div class="card-body">
+                                <p class="list-group-item">Del {{book.start_date.date}} al {{book.end_date.date}}</p>
+                                <p><b>Ocupación: </b>{{book.amount_people}}</p>
+                                <p><b>Pago: </b>{{book.payment_method}}</p>
+                                <a>
+                                    <form action="{% url 'cancelBooksUser' book_id=book.id %}" method="post" >
+                                        {%csrf_token %}
+                                      <button type="submit" style="background-color: transparent;color: white; border:none; padding: 5px 15px;background-color: var(--c5) !important;border-radius: 5px;">Cancelar reserva</button>
+                                  </form>
+                                </a>
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    {% for book in nextBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
-                                    {%endfor%}
-                                    
-                                </ul>
-                                </div>
+                            </div>
+                            {%endfor%}
                         </div>
                     </div>
                     <div id="canceladas" class="tab-pane">
                         <!-- Contenido para reservas canceladas -->
                         <div class="row justify-content-center w-100" >   
-                            <div class="card w-100 h-100">
-                                <div class="card-header ">
-                                    Servicios2
+                            {% for book in cancelBooks %}
+                            <div class="card-history">
+                                <div class="card-body">
+                                <p class="list-group-item">Del {{book.start_date.date}} al {{book.end_date.date}}</p>
+                                <p><b>Ocupación: </b>{{book.amount_people}}</p>
+                                <p><b>Pago: </b>{{book.payment_method}}</p>
+                                
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    {% for book in cancelBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
-                                    {%endfor%}
-                                </ul>
-                                </div>
+                            </div>
+                            {%endfor%}
                         </div>
                     </div>
                     <div id="pasadas" class="tab-pane">
                         <!-- Contenido para reservas pasadas -->
                         <div class="row justify-content-center w-100" >   
-                            <div class="card w-100 h-100">
-                                <div class="card-header">
-                                    Servicios3
+                            {% for book in pastBooks %}
+                            <div class="card-history">
+                                <div class="card-body">
+                                <p class="list-group-item">Del {{book.start_date.date}} al {{book.end_date.date}}</p>
+                                <p><b>Ocupación: </b>{{book.amount_people}}</p>
+                                <p><b>Pago: </b>{{book.payment_method}}</p>
+                                
                                 </div>
-                                <ul class="list-group list-group-flush">
-                                    {% for book in pastBooks %}
-                                    <li class="list-group-item">de {{book.start_date}} a {{book.end_date}}</li>
-                                    {%endfor%}
-                                </ul>
-                                </div>
+                            </div>
+                            {%endfor%}
                         </div>
                     </div>
   
@@ -204,32 +208,22 @@
         
     </div>
         
-        
+    <script>
+        function openTab(opcionSeleccionada) {
+            // Oculta todos los contenidos
+            document.getElementById('pasadas').style.display = 'none';
+            document.getElementById('activas').style.display = 'none';
+            document.getElementById('canceladas').style.display = 'none';
+            let select = document.getElementById('tab-select');
+            
+
+            // Muestra el contenido correspondiente a la opción seleccionada
+            document.getElementById(select.value).style.display = 'block';
+            
+        }
+    </script> 
       </div>
       
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-  var tabs = document.querySelectorAll('.tab-link');
 
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function (event) {
-      event.preventDefault();
-
-      // Desactivar todas las pestañas y ocultar todos los paneles
-      tabs.forEach(function (tab) {
-        tab.classList.remove('active');
-        var pane = document.querySelector(tab.getAttribute('data-target'));
-        pane.classList.remove('active');
-      });
-
-      // Activar la pestaña clicada y mostrar el panel correspondiente
-      tab.classList.add('active');
-      var activePane = document.querySelector(tab.getAttribute('data-target'));
-      activePane.classList.add('active');
-    });
-  });
-});
-
-</script>
 {% endblock %}
