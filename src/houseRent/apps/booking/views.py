@@ -145,7 +145,10 @@ def request_booking(request, accommodation_id):
             str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
             str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
             nights = (booking_request.end_date - booking_request.start_date)
-            price = (nights.days - 1 )* accommodation.price
+            print('night', nights)
+            price = (nights.days) * accommodation.price
+            print(price)
+            print(accommodation.price)
             body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por cun coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
             send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
             if(booking_request.payment_method== 'ONLINE'):
@@ -195,13 +198,8 @@ def booking_history(request):
     for booking in cancel_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
 
-    """
-    judge_url = request.get_host() + reverse('judge')
-    claim_url = request.get_host() + reverse('claim')
-    cancel_url = request.get_host() + reverse('cancel')
-    """
 
-    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario})
 
 
 def conteoReservasTotales(request, id_accommodation):
@@ -318,6 +316,8 @@ def cancelBooksUser(request,book_id):
         book.is_active=False
         book.status=BookingStatus.CANCELLED
         book.save()
-    body = "Su reserva para {} ha sido cancelada.".format(book.accommodation.name)
-    send_mail("Información de reserva", body, [user.email],"mailer/email_booking.html")
+    str_start_date = book.start_date.strftime("%d/%m/%Y")
+    str_end_date = book.end_date.strftime("%d/%m/%Y")
+    body = "Su reserva para {} ha sido cancelada. Para los dias {} - {}".format(book.accommodation.name, str_start_date, str_end_date)
+    send_mail("Confirmación de cancelación de reserva", body, [user.email],"mailer/email_cancel.html")
     return redirect('/booking/history')

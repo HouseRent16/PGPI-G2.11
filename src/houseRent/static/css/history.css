@@ -70,10 +70,16 @@
 }
 
 .button-link {
-    display: inline-block;
-    padding: 10px 20px;
+
+    padding: 5px 15px;
     text-decoration: none;
     background-color: var(--c5) !important;
     color: #fff;
     border-radius: 5px;
+    height: 50px !important;
+}
+
+.button {
+    background-color: var(--c5) !important;
+    color: white !important;
 }
