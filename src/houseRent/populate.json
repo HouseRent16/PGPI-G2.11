@@ -171,17 +171,17 @@
         "model": "core.CustomUser",
         "pk": 2,
         "fields": {
-            "password": "pbkdf2_sha256$390000$11tiXax4IDCFs7S3QKvOVl$bPoME2pCTpKjsl4iQIbmYCg/hyvUvEFbVW7RrSOkWwU=",
+            "password": "pbkdf2_sha256$390000$QmclgLiWzI9qMjpASERfBJ$krii5WDHsypynpWaz1vZcBpR/XRPwvKQ3VDt1TYAOok=",
             "last_login": "2022-12-05T16:54:46.872Z",
-            "username": "staff",
+            "username": "houserent2324",
             "first_name": "",
             "last_name": "",
-            "email": "staff@us.es",
+            "email": "houserent2324@gmail.com",
             "is_staff": true,
             "is_active": true,
             "date_joined": "2022-12-05T16:46:52.327Z",
             "address": 4,
-            "groups": [71],
+            "groups": [72],
             "dni": "784437896z",
             "birth_date": "1963-02-24"            
         }
@@ -195,13 +195,13 @@
             "birth_date": "1963-02-24",
             "gender": "OTHER",
             "phone": "+34606406974",
-            "email": "jameowner@gmail.com",
-            "username":"jame1",
-            "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
-            "first_name": "James",
-            "last_name": "Owens",
+            "email": "alepervaz@alum.us.es",
+            "username":"alejandro",
+            "password": "pbkdf2_sha256$390000$uKTrxc2GN1NjUmYDFzUASf$n48Ga3xPtaihWbv6GybOWgGIcqDrYjBkCczeb6zMTfE=",
+            "first_name": "ale",
+            "last_name": "perez",
             "request": "ACCEPTED",
-            "groups": [72]
+            "groups": []
         }   
     },
     {
@@ -218,6 +218,78 @@
             "password": "pbkdf2_sha256$390000$AQglJv2iGsrfx1GidQA76m$miI9hV8YjGmrd3DF8MDEgStocpc9uFrBDRGCSYLhIgI=",
             "request": "ACCEPTED",
             "groups": []
+        }   
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 5,
+        "fields": {
+            "dni": "49170456G",
+            "address": 1,
+            "birth_date": "1963-02-24",
+            "gender": "OTHER",
+            "phone": "+34606406982",
+            "email": "carruipor@alum.us.es",
+            "username":"carruipor",
+            "password": "pbkdf2_sha256$390000$Pz4xnYugNFwUC4RIQZmOjA$KEcHnJyG5mYbk89GSevDzbkM+wMoHYNhJR6tqq0yiQ8=",
+            "first_name": "carmen",
+            "last_name": "ruiz",
+            "request": "ACCEPTED",
+            "groups": [72]
+        }   
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 6,
+        "fields": {
+            "dni": "20415876T",
+            "address": 1,
+            "birth_date": "1963-02-24",
+            "gender": "OTHER",
+            "phone": "+34606406994",
+            "email": "marvicmar@alum.us.es",
+            "username":"marvicmar",
+            "password": "pbkdf2_sha256$390000$Vo51l42z46avttsVVKE7Ap$vocEEFddmHjkzOm+lCZILZ/RP+iLXrAq5dEdUaz4+m8=",
+            "first_name": "maria",
+            "last_name": "vico",
+            "request": "ACCEPTED",
+            "groups": [72]
+        }   
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 7,
+        "fields": {
+            "dni": "20415845A",
+            "address": 1,
+            "birth_date": "1963-02-24",
+            "gender": "OTHER",
+            "phone": "+34606406941",
+            "email": "juaramlop2@alum.us.es",
+            "username":"juaramlop2",
+            "password": "pbkdf2_sha256$390000$XprpufzMEBOfhuG6IpY1eD$DRWLklgmIpJKgoBjCsOBy9JWPdBYVSJR4iqvH7s88Oo=",
+            "first_name": "Juan carlos",
+            "last_name": "ramirez",
+            "request": "ACCEPTED",
+            "groups": [72]
+        }   
+    },
+    {
+        "model": "core.CustomUser",
+        "pk": 8,
+        "fields": {
+            "dni": "20415821P",
+            "address": 1,
+            "birth_date": "1963-02-24",
+            "gender": "OTHER",
+            "phone": "+34606406946",
+            "email": "sersansan2@alum.us.es",
+            "username":"sersansan2",
+            "password": "pbkdf2_sha256$390000$0S2zDdwoWreGiEGqCLi5fn$Kudl0D8CIg9IhRnzZ0/sU3YJ84lRbZVjd9HZv9I4IoA=",
+            "first_name": "Sergio",
+            "last_name": "Santiago",
+            "request": "ACCEPTED",
+            "groups": [72]
         }   
     },
     {
@@ -353,7 +425,8 @@
             "address": 1,
             "price": 7041,
             "category": "Apartamento",
-            "owner": 3,
+            "service":[1,2,3,4],
+            "owner": 2,
             "capacity": 5,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -369,7 +442,8 @@
             "address": 2,
             "price": 26735,
             "category": "Casa",
-            "owner": 3,
+            "service":[5,6,7,8,9],
+            "owner": 2,
             "capacity": 6,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -385,7 +459,8 @@
             "address":3,
             "price": 78839,
             "category": "Dúplex",
-            "owner": 3,
+            "service":[10,11,12,13],
+            "owner": 2,
             "capacity": 7,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -401,7 +476,8 @@
             "address":3,
             "price": 889,
             "category": "Apartamento",
-            "owner": 3,
+            "service":[14,15,16,17,18],
+            "owner": 2,
             "capacity": 3,
             "is_active": true,
             "creation_date": "2023-11-17",
@@ -492,7 +568,6 @@
         "pk": 1,
         "fields": {
             "title": "Sunset View",
-            "description": "Beautiful sunset view from the balcony.",
             "order": 1,
             "image": "uploads/images/habitacion1.png",
             "alt": "Sunset view",
@@ -504,8 +579,7 @@
         "model": "core.image",
         "pk": 2,
         "fields": {
-        "title": "Spacious Living Room",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room",
             "order": 1,
             "image": "uploads/images/habitacion2.png",
             "alt": "Living room",
@@ -517,8 +591,7 @@
         "model": "core.image",
         "pk": 3,
         "fields": {
-        "title": "Spacious Living Room",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room",
             "order": 1,
             "image": "uploads/images/accommodation1.png",
             "alt": "Living room",
@@ -530,8 +603,7 @@
         "model": "core.image",
         "pk": 5,
         "fields": {
-        "title": "Spacious Living Room 3",
-            "description": "Spacious living room with modern amenities.",
+            "title": "Spacious Living Room 3",
             "order": 1,
             "image": "uploads/images/accommodation4.png",
             "alt": "Living room",

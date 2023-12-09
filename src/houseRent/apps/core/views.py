@@ -62,7 +62,6 @@ def home(request):
 
     # Filtros
     name_query = request.GET.get('name')
-    owner_query = request.GET.get('owner')
     type_query = request.GET.get('type')
     min_capacity = request.GET.get('min_capacity')
     max_capacity = request.GET.get('max_capacity')
@@ -112,7 +111,6 @@ def home(request):
     
     valid_query_params = {
         'name': name_query or '',
-        'owner': owner_query or '',
         'type': type_query or '',
         'min_capacity': min_capacity if min_capacity is not None else '',
         'max_capacity': max_capacity if max_capacity is not None else '',
@@ -136,8 +134,6 @@ def home(request):
 
     if name_query:
         accommodations = accommodations.filter(name__icontains=name_query)
-    if owner_query:
-        accommodations = accommodations.filter(owner__username__icontains=owner_query)
     if type_query:
         accommodations = accommodations.filter(category=Category.get_readable_name(type_query))
     if min_capacity:
