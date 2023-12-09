@@ -5,7 +5,7 @@ from django.utils import timezone
 class Validators:
     @staticmethod
     def validate_future_datetime(value):
-        if value and value < timezone.now():
+        if value and value.date() < timezone.now().date():
             raise ValidationError('La fecha mínima es la actual')
         
     @staticmethod
