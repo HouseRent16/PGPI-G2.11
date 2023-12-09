@@ -23,7 +23,7 @@ from utils.mailer import send_mail
 import stripe
 
 
-@login_required
+@login_required(login_url="/login/")
 def books(request):
     context={}
     if request.user.is_authenticated:
@@ -45,7 +45,7 @@ def books(request):
     else:
          return redirect('login')
 
-@login_required    
+@login_required(login_url="/login/")
 def detailsBooks(request,ID):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -184,7 +184,7 @@ def booking_details(request):
     
     return render(request, 'booking/bookingDetails.html', context)
 
-@login_required
+@login_required(login_url="/login/")
 def booking_history(request):
     current_user = request.user
 
@@ -258,7 +258,7 @@ def paymentCancelView(request,book_id):
     return redirect('/')
 
 #gestion pasarela de pago para el propietario
-@login_required(login_url='login')
+@login_required(login_url="/login/")
 def create_stripe_account_for_owner(request):
     user=CustomUser.objects.get(id=request.user.id)
     print("creando cuenta")
@@ -308,7 +308,7 @@ def create_stripe_account_for_owner(request):
         
 #----------cancelar reservas de un usuario-------
 
-@login_required
+@login_required(login_url="/login/")
 @require_POST
 def cancelBooksUser(request,book_id):
     book=Book.objects.get(id=book_id)
