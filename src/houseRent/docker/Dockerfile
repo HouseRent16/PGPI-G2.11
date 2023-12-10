@@ -14,10 +14,13 @@ RUN pip install ipython
 WORKDIR /app
 
 RUN git clone https://github.com/HouseRent16/PGPI-G2.11.git PGPI-G2.11
+
 WORKDIR /app/PGPI-G2.11
+RUN git pull
 RUN pip install -r requirements.txt
 
 COPY settings.py /app/src/houseRent/houseRent/settings.py
+EXPOSE 8000
 
 WORKDIR /app/PGPI-G2.11
 RUN chmod +x ./init.sh
