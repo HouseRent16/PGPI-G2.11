@@ -51,3 +51,11 @@ class ClaimForm(forms.ModelForm):
     class Meta:
         model= Claim
         fields=['response']
+
+        widgets = {
+            'response': forms.Textarea(attrs={'class': 'form-control'})
+        }
+
+        labels = {
+            'response': 'Respuesta ante la reclamación'
+        }

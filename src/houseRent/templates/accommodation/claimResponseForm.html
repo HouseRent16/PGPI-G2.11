@@ -1,17 +1,19 @@
 {% extends 'base_generic.html' %}
-{% load static %}
+
 
 {% block content %}
+{% load static %}
 <link rel="stylesheet" type="text/css" href="/static/css/book.css">
 
 <div class="page-content">
     <section class="container">
-        <form method="post">
+        <div id="form" class="form visible">
+        <form method="post" >
             {%csrf_token%}
             {{form.as_p}}
-            <button type="submit"> Enviar respuesta reclamacion</button>
+            <button type="submit" class="filled-button"> Enviar respuesta reclamacion</button>
         </form>
-    
+    </div>
 </section>
 </div>
 {% endblock %}

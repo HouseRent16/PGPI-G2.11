@@ -38,7 +38,7 @@
     <div class="appBar">
         <div class="title">
             <img src="cid:attached_image" alt="Logo" class="header-img">  
-            <h2>Confirmación de cancelación</h2>
+            <h2>Información sobre reclamación de {{accommodation.name}}</h2>
         </div>
     </div>
 <body>
@@ -68,7 +68,17 @@
     </style>
 
 <div class="container">
-    <p>Desde el equipo del House Rent sentimos mucho los ocurrido, <br></p>
+    <p>Desde el equipo del House Rent sentimos mucho los ocurrido.<br></p>
+</div>
+<div class="container">
+
+    <p> Usted solicitó una reclamación al equipo de HouseRent sobre el inmueble {{accommodation.name}}.<br></p>
+</div>
+<div class="container">
+    <p> La reclamación indicaba como tema de disputa: {{claim.title}}<br></p>
+</div>
+<div class="container">
+    <p> La reclamación indicaba como descripción: {{claim.description}}<br></p>
 </div>
 <div class="container">
     <p>{{body}}</p>

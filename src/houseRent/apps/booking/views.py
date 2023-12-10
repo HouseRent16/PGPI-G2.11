@@ -41,7 +41,7 @@ def books(request):
                 }
             return render(request,'booking/booksOwner.html',context)
         else:
-            return redirect('')
+            return redirect('/')
     else:
          return redirect('login')
 
@@ -84,7 +84,7 @@ def detailsBooks(request,ID):
             
             return render(request,'booking/detailsBooksOwner.html',context)
         else:
-            return redirect('')
+            return redirect('/')
     else: 
         return redirect('login')
 

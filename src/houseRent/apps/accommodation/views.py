@@ -75,7 +75,7 @@ def claim_details(request, claim_id):
 def claimRespond(request,claim_id):
     claim= get_object_or_404(Claim,id=claim_id)
     user=CustomUser.objects.get(id=request.user.id)
-
+    context = {'accommodation': claim.accommodation, 'claim': claim}
     if request.method=='POST':
         form= ClaimForm(request.POST, instance=claim)
         if form.is_valid():
@@ -83,7 +83,7 @@ def claimRespond(request,claim_id):
             claim.status = ClaimStatus.RESOLVED
             claim.save()
             respuesta = claim.response
-            send_mail("Respuesta reclamación", respuesta, [user.email], "mailer/email_claim.html")
+            send_mail("Respuesta reclamación", respuesta, [claim.user.email], "mailer/email_claim.html", context)
             return redirect('/claims')
     else:
         form=ClaimForm(instance=claim)
