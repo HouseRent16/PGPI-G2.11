@@ -253,7 +253,7 @@
             "first_name": "maria",
             "last_name": "vico",
             "request": "ACCEPTED",
-            "groups": [72]
+            "groups": []
         }   
     },
     {
@@ -271,7 +271,7 @@
             "first_name": "Juan carlos",
             "last_name": "ramirez",
             "request": "ACCEPTED",
-            "groups": [72]
+            "groups": []
         }   
     },
     {
@@ -289,7 +289,7 @@
             "first_name": "Sergio",
             "last_name": "Santiago",
             "request": "ACCEPTED",
-            "groups": [72]
+            "groups": []
         }   
     },
     {
