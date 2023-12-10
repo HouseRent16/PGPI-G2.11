@@ -9,6 +9,9 @@ from django.views import View
 
 from apps.authentication.forms import RegisterAddress
 from apps.core.models import Accommodation, Address, CustomUser, Claim, Image
+from apps.core.enums import ClaimStatus
+from utils.mailer import send_mail
+
 
 
 def register_acommodation(request):
@@ -71,15 +74,24 @@ def claim_details(request, claim_id):
 
 def claimRespond(request,claim_id):
     claim= get_object_or_404(Claim,id=claim_id)
+    user=CustomUser.objects.get(id=request.user.id)
+
     if request.method=='POST':
         form= ClaimForm(request.POST, instance=claim)
         if form.is_valid():
             form.save()
+            claim.status = ClaimStatus.RESOLVED
+            claim.save()
+            respuesta = claim.response
+            send_mail("Respuesta reclamación", respuesta, [user.email], "mailer/email_claim.html")
             return redirect('/claims')
     else:
         form=ClaimForm(instance=claim)
     return render(request,'accommodation/claimResponseForm.html',{'form':form})
-        
+
+
+
+
 @method_decorator(login_required, name='dispatch')
 class EditAccommodation(View):
 

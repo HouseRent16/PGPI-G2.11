@@ -150,7 +150,7 @@ def request_booking(request, accommodation_id):
             price = (nights.days) * accommodation.price
             print(price)
             print(accommodation.price)
-            body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por cun coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
+            body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por un coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
             send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
             if(booking_request.payment_method== 'ONLINE'):
                 return redirect('/booking/create-checkout-session/'+str(booking_request.id))

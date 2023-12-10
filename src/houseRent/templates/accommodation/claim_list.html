@@ -13,6 +13,7 @@
                   <th scope="col">Fecha de Publicación</th>
                   <th scope="col">Alojamiento</th>
                   <th scope="col">Estado</th>
+                  <th scope="col"></th>
               </tr>
           </thead>
           <tbody>
@@ -22,6 +23,12 @@
                       <td>{{ claim.publication_date }}</td>
                       <td>{{ claim.accommodation }}</td>
                       <td>{{ claim.status }}</td>
+                       {% if claim.status == 'Pendiente' %}
+                          <td><a href="/claims/{{ claim.id }}/claimResponse" class="btn btn-primary">Resolver</a></td>
+                      {% else %}
+                          <td></td>  <!-- No mostrar el botón si el estado no es PENDING -->
+                      {% endif %}
+
                   </tr>
               {% endfor %}
           </tbody>

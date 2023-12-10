@@ -356,7 +356,6 @@ def add_comment(request, accommodation_id):
 
     return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
 
-@login_required
 def add_claim(request, booking_id):
     booking = Book.objects.get(pk=booking_id)
 
