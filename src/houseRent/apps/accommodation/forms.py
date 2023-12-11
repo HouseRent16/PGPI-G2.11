@@ -38,11 +38,10 @@ class RegisterAccommodation(forms.ModelForm):
 class RegisterImage(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ['title', 'order', 'image', 'alt']
+        fields = ['title', 'image', 'alt']
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control'}),
-            'order': forms.NumberInput(attrs={'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
             'alt': forms.TextInput(attrs={'class': 'form-control'}),
         }
