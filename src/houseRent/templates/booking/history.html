@@ -46,15 +46,17 @@
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.calculate_total_price}} €</p>
                 <div>
+                    {% if booking.start_date.date <= now%}
                     <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
-                    <a  class="button-link">
+                    {% else %}
+                    <a>
                         <form action="{% url 'cancelBooksUser' book_id=booking.id %}" method="post" >
                             {%csrf_token %}
-                          <button type="submit" style="background-color:  transparent;">Cancelar reserva</button>
+                          <button type="submit" style="background-color: transparent;color: white; border:none; padding: 5px 15px;background-color: var(--c5) !important;border-radius: 5px;">Cancelar reserva</button>
                       </form>
                     </a>
                     
-                  
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -73,6 +75,7 @@
                 <p>Comienzo: {{booking.start_date.date}}</p>
                 <p>Fin: {{booking.end_date.date}}</p>
                 <p>Precio: {{booking.calculate_total_price}} €</p>
+                <a href="/add_claim/{{booking.id}}" class="button-link">Reclamar</a>
             </div>
         </div>
         {% endfor %}

@@ -1,6 +1,8 @@
 from .forms import RegisterAccommodation, RegisterImage, ClaimForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
+from django.db.models import Max
 from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect, get_object_or_404
@@ -8,6 +10,9 @@ from django.views import View
 
 from apps.authentication.forms import RegisterAddress
 from apps.core.models import Accommodation, Address, CustomUser, Claim, Image
+from apps.core.enums import ClaimStatus
+from utils.mailer import send_mail
+
 
 
 def register_acommodation(request):
@@ -43,11 +48,23 @@ def register_image(request, accommodation_id):
     if request.method == 'POST':
         formImage = RegisterImage(request.POST, request.FILES)
         if formImage.is_valid():
-            image = formImage.save(commit=False)
-            image.accommodation_id = accommodation_id
-            image.save()
-            messages.success(request, 'Alojamiento registrado correctamente')
-            return redirect('gestion')
+
+            try:
+                image = formImage.save(commit=False)
+                image.accommodation_id = accommodation_id
+                
+                # Obtener el valor máximo actual de 'order' para el alojamiento específico
+                max_order = Image.objects.filter(accommodation_id=accommodation_id).aggregate(Max('order'))['order__max']   
+                # Si no hay registros aún para ese alojamiento, establecer max_order en 0
+                max_order = max_order if max_order is not None else 0
+                # Asignar el nuevo valor de 'order'
+                image.order = max_order + 1
+
+                image.save()
+                messages.success(request, 'Alojamiento registrado correctamente')
+                return redirect('gestion')
+            except IntegrityError as e:
+                 messages.error(request, 'Error: Ya existe una imagen con el mismo orden para este alojamiento.')
     else:
         formImage = RegisterImage()
     
@@ -66,15 +83,24 @@ def claim_details(request, claim_id):
 
 def claimRespond(request,claim_id):
     claim= get_object_or_404(Claim,id=claim_id)
+    user=CustomUser.objects.get(id=request.user.id)
+    context = {'accommodation': claim.accommodation, 'claim': claim}
     if request.method=='POST':
         form= ClaimForm(request.POST, instance=claim)
         if form.is_valid():
             form.save()
+            claim.status = ClaimStatus.RESOLVED
+            claim.save()
+            respuesta = claim.response
+            send_mail("Respuesta reclamación", respuesta, [claim.user.email], "mailer/email_claim.html", context)
             return redirect('/claims')
     else:
         form=ClaimForm(instance=claim)
     return render(request,'accommodation/claimResponseForm.html',{'form':form})
-        
+
+
+
+
 @method_decorator(login_required, name='dispatch')
 class EditAccommodation(View):
 

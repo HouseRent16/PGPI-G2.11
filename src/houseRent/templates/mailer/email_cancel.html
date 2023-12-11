@@ -1,0 +1,81 @@
+
+{% extends 'mailer/base_email.html' %}
+{% block extrahead %}
+{% load static %} 
+
+
+<style>
+    .appBar {
+        background-color: white;
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .header-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .title{
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .container {
+        background-color: white;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+        flex-direction: column;
+    }
+
+    </style>
+
+    <div class="appBar">
+        <div class="title">
+            <img src="cid:attached_image" alt="Logo" class="header-img">  
+            <h2>Confirmación de cancelación</h2>
+        </div>
+    </div>
+<body>
+
+{% endblock %}
+
+{% block content %}
+
+<style>
+    
+
+
+    .title{
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .container {
+        background-color: white;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        text-align: left;
+        flex-direction: column;
+    }
+
+    </style>
+
+<div class="container">
+    <p>Sentimos que haya ocurrido esto, su reserva ha sido cancelada<br></p>
+</div>
+<div class="container">
+    <p>{{body}}</p>
+    <br>
+</div>
+
+
+</body>
+{% endblock %}
+

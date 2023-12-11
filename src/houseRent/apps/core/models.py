@@ -130,7 +130,6 @@ class Accommodation(models.Model):
     
 class Image(models.Model):
     title = models.TextField(max_length=64, blank=False, null=False)
-    description = models.TextField(max_length=1024)
     order = models.PositiveIntegerField(blank=False, null=False)
     image = models.ImageField(
         upload_to="images/",
