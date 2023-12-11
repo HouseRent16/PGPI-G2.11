@@ -55,9 +55,8 @@ def register_image(request, accommodation_id):
                 
                 # Obtener el valor máximo actual de 'order' para el alojamiento específico
                 max_order = Image.objects.filter(accommodation_id=accommodation_id).aggregate(Max('order'))['order__max']   
-                # Si no hay registros aún para ese alojamiento, establecer max_order en 1
+                # Si no hay registros aún para ese alojamiento, establecer max_order en 0
                 max_order = max_order if max_order is not None else 0
-                print(max_order)
                 # Asignar el nuevo valor de 'order'
                 image.order = max_order + 1
 
