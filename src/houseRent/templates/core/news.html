@@ -14,15 +14,12 @@
     <div id="news_accommodation" class="tab">
         {% for accommodation in news_accommodation %}
         
-        <div class="card-history">
+        <a href="/accommodation/{{ accommodation.id }}" class="card-history">
             <div class="card-header">
                 <img src="{{ accommodation.first_image.image.url }}" alt="{{ news_accommodation.first_image.alt }}" class="card-image">
             </div>
 
             <div class="card-body">
-                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
-                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
-                </a>
                 <div class="card-body">
                     <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
                     <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
@@ -34,7 +31,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </a>
     
         {% endfor %}
     </div> 
