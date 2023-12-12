@@ -90,11 +90,13 @@
                 <a class="nav-link text-center" href="/ayuda">Ayuda</a>
                 </li>
             </ul>
-            <div> 
-        
-              <input type="text" class="form-control" placeholder="Buscar"  id="search">
-              
-          </div>
+              <form action="/catalogo" method="get">
+              <div class="form-group"> 
+                <div id="name" class="form-label">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+              </div>
+            </div>
+          </form>
         </div>
         </div>
         {% if user.is_authenticated %}
