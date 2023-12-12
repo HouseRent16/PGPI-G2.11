@@ -146,6 +146,7 @@ def request_booking(request, accommodation_id):
                 booking_request.save()
                 return redirect('/booking/create-checkout-session/'+str(booking_request.id))
             else:
+                booking_request.save()
                 str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
                 str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
                 nights = (booking_request.end_date - booking_request.start_date)
@@ -161,26 +162,30 @@ def booking_details(request):
     code = request.GET.get('code')
 
     context = {}
+    try:
+        if code:
+            book = get_object_or_404(Book, code=code)
+            accommodation = book.accommodation
+            images = accommodation.image_set.all()
+            imagenInicial = images[0]
 
-    if code:
-        book = get_object_or_404(Book, code=code)
-        accommodation = book.accommodation
-        images = accommodation.image_set.all()
-        imagenInicial = images[0]
-
-        context = {
-            'book': book,
-            'accommodation': accommodation,
-            'images': images[1:len(images)],
-            'imagenInicial': imagenInicial,
-            'numFavoritos': conteoFavoritos(request, accommodation.id),
-            'rating': ratingAccommodation(request, accommodation.id),
-            'claim': conteoReclamaciones(request, accommodation.id),
-            'reservas': conteoReservasTotales(request, accommodation.id),
-            'now': datetime.now().date(),
-        }
+            context = {
+                'book': book,
+                'accommodation': accommodation,
+                'images': images[1:len(images)],
+                'imagenInicial': imagenInicial,
+                'numFavoritos': conteoFavoritos(request, accommodation.id),
+                'rating': ratingAccommodation(request, accommodation.id),
+                'claim': conteoReclamaciones(request, accommodation.id),
+                'reservas': conteoReservasTotales(request, accommodation.id),
+                'now': datetime.now().date(),
+            }
+            return render(request, 'booking/bookingDetails.html', context)
+    except:
+        redirect('/booking')
     
     return render(request, 'booking/bookingDetails.html', context)
+    
 
 @login_required(login_url="/login/")
 def booking_history(request):
