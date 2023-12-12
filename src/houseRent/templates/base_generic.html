@@ -53,28 +53,28 @@
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/catalogo">Catálogo</a>
                 </li>
-                  {% if user.is_authenticated and user.groups.all.0.name == 'Propietarios' or user.groups.all.0.name == 'Administradores'%}
+                  {% if user.is_authenticated and user.groups.all.0.name == 'Propietarios' %}
                   <li class="nav-item">
                     <a class="nav-link text-center" href="/booking/owner">Gestión</a>
                   </li>
                   {%endif%}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' or user.groups.all.0.name != 'Administradores' %}
+                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' and user.groups.all.0.name != 'Administradores'%}
+                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/favoritos">Favoritos</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' or user.groups.all.0.name != 'Administradores' %}
+                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/booking">Seguimiento</a>
                 </li>
                 {% endif %}
                 </li>
-                {% if user.groups.all.0.name == 'Propietarios' or user.groups.all.0.name == 'Administradores'%}
+                {% if user.groups.all.0.name == 'Propietarios'%}
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
                 </li>

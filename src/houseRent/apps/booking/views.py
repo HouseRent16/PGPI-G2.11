@@ -142,19 +142,16 @@ def request_booking(request, accommodation_id):
             dias=booking_request.end_date-booking_request.start_date
             price=dias.days*accommodation.price
             booking_request.price=price
-            booking_request.save()
-            str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
-            str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
-            nights = (booking_request.end_date - booking_request.start_date)
-            print('night', nights)
-            price = (nights.days) * accommodation.price
-            print(price)
-            print(accommodation.price)
-            body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por un coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
-            send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
             if(booking_request.payment_method== 'ONLINE'):
+                booking_request.save()
                 return redirect('/booking/create-checkout-session/'+str(booking_request.id))
             else:
+                str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
+                str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
+                nights = (booking_request.end_date - booking_request.start_date)
+                price = (nights.days) * accommodation.price
+                body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por un coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
+                send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
                 return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
