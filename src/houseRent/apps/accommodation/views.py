@@ -9,11 +9,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 
 from apps.authentication.forms import RegisterAddress
-from apps.core.models import Accommodation, Address, CustomUser, Claim, Image
+from apps.core.models import Accommodation, Address, CustomUser, Claim, Image,Book
 from apps.core.enums import ClaimStatus
 from utils.mailer import send_mail
 
-
+from apps.booking.views import cancelBooksUser
 
 def register_acommodation(request):
     if request.method == 'POST':
@@ -133,6 +133,11 @@ class EditAccommodation(View):
                 accommodation.address = address
                 formAccommodation.save()
                 messages.success(request, 'Alojamiento editado correctamente')
+                if not accommodation.is_active:
+                    books=Book.objects.filter(accommodation_id=accommodation.id)
+                    for book in books:
+                        cancelBooksUser(request,book.id)
+                    
                 return redirect('gestion')
             else:
                 print("Form validation errors:")

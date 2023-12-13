@@ -47,32 +47,32 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <div class="column">
             <ul class="navbar-nav">
-                
+              <li class="nav-item">
+                <a class="nav-link text-center" href="/">Escaparate</a>
+              </li>
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/catalogo">Catálogo</a>
                 </li>
-                  {% if user.is_authenticated and user.groups.all.0.name == 'Propietarios' or user.groups.all.0.name == 'Administradores'%}
+                  {% if user.is_authenticated and user.groups.all.0.name == 'Propietarios' %}
                   <li class="nav-item">
                     <a class="nav-link text-center" href="/booking/owner">Gestión</a>
                   </li>
                   {%endif%}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' or user.groups.all.0.name != 'Administradores' %}
+                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="{{ request.scheme }}://{{request.get_host}}/booking/history">Reservas</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' and user.groups.all.0.name != 'Administradores'%}
+                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/favoritos">Favoritos</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' or user.groups.all.0.name != 'Administradores' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/booking">Seguimiento</a>
                 </li>
-                {% endif %}
                 </li>
-                {% if user.groups.all.0.name == 'Propietarios' or user.groups.all.0.name == 'Administradores'%}
+                {% if user.groups.all.0.name == 'Propietarios'%}
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
                 </li>
@@ -90,11 +90,13 @@
                 <a class="nav-link text-center" href="/ayuda">Ayuda</a>
                 </li>
             </ul>
-            <div> 
-        
-              <input type="text" class="form-control" placeholder="Buscar"  id="search">
-              
-          </div>
+              <form action="/catalogo" method="get">
+              <div class="form-group"> 
+                <div id="name" class="form-label">
+                <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
+              </div>
+            </div>
+          </form>
         </div>
         </div>
         {% if user.is_authenticated %}

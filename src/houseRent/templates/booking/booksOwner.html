@@ -11,16 +11,23 @@
                     {% for accommodation,book in books.items %}
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-5 card-container">
                             <div class="card">
+                                <div class="card-img-container">
                                 <a href="/booking/owner/{{ accommodation.id }}" class="card-overlay">
                                     <h5 class="accommodation-name">{{ accommodation.name }}</h5>
                                 </a>
-                
+                                {% if not accommodation.is_active %}
+                                    <div class="booked-indicator">
+                                        <p>Inactivo</p>
+                                    </div>
+                                    {%endif%}
                                 {% if accommodation.first_image %}
                                     <img src="{{ accommodation.first_image.image.url }}" alt="{{ accommodation.first_image.alt }}" class="card-img-top">
                                 {% endif %}
+                            </div>
                                 <div class="card-body">
                                     <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
                                     <p class="card-text"><b class="price"> {{ book }}  </b> reservas activas</p>
+                                    
                                     <!-- Puntuación promedio -->
                                     <div class="rating">
                                         <span class="material-symbols-outlined rating-star">
