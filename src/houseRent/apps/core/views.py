@@ -37,7 +37,7 @@ def change_password(request, user_id):
 
 def news(request):
 
-    news_accommodation = Accommodation.objects.filter(Q(is_active=True)).order_by('creation_date')[:3]
+    news_accommodation = Accommodation.objects.filter(Q(is_active=True)).order_by('-creation_date')[:3]
     best_accommodation = sorted(Accommodation.objects.filter(Q(is_active=True)), key=lambda acc: acc.average_rating if acc.average_rating is not None else float('-inf'), reverse=True) [:3]
     for accommodation in news_accommodation:
         accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
