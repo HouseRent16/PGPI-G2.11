@@ -68,10 +68,14 @@
                 <a class="nav-link text-center" href="/favoritos">Favoritos</a>
                 </li>
                 {% endif %}
+
+                {% if user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
-                <a class="nav-link text-center" href="/booking">Seguimiento</a>
-                </li>
-                </li>
+                  <a class="nav-link text-center" href="/booking">Seguimiento</a>
+                  </li>
+                {% endif %}
+                
+               
                 {% if user.groups.all.0.name == 'Propietarios'%}
                 <li class="nav-item">
                   <a class="nav-link text-center" href="/accommodation/add">Alojamientos</a>
