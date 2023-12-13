@@ -141,7 +141,7 @@
         </div>
 
        
-    {% if not book %}
+    {% if not book and user.groups.all.0.name != 'Propietarios'%}
         </div>
             <div class="page-content text-center" style="margin-top: 20px;">
                 <a href="/booking/{{id}}" class="btn btn-reserve">RESERVAR</a>
