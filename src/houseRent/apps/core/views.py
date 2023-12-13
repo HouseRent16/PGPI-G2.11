@@ -2,7 +2,9 @@ import json
 
 from datetime import datetime, date
 from urllib.parse import urlencode
-
+from django.db.models import Avg, Count, Case, When, Value, F, Sum
+from django.db.models import FloatField
+from django.db.models.functions import Coalesce
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import login_required
@@ -33,6 +35,16 @@ def change_password(request, user_id):
         'form': form
     })
 
+def news(request):
+
+    news_accommodation = Accommodation.objects.filter(Q(is_active=True)).order_by('creation_date')[:3]
+    best_accommodation = sorted(Accommodation.objects.filter(Q(is_active=True)), key=lambda acc: acc.average_rating if acc.average_rating is not None else float('-inf'), reverse=True) [:3]
+    for accommodation in news_accommodation:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()
+    for accommodation in best_accommodation:
+        accommodation.first_image = Image.objects.filter(accommodation=accommodation, order=1).first()  
+    return render(request, 'core/news.html', {'news_accommodation': news_accommodation, 'best_accommodation': best_accommodation})
+
 def home(request):
     accommodations = Accommodation.objects.all().filter(is_active=True).annotate(
         is_booked=Value(False, output_field=BooleanField()),
@@ -50,7 +62,6 @@ def home(request):
 
     # Filtros
     name_query = request.GET.get('name')
-    owner_query = request.GET.get('owner')
     type_query = request.GET.get('type')
     min_capacity = request.GET.get('min_capacity')
     max_capacity = request.GET.get('max_capacity')
@@ -100,7 +111,6 @@ def home(request):
     
     valid_query_params = {
         'name': name_query or '',
-        'owner': owner_query or '',
         'type': type_query or '',
         'min_capacity': min_capacity if min_capacity is not None else '',
         'max_capacity': max_capacity if max_capacity is not None else '',
@@ -124,8 +134,6 @@ def home(request):
 
     if name_query:
         accommodations = accommodations.filter(name__icontains=name_query)
-    if owner_query:
-        accommodations = accommodations.filter(owner__username__icontains=owner_query)
     if type_query:
         accommodations = accommodations.filter(category=Category.get_readable_name(type_query))
     if min_capacity:
@@ -226,6 +234,8 @@ def favoritos(request):
 
 def private_policy(request):
     return render(request, 'authentication/privatePolicy.html')
+
+
 @method_decorator(login_required, name='dispatch')
 class ProfileView(View):
     
@@ -236,10 +246,12 @@ class ProfileView(View):
         user = get_object_or_404(CustomUser, pk=request.user.id)
         customUserForm = CustomUserForm(instance=user)
         addressForm = AddressForm(instance=user.address)
+        es_propietario=request.user.groups.filter(name="Propietarios").exists()
 
         context = {
             'user_form': customUserForm,
             'address_form': addressForm,
+            'propietario':es_propietario,
             
         }
         return render(self.request, self.get_template(), context)
@@ -320,6 +332,7 @@ def conteoReclamaciones(request,id_accommodation):
 def conteoReservasTotales(request, id_accommodation):
     reservas=Book.objects.filter(accommodation_id=id_accommodation)
     return reservas.filter(status=BookingStatus.CONFIRMED).count()
+
 @login_required
 def add_comment(request, accommodation_id):
     accommodation = Accommodation.objects.get(pk=accommodation_id)
@@ -343,7 +356,6 @@ def add_comment(request, accommodation_id):
 
     return render(request, 'comments-claim/add_comment.html', {'form': form, 'accommodation': accommodation})
 
-@login_required
 def add_claim(request, booking_id):
     booking = Book.objects.get(pk=booking_id)
 

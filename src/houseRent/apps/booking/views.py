@@ -23,8 +23,9 @@ from utils.mailer import send_mail
 import stripe
 
 
-@login_required
+@login_required(login_url="/login/")
 def books(request):
+    context={}
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
         if es_propietario: 
@@ -40,11 +41,11 @@ def books(request):
                 }
             return render(request,'booking/booksOwner.html',context)
         else:
-            return redirect('')
+            return redirect('/')
     else:
          return redirect('login')
 
-@login_required    
+@login_required(login_url="/login/")
 def detailsBooks(request,ID):
     if request.user.is_authenticated:
         es_propietario=request.user.groups.filter(name="Propietarios").exists()
@@ -83,7 +84,7 @@ def detailsBooks(request,ID):
             
             return render(request,'booking/detailsBooksOwner.html',context)
         else:
-            return redirect('')
+            return redirect('/')
     else: 
         return redirect('login')
 
@@ -141,16 +142,17 @@ def request_booking(request, accommodation_id):
             dias=booking_request.end_date-booking_request.start_date
             price=dias.days*accommodation.price
             booking_request.price=price
-            booking_request.save()
-            str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
-            str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
-            nights = (booking_request.end_date - booking_request.start_date)
-            price = (nights.days - 1 )* accommodation.price
-            body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por cun coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
-            send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
             if(booking_request.payment_method== 'ONLINE'):
+                booking_request.save()
                 return redirect('/booking/create-checkout-session/'+str(booking_request.id))
             else:
+                booking_request.save()
+                str_start_date = booking_request.start_date.strftime("%d/%m/%Y")
+                str_end_date = booking_request.end_date.strftime("%d/%m/%Y")
+                nights = (booking_request.end_date - booking_request.start_date)
+                price = (nights.days) * accommodation.price
+                body = "Su reserva para {} ha sido confirmada, para las fechas {} - {}. Por un coste de {}€".format(accommodation.name, str_start_date, str_end_date, price)
+                send_mail("Información de reserva", body, [user_form.cleaned_data.get("email")],"mailer/email_booking.html", {"code": booking_request.code, "addres": accommodation.address})
                 return redirect('/')
         else: 
             return render(request, 'booking/book.html', {'form': form, 'user_form': user_form,  "accommodation":accommodation})
@@ -160,32 +162,37 @@ def booking_details(request):
     code = request.GET.get('code')
 
     context = {}
+    try:
+        if code:
+            book = get_object_or_404(Book, code=code)
+            accommodation = book.accommodation
+            images = accommodation.image_set.all()
+            imagenInicial = images[0]
 
-    if code:
-        book = get_object_or_404(Book, code=code)
-        accommodation = book.accommodation
-        images = accommodation.image_set.all()
-        imagenInicial = images[0]
-
-        context = {
-            'book': book,
-            'accommodation': accommodation,
-            'images': images[1:len(images)],
-            'imagenInicial': imagenInicial,
-            'numFavoritos': conteoFavoritos(request, accommodation.id),
-            'rating': ratingAccommodation(request, accommodation.id),
-            'claim': conteoReclamaciones(request, accommodation.id),
-            'reservas': conteoReservasTotales(request, accommodation.id),
-        }
+            context = {
+                'book': book,
+                'accommodation': accommodation,
+                'images': images[1:len(images)],
+                'imagenInicial': imagenInicial,
+                'numFavoritos': conteoFavoritos(request, accommodation.id),
+                'rating': ratingAccommodation(request, accommodation.id),
+                'claim': conteoReclamaciones(request, accommodation.id),
+                'reservas': conteoReservasTotales(request, accommodation.id),
+                'now': datetime.now().date(),
+            }
+            return render(request, 'booking/bookingDetails.html', context)
+    except:
+        redirect('/booking')
     
     return render(request, 'booking/bookingDetails.html', context)
+    
 
-@login_required
+@login_required(login_url="/login/")
 def booking_history(request):
     current_user = request.user
 
-    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
-    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    pendding_booking = Book.objects.filter(Q(user=current_user) & Q(end_date__lt = datetime.now().date()) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
+    confirm_booking = Book.objects.filter(Q(user=current_user) & Q(end_date__gte = datetime.now().date()) & Q(is_active=True) & ~Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     cancel_booking = Book.objects.filter(Q(user=current_user) & Q(is_active=False) & Q(status=BookingStatus.CANCELLED)).order_by('start_date')
     es_propietario=request.user.groups.filter(name="Propietarios").exists()
     for booking in pendding_booking:
@@ -194,14 +201,9 @@ def booking_history(request):
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
     for booking in cancel_booking:
         booking.accommodation.first_image = Image.objects.filter(accommodation=booking.accommodation, order=1).first()
+    now = datetime.now().date()
 
-    """
-    judge_url = request.get_host() + reverse('judge')
-    claim_url = request.get_host() + reverse('claim')
-    cancel_url = request.get_host() + reverse('cancel')
-    """
-
-    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario}) #, 'judge_url': judge_url, 'claim_url':claim_url , 'cancel_url': cancel_url})
+    return render(request, 'booking/history.html', {'pendding_booking': pendding_booking, 'confirm_booking': confirm_booking, 'cancel_booking': cancel_booking,'propietario':es_propietario, 'now':now})
 
 
 def conteoReservasTotales(request, id_accommodation):
@@ -259,7 +261,7 @@ def paymentCancelView(request,book_id):
     return redirect('/')
 
 #gestion pasarela de pago para el propietario
-@login_required(login_url='login')
+@login_required(login_url="/login/")
 def create_stripe_account_for_owner(request):
     user=CustomUser.objects.get(id=request.user.id)
     print("creando cuenta")
@@ -309,12 +311,19 @@ def create_stripe_account_for_owner(request):
         
 #----------cancelar reservas de un usuario-------
 
-@login_required
+@login_required(login_url="/login/")
 @require_POST
 def cancelBooksUser(request,book_id):
+    book=Book.objects.get(id=book_id)
+    user=CustomUser.objects.get(id=request.user.id)
     if request.user.is_authenticated:
-        book=Book.objects.get(id=book_id)
         book.is_active=False
         book.status=BookingStatus.CANCELLED
         book.save()
+    str_start_date = book.start_date.strftime("%d/%m/%Y")
+    str_end_date = book.end_date.strftime("%d/%m/%Y")
+    body = "Su reserva para {} ha sido cancelada. Para los dias {} - {}".format(book.accommodation.name, str_start_date, str_end_date)
+    send_mail("Confirmación de cancelación de reserva", body, [user.email],"mailer/email_cancel.html")
+    if request.user.groups.filter(name='Propietarios').exists():
+        return redirect('booking/owner')
     return redirect('/booking/history')

@@ -304,7 +304,7 @@
 
 .price {
   color: var(--c4) !important;
-  font-weight: 800 !important;
+  font-weight: bold !important;
 }
 
 .rating {
@@ -370,6 +370,7 @@
 .formulario .columna {
   display: flex;
   column-gap: 15px;
+  
 }
 
 .caja-select select {
@@ -432,4 +433,8 @@
 
 .custom-title-input {
     height: 10px !important; /* Ajusta la altura según tus preferencias */
+}
+
+.almost-screen {
+  width: 80% !important;
 }

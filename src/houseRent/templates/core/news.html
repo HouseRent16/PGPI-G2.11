@@ -1,0 +1,88 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+{% load static %} 
+<link rel="stylesheet" type="text/css" href="/static/css/history.css">
+
+<div class="tab-container">
+    <!-- Botones de las tabs -->
+    <div class="tab-buttons">
+        <div class="tab-button active" onclick="openTab(event, 'news_accommodation')">Nuevos alojamientos</div>
+        <div class="tab-button" onclick="openTab(event, 'best_accommodation')">Mejor valorados</div>
+    </div>
+
+    <div id="news_accommodation" class="tab">
+        {% for accommodation in news_accommodation %}
+        
+        <a href="/accommodation/{{ accommodation.id }}" class="card-history">
+            <div class="card-header">
+                <img src="{{ accommodation.first_image.image.url }}" alt="{{ news_accommodation.first_image.alt }}" class="card-image">
+            </div>
+
+            <div class="card-body">
+                <div class="card-body">
+                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                    <div class="rating">
+                        <span class="material-symbols-outlined rating-star">
+                            star
+                        </span>
+                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    
+        {% endfor %}
+    </div> 
+
+    <div id="best_accommodation" class="tab">
+        {% for accommodation in best_accommodation %}
+        <div class="card-history">
+            
+            <div class="card-header">
+                <img src="{{ accommodation.first_image.image.url }}" alt="{{ news_accommodation.first_image.alt }}" class="card-image">
+            </div>
+
+            <div class="card-body">
+                <a href="/accommodation/{{ accommodation.id }}" class="card-overlay">
+                    <h5 class="accommodation-name">{{ accommodation.name }}</h5>
+                </a>
+                <div class="card-body">
+                    <p class="card-text"><b class="price"> {{ accommodation.price }} € </b> Noche</p>
+                    <p class="card-text">{{ accommodation.address.city }}, {{ accommodation.address.region }}, {{ accommodation.address.country.name }}</p>
+                    <div class="rating">
+                        <span class="material-symbols-outlined rating-star">
+                            star
+                        </span>
+                        <p class="card-text">{{ accommodation.average_rating|default:"ND" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div> 
+
+</div>
+
+<script>
+    // Función para cambiar entre tabs
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tab-button");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Mostrar la primera tab por defecto
+    document.querySelector(".tab-button.active").click();
+</script>
+
+{% endblock %}

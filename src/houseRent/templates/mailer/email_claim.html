@@ -38,7 +38,7 @@
     <div class="appBar">
         <div class="title">
             <img src="{% static 'assets/Logo_S_T.png' %}" alt="Logo" class="header-img"/>
-            <h2>Información de reserva</h2>
+            <h2>Información sobre reclamación de {{accommodation.name}}</h2>
         </div>
     </div>
 <body>
@@ -68,19 +68,26 @@
     </style>
 
 <div class="container">
-    <p>Gracias por confiar en nosotros para sus próximas vacaciones<br></p>
+    <p>Desde el equipo del House Rent sentimos mucho los ocurrido.<br></p>
+</div>
+<div class="container">
+
+    <p> Usted solicitó una reclamación al equipo de HouseRent sobre el inmueble {{accommodation.name}}.<br></p>
+</div>
+<div class="container">
+    <p> La reclamación indicaba como tema de disputa: {{claim.title}}<br></p>
+</div>
+<div class="container">
+    <p> La reclamación indicaba como descripción: {{claim.description}}<br></p>
 </div>
 <div class="container">
     <p>{{body}}</p>
     <br>
 </div>
 <div class="container">
-    <p>El código de seguimiento es: <a href="{{ request.scheme }}://{{request.get_host}}/booking/?code={{code}}">{{code}}</a></p>
-    <br>
+    <p>Esperemos que haya sido util y si tiene más dudas o la solución proporcionado no soluciona su problema no dude en contactarnos por houserente2324@gmai.com<br></p>
 </div>
-<div class="container">
-    <p>El alojamiento se encuentra en: {{addres}}</p>
-</div>
+
 
 </body>
 {% endblock %}

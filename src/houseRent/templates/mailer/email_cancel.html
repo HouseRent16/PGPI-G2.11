@@ -38,7 +38,7 @@
     <div class="appBar">
         <div class="title">
             <img src="{% static 'assets/Logo_S_T.png' %}" alt="Logo" class="header-img"/>
-            <h2>Información de reserva</h2>
+            <h2>Confirmación de cancelación</h2>
         </div>
     </div>
 <body>
@@ -68,19 +68,13 @@
     </style>
 
 <div class="container">
-    <p>Gracias por confiar en nosotros para sus próximas vacaciones<br></p>
+    <p>Sentimos que haya ocurrido esto, su reserva ha sido cancelada<br></p>
 </div>
 <div class="container">
     <p>{{body}}</p>
     <br>
 </div>
-<div class="container">
-    <p>El código de seguimiento es: <a href="{{ request.scheme }}://{{request.get_host}}/booking/?code={{code}}">{{code}}</a></p>
-    <br>
-</div>
-<div class="container">
-    <p>El alojamiento se encuentra en: {{addres}}</p>
-</div>
+
 
 </body>
 {% endblock %}

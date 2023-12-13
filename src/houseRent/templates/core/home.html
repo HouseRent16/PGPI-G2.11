@@ -58,17 +58,12 @@
             <form method="get">
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary">Activar</button>
-                    <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/';">Limpiar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="window.location.href = '/catalogo';">Limpiar</button>
                 </div>
                 
                 <div class="form-group">
                     <label for="name" class="form-label">Nombre</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Buscar" value="{{ request.GET.name }}">
-                </div>
-        
-                <div class="form-group">
-                    <label for="owner" class="form-label">Propietario</label>
-                    <input type="text" id="owner" name="owner" class="form-control" placeholder="Propietario" value="{{ request.GET.owner }}">
                 </div>
         
                 <div class="form-group">
@@ -134,9 +129,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="page-content text-center" style="margin-top: 20px;">
-                <a href="/booking" class="btn btn-primary">Buscar reserva</a>
-                                   </div>
+                
 
             </form>
         </div>
