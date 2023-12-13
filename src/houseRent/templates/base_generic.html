@@ -68,11 +68,9 @@
                 <a class="nav-link text-center" href="/favoritos">Favoritos</a>
                 </li>
                 {% endif %}
-                {% if user.is_authenticated and user.groups.all.0.name != 'Propietarios' %}
                 <li class="nav-item">
                 <a class="nav-link text-center" href="/booking">Seguimiento</a>
                 </li>
-                {% endif %}
                 </li>
                 {% if user.groups.all.0.name == 'Propietarios'%}
                 <li class="nav-item">
